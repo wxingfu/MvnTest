@@ -692,7 +692,9 @@ public class wordExportTest {
     }
 
     /**
-     * 当需求中的表格更加复杂的时候，我们完全可以设计好那些固定的部分，将需要动态渲染的部分单元格交给自定义模板渲染策略。poi-tl提供了抽象表格策略 DynamicTableRenderPolicy 来实现这样的功能。
+     * 当需求中的表格更加复杂的时候，我们完全可以设计好那些固定的部分，
+     * 将需要动态渲染的部分单元格交给自定义模板渲染策略。
+     * poi-tl提供了抽象表格策略 DynamicTableRenderPolicy 来实现这样的功能。
      */
     @Test
     public void test19() {
