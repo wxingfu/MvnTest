@@ -1,4 +1,4 @@
-package com.wxf.thread;
+package com.wxf.thread.other;
 
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;

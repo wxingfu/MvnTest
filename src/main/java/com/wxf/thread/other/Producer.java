@@ -1,6 +1,6 @@
-package com.wxf.thread;
+package com.wxf.thread.other;
 
-import static com.wxf.thread.TestPC.MAX_POOL;
+import static com.wxf.thread.other.TestPC.MAX_POOL;
 
 public class Producer implements Runnable {
 

@@ -1,4 +1,4 @@
-package com.wxf.thread;
+package com.wxf.thread.other;
 
 public class ThreadExtends extends Thread {
     @Override
