@@ -24,6 +24,7 @@ class MyThread2 implements Callable {
 }
 
 public class Demo1 {
+
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         //Runnable接口创建线程
         new Thread(new MyThread1(), "AA").start();
@@ -32,7 +33,7 @@ public class Demo1 {
         // new Thread(new MyThread2(),"BB").start();
 
         //FutureTask
-        FutureTask<Integer> futureTask1 = new FutureTask<>(new MyThread2());
+        FutureTask<Integer> futureTask1 = new FutureTask<Integer>(new MyThread2());
 
         //lam表达式
         FutureTask<Integer> futureTask2 = new FutureTask<>(() -> {
@@ -44,9 +45,9 @@ public class Demo1 {
         new Thread(futureTask2, "lucy").start();
         new Thread(futureTask1, "mary").start();
 
-//        while(!futureTask2.isDone()) {
-//            System.out.println("wait.....");
-//        }
+       // while(!futureTask2.isDone()) {
+       //     System.out.println("wait.....");
+       // }
         //调用FutureTask的get方法
         System.out.println(futureTask2.get());
 
@@ -67,6 +68,5 @@ public class Demo1 {
          * 汇总一次
          *
          */
-
     }
 }
