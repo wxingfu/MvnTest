@@ -1,4 +1,13 @@
 # Project exclude paths
 /target/
 /.idea/
+# .iml
 .iml
+# target
+/WordExport/target/
+/ThreadStudy/target/
+/SpringStudy/target/
+/RpcStudy/target/
+/CommonsUtils/target/
+/CollectionStudy/target/
+/CodeTestModule/target/
