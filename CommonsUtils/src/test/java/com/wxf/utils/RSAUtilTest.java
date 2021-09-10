@@ -1,6 +1,6 @@
 package com.wxf.utils;
 
-import com.wxf.utils.util.RSAUtil;
+import com.wxf.utils.myutils.RSAUtil;
 import org.junit.Test;
 
 import javax.crypto.BadPaddingException;

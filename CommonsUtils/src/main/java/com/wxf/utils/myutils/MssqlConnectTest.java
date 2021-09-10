@@ -1,4 +1,4 @@
-package com.wxf.utils.util;
+package com.wxf.utils.myutils;
 
 import java.sql.*;
 import java.util.ArrayList;

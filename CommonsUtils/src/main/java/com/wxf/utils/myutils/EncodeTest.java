@@ -1,4 +1,4 @@
-package com.wxf.utils.test;
+package com.wxf.utils.myutils;
 
 import java.io.UnsupportedEncodingException;
 

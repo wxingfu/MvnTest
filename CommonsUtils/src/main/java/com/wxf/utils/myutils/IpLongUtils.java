@@ -1,4 +1,4 @@
-package com.wxf.utils.util;
+package com.wxf.utils.myutils;
 
 public class IpLongUtils {
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.wxf.utils.util;
+package com.wxf.utils.myutils;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
