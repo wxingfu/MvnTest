@@ -41,7 +41,7 @@ import java.util.*;
 
 public class wordExportTest {
 
-    public final static String base = "F:\\wordExport\\";
+    public final static String base = "E:\\wordExport\\";
     public final static String templatePath = base + "templates\\";
     public final static String imgPath = base + "images\\";
     public final static String markdownPath = base + "markdown\\";
