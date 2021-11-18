@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.wxf.executor</groupId>
-    <artifactId>ThreadPoolTaskExecutor</artifactId>
+    <artifactId>ThreadStudy</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
