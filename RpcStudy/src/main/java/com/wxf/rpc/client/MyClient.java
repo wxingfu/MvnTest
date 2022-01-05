@@ -30,7 +30,7 @@ public interface MyClient {
 
 
     // @PostRequest(url = "/InVehicle/GetByCustom")
-    // PageInVehicleRecord pageInVehicleRecord(@JSONBody ReqParams param)s;
+    // PageInVehicleRecord pageInVehicleRecord(@JSONBody ReqParams param);
 
     @PostRequest(url = "/InVehicleRecord/GetByFunc")
     InVehicleRecord getInVehicleRecord(@Body String param);
