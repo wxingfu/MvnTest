@@ -233,7 +233,7 @@ public class ${className}Schema implements Schema, Cloneable {
     }
 
     /**
-     * 数据打包,按XML格式打包
+     * 数据打包，按 XML 格式打包，顺序参见<A href ={@docRoot}/dataStructure/tb.html#Prp${className}描述/A>表字段
      * @return: String 返回打包后字符串
      */
     public String encode() {
@@ -272,7 +272,7 @@ public class ${className}Schema implements Schema, Cloneable {
     }
 
     /**
-     * 数据解包
+     * 数据解包，解包顺序参见<A href ={@docRoot}/dataStructure/tb.html#Prp${className}>历史记账凭证主表信息</A>表字段
      * @param: strMessage String 包含一条纪录数据的字符串
      * @return: boolean
      */
