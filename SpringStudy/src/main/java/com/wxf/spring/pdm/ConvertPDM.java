@@ -57,8 +57,7 @@ public class ConvertPDM {
             String comment = column.getComment();
             PDMTable table = column.getTable();
 
-            PDMColumn pdmColumn = new PDMColumn(
-                    id, name, code, newDataType, length, precision,
+            PDMColumn pdmColumn = new PDMColumn(id, name, code, newDataType, length, precision,
                     mandatory, defaultValue, lowValue, highValue, comment, table);
             pdmColumnArrayList.add(pdmColumn);
         }
@@ -144,37 +143,27 @@ public class ConvertPDM {
             }
         }
         if (oldType.indexOf("char") >= 0) {
-            if (oldType.indexOf("varchar2") >= 0 &&
-                    DBMSType != DBConst.DB_Oracle) {
+            if (oldType.indexOf("varchar2") >= 0 && DBMSType != DBConst.DB_Oracle) {
                 dealDbError(oldType, tabName, colName);
             }
-            if (oldType.indexOf("nvarchar") >= 0 &&
-                    (DBMSType != DBConst.DB_Oracle &&
-                            DBMSType != DBConst.DB_SQLServer)) {
+            if (oldType.indexOf("nvarchar") >= 0 && (DBMSType != DBConst.DB_Oracle && DBMSType != DBConst.DB_SQLServer)) {
                 dealDbError(oldType, tabName, colName);
             }
-            regex =
-                    "(char|varchar|varchar2|nvarchar|nvarchar2)(|\\s*\\(\\s*[0-9]+\\s*\\))";
+            regex = "(char|varchar|varchar2|nvarchar|nvarchar2)(|\\s*\\(\\s*[0-9]+\\s*\\))";
             checkDataType(regex, oldType, tabName, colName);
             return "String";
         }
         //不推荐使用timestamp。timestamp在Microsoft SQL Server JDBC中没有对应的java.sql.Types类型
-        if (oldType.indexOf("timestamp") >= 0 ||
-                oldType.indexOf("date") >= 0) {
-            if (oldType.indexOf("datetime") >= 0 &&
-                    DBMSType != DBConst.DB_SQLServer) {
+        if (oldType.indexOf("timestamp") >= 0 || oldType.indexOf("date") >= 0) {
+            if (oldType.indexOf("datetime") >= 0 && DBMSType != DBConst.DB_SQLServer) {
                 dealDbError(oldType, tabName, colName);
             }
-            if (oldType.indexOf("datetime") < 0 &&
-                    oldType.indexOf("date") >= 0 &&
-                    DBMSType != DBConst.DB_Oracle &&
-                    DBMSType != DBConst.DB_DB2) {
+            if (oldType.indexOf("datetime") < 0 && oldType.indexOf("date") >= 0 && DBMSType != DBConst.DB_Oracle && DBMSType != DBConst.DB_DB2) {
                 dealDbError(oldType, tabName, colName);
             }
             regex = "(datetime|smalldatetime|timestamp|date)";
             checkDataType(regex, oldType, tabName, colName);
-            if (oldType.indexOf("datetime") < 0 &&
-                    oldType.indexOf("date") >= 0) {
+            if (oldType.indexOf("datetime") < 0 && oldType.indexOf("date") >= 0) {
                 return "Date";
             } else {
                 return "String";
@@ -241,5 +230,40 @@ public class ConvertPDM {
         } else {
             throw new Exception("表" + tabName + "的字段" + colName + "的数据类型不支持或错误:" + oldType);
         }
+    }
+
+
+    public static String getPKWhereClause(ArrayList<PDMColumn> pkList) {
+        // 生成按主键操作的WHERE子句
+        StringBuilder PKWhereClause = new StringBuilder(50);
+        if (pkList != null && pkList.size() > 0) {
+            for (PDMColumn pk : pkList) {
+                PKWhereClause.append(" AND ").append(pk.getCode()).append(" = ?");
+            }
+            PKWhereClause.delete(0, 4);
+        }
+        if (PKWhereClause.length() == 0) {
+            PKWhereClause.append("1 = 1");
+        }
+        return PKWhereClause.toString().trim();
+    }
+
+    public String getInsertColumnClause(ArrayList<PDMColumn> newColumns) {
+        StringBuilder InsertColumnClause = new StringBuilder(300);
+        for (int i = 0; i < newColumns.size(); i++) {
+            InsertColumnClause.append(" , ?");
+        }
+        InsertColumnClause.delete(0, 2);
+        return InsertColumnClause.toString().trim();
+    }
+
+    public String getUpdateColumnClause(ArrayList<PDMColumn> newColumns) {
+        // 生成UPDATE操作所需要的所有字段的字句。例如，ContNo = ? , PolNo = ?
+        StringBuilder UpdateColumnClause = new StringBuilder(300);
+        for (PDMColumn column : newColumns) {
+            UpdateColumnClause.append(" , ").append(column.getCode()).append(" = ?");
+        }
+        UpdateColumnClause.delete(0, 2);
+        return UpdateColumnClause.toString().trim();
     }
 }

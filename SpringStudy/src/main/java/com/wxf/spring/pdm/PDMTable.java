@@ -8,7 +8,6 @@ import java.util.ArrayList;
  */
 public class PDMTable {
 
-
     public String id;
     private String name;
     private String code;

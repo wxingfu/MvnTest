@@ -4,7 +4,6 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -27,7 +26,7 @@ public class CommonUtil {
     private static void pathJudgeExist(String path) {
         File file = new File(path);
         if (!file.exists()) {
-            file.mkdirs();
+            boolean b = file.mkdirs();
         }
     }
 
@@ -50,10 +49,7 @@ public class CommonUtil {
         if (!file.exists()) {
             file.createNewFile();
         }
-        Writer out =
-                new BufferedWriter(
-                        new OutputStreamWriter(
-                                new FileOutputStream(file), StandardCharsets.UTF_8));
+        Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "GBK"));
         template.process(root, out);
         out.close();
     }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021 Sinosoft Co.,LTD.
+ * Copyright (c) ${currentYear} Sinosoft Co.,LTD.
  * All right reserved.
  */
 
@@ -23,7 +23,7 @@ import com.sinosoft.lis.pubfun.FDate;
 
 /**
  * <p>自动生成的文件，不可手工修改！</p>
- * <p>ClassName: ${className}Schema </p>
+ * <p>ClassName: ${tableName}Schema </p>
  * <p>Description: DB层 Schema 类文件 </p>
  * <p>Company: Sinosoft Co.,LTD </p>
  *
@@ -35,7 +35,7 @@ import com.sinosoft.lis.pubfun.FDate;
  * @creator: ${userName}(${userCountry})
  */
 
-public class ${className}Schema implements Schema, Cloneable {
+public class ${tableName}Schema implements Schema, Cloneable {
 
 <#if tableColumns??>
     // @Field
@@ -58,7 +58,7 @@ public class ${className}Schema implements Schema, Cloneable {
     public CErrors mErrors; // 错误信息
 
     // @Constructor
-    public ${className}Schema() {
+    public ${tableName}Schema() {
         mErrors = new CErrors();
     <#if pkList?? && (pkNum > 0)>
         String[] pk = new String[${pkNum}];
@@ -76,7 +76,7 @@ public class ${className}Schema implements Schema, Cloneable {
      * @throws CloneNotSupportedException
      */
     public Object clone() throws CloneNotSupportedException {
-        ${className}Schema cloned = (${className}Schema) super.clone();
+        ${tableName}Schema cloned = (${tableName}Schema) super.clone();
         cloned.fDate = (FDate) fDate.clone();
         cloned.mErrors = (CErrors) mErrors.clone();
         return cloned;
@@ -162,16 +162,16 @@ public class ${className}Schema implements Schema, Cloneable {
 </#list>
 </#if>
     /**
-    * 使用另外一个${className}Schema对象给Schema赋值
-    * @param: a${className}Schema ${className}Schema
+    * 使用另外一个${tableName}Schema对象给Schema赋值
+    * @param: a${tableName}Schema ${tableName}Schema
     **/
-    public void setSchema(${className}Schema a${className}Schema) {
+    public void setSchema(${tableName}Schema a${tableName}Schema) {
 <#if tableColumns??>
     <#list tableColumns as column>
         <#if column.dataType=="Date">
-        this.${column.code} = fDate.getDate(a${className}Schema.get${column.code}());
+        this.${column.code} = fDate.getDate(a${tableName}Schema.get${column.code}());
         <#else>
-        this.${column.code} = a${className}Schema.get${column.code}();
+        this.${column.code} = a${tableName}Schema.get${column.code}();
         </#if>
     </#list>
 </#if>
@@ -214,10 +214,10 @@ public class ${className}Schema implements Schema, Cloneable {
     </#list>
 </#if>
         } catch(SQLException sqle){
-            System.out.println("数据库中表${className}字段个数和Schema中的字段个数不一致，或执行db.executeQuery查询时未使用select * from tables");
+            System.out.println("数据库中表${tableName}字段个数和Schema中的字段个数不一致，或执行db.executeQuery查询时未使用select * from tables");
             // @@错误处理
             CError tError = new CError();
-            tError.moduleName = "${className}Schema";
+            tError.moduleName = "${tableName}Schema";
             tError.functionName = "setSchema";
             tError.errorMessage = sqle.toString();
             this.mErrors.addOneError(tError);
@@ -226,14 +226,14 @@ public class ${className}Schema implements Schema, Cloneable {
         return true;
     }
 
-    public ${className}Schema getSchema(){
-        ${className}Schema a${className}Schema = new ${className}Schema();
-        a${className}Schema.setSchema(this);
-        return a${className}Schema;
+    public ${tableName}Schema getSchema(){
+        ${tableName}Schema a${tableName}Schema = new ${tableName}Schema();
+        a${tableName}Schema.setSchema(this);
+        return a${tableName}Schema;
     }
 
     /**
-     * 数据打包，按 XML 格式打包，顺序参见<A href ={@docRoot}/dataStructure/tb.html#Prp${className}描述/A>表字段
+     * 数据打包，按 XML 格式打包，顺序参见<A href ={@docRoot}/dataStructure/tb.html#Prp${tableName}描述/A>表字段
      * @return: String 返回打包后字符串
      */
     public String encode() {
@@ -272,7 +272,7 @@ public class ${className}Schema implements Schema, Cloneable {
     }
 
     /**
-     * 数据解包，解包顺序参见<A href ={@docRoot}/dataStructure/tb.html#Prp${className}>历史记账凭证主表信息</A>表字段
+     * 数据解包，解包顺序参见<A href ={@docRoot}/dataStructure/tb.html#Prp${tableName}>历史记账凭证主表信息</A>表字段
      * @param: strMessage String 包含一条纪录数据的字符串
      * @return: boolean
      */
@@ -307,7 +307,7 @@ public class ${className}Schema implements Schema, Cloneable {
         } catch(NumberFormatException ex) {
             // @@错误处理
             CError tError = new CError();
-            tError.moduleName = "${className}Schema";
+            tError.moduleName = "${tableName}Schema";
             tError.functionName = "decode";
             tError.errorMessage = ex.toString();
             this.mErrors.addOneError(tError);
@@ -453,7 +453,7 @@ public class ${className}Schema implements Schema, Cloneable {
         if (getClass() != otherObject.getClass()) {
             return false;
         }
-        ${className}Schema other = (${className}Schema) otherObject;
+        ${tableName}Schema other = (${tableName}Schema) otherObject;
         return
 <#if tableColumns??>
     <#list tableColumns as column>
