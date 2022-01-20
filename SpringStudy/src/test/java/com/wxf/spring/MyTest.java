@@ -31,7 +31,8 @@ public class MyTest {
         Template schemaTemplate = configuration.getTemplate("schema.ftl");
         try {
             Parser parser = new Parser();
-            PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\NoRealBlcDtl.pdm");
+            // PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\NoRealBlcDtl.pdm");
+            PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\LifeInsurancePersonal.pdm");
 
             String dataBaseName = pdm.getName();
             Properties properties = System.getProperties();
@@ -92,7 +93,8 @@ public class MyTest {
         Template setTemplate = configuration.getTemplate("set.ftl");
         try {
             Parser parser = new Parser();
-            PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\NoRealBlcDtl.pdm");
+            // PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\NoRealBlcDtl.pdm");
+            PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\LifeInsurancePersonal.pdm");
             String dataBaseName = pdm.getName();
             Properties properties = System.getProperties();
             ConvertPDM convertPDM = new ConvertPDM();
@@ -134,8 +136,8 @@ public class MyTest {
         Template setTemplate = configuration.getTemplate("dbset.ftl");
         try {
             Parser parser = new Parser();
-            // PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\LDOnluser.pdm");
-            PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\NoRealBlcDtl.pdm");
+            // PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\NoRealBlcDtl.pdm");
+            PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\LifeInsurancePersonal.pdm");
             String dataBaseName = pdm.getName();
             Properties properties = System.getProperties();
             ConvertPDM convertPDM = new ConvertPDM();
@@ -193,7 +195,65 @@ public class MyTest {
     }
 
     @Test
-    public void createDb() {
+    public void createDb() throws IOException {
+        Template setTemplate = configuration.getTemplate("db.ftl");
+        try {
+            Parser parser = new Parser();
+            // PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\NoRealBlcDtl.pdm");
+            PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\LifeInsurancePersonal.pdm");
+            String dataBaseName = pdm.getName();
+            Properties properties = System.getProperties();
+            ConvertPDM convertPDM = new ConvertPDM();
+            convertPDM.setDBMSType(DBConst.DB_Oracle);
+            convertPDM.setAllowErrorInPDM(false);
+            convertPDM.setAllowJavaType(false);
+            convertPDM.setAllowJavaMath(false);
 
+            ArrayList<PDMTable> tables = pdm.getTables();
+            for (PDMTable table : tables) {
+                String code = table.getCode();
+                ArrayList<PDMKey> keys = table.getKeys();
+                PDMKey primaryKey = table.getPrimaryKey();
+                ArrayList<PDMColumn> pkList = primaryKey.getColumns();
+                ArrayList<PDMColumn> newPKList = convertPDM.ConvertColumnType(code, pkList);
+                // System.out.println(pkList);
+                ArrayList<PDMColumn> columns = table.getColumns();
+                ArrayList<PDMColumn> newColumns = convertPDM.ConvertColumnType(code, columns);
+                // System.out.println(newColumns);
+
+                Date date = new Date();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy");
+
+                Map<String, Object> dbSetMap = new HashMap<>();
+                dbSetMap.put("javaVmName", properties.getProperty("java.vm.name"));
+                dbSetMap.put("javaVmVersion", properties.getProperty("java.vm.version"));
+                dbSetMap.put("javaVmVendor", properties.getProperty("java.vm.vendor"));
+                dbSetMap.put("osName", properties.getProperty("os.name"));
+                dbSetMap.put("osArch", properties.getProperty("os.arch"));
+                dbSetMap.put("userName", properties.getProperty("user.name"));
+                dbSetMap.put("userCountry", properties.getProperty("user.country"));
+
+                dbSetMap.put("currentYear", dateFormat2.format(date));
+                dbSetMap.put("tableName", code);
+                dbSetMap.put("dataBase", dataBaseName);
+                dbSetMap.put("createDateTime", dateFormat.format(date));
+                dbSetMap.put("tableColumns", newColumns);
+                dbSetMap.put("columnNum", newColumns.size());
+                dbSetMap.put("pkList", newPKList);
+                dbSetMap.put("pkNum", newPKList.size());
+
+                String PKWhereClause = ConvertPDM.getPKWhereClause(pkList);
+                String InsertColumnClause = convertPDM.getInsertColumnClause(newColumns);
+                String UpdateColumnClause = convertPDM.getUpdateColumnClause(newColumns);
+                dbSetMap.put("PKWhereClause", PKWhereClause);
+                dbSetMap.put("InsertColumnClause", InsertColumnClause);
+                dbSetMap.put("UpdateColumnClause", UpdateColumnClause);
+
+                CommonUtil.printFile(dbSetMap, setTemplate, "D:\\MyWork\\Schema\\", code + "DB.java");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

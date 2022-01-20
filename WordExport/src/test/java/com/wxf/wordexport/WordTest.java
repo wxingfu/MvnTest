@@ -4,13 +4,11 @@ import com.deepoove.poi.XWPFTemplate;
 import com.deepoove.poi.data.Pictures;
 import com.deepoove.poi.data.Tables;
 import com.deepoove.poi.data.style.BorderStyle;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.junit.Test;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,37 +68,6 @@ public class WordTest {
             template.writeAndClose(fileOutputStream);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void test3() throws Exception {
-        // freemarker模板配置
-        Configuration configuration = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
-        configuration.setDefaultEncoding("utf-8");
-        configuration.setClassForTemplateLoading(this.getClass(), "/templates");
-        Template template = configuration.getTemplate("怡欣居标价牌.ftl");
-
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("name", "餐边柜");
-        map.put("type", "7901#");
-        // map.put("logo", Pictures.ofLocal(imgPath + "yxj-logo.jpg").create());
-        map.put("series", "奢华");
-        map.put("standards", "120cm*190cm");
-        map.put("price", "14000");
-
-        // 创建模板文件
-        String filePath = "F:\\aaa.doc";
-        File outFile = new File(filePath);
-        // 该文件不存在则创建
-        if (!outFile.exists()) {
-            // 将数据写入模板并生成文件
-            Writer out = new BufferedWriter(
-                    new OutputStreamWriter(new FileOutputStream(outFile), StandardCharsets.UTF_8));
-            template.process(map, out);
-            out.flush();
-            out.close();
         }
     }
 }

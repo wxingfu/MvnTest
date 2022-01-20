@@ -1,7 +1,5 @@
-/**
- * Copyright (c) ${currentYear} Sinosoft Co.,LTD.
- * All right reserved.
- */
+<#import "lib/copyright.ftl" as copyright>
+<@copyright.copyright date="${currentYear}" />
 
 package com.sinosoft.lis.schema;
 
@@ -21,20 +19,8 @@ import com.sinosoft.utility.CErrors;
 import com.sinosoft.lis.pubfun.Arith;
 import com.sinosoft.lis.pubfun.FDate;
 
-/**
- * <p>自动生成的文件，不可手工修改！</p>
- * <p>ClassName: ${tableName}Schema </p>
- * <p>Description: DB层 Schema 类文件 </p>
- * <p>Company: Sinosoft Co.,LTD </p>
- *
- * @Database: ${dataBase}
- * @author: Makerx
- * @CreateDatetime: ${createDateTime}
- * @vm: ${javaVmName}(build ${javaVmVersion}, ${javaVmVendor})
- * @o: ${osName}(${osArch})
- * @creator: ${userName}(${userCountry})
- */
-
+<#import "lib/class_comments.ftl" as classComments>
+<@classComments.comment type="Schema"/>
 public class ${tableName}Schema implements Schema, Cloneable {
 
 <#if tableColumns??>
@@ -43,7 +29,7 @@ public class ${tableName}Schema implements Schema, Cloneable {
     /**
      * ${column.name}
      *
-     * <#if column.coment??>${column.coment}</#if>
+     * <#if column.comment??>${column.comment}</#if>
      */
     private ${column.dataType} ${column.code};
 
@@ -162,9 +148,9 @@ public class ${tableName}Schema implements Schema, Cloneable {
 </#list>
 </#if>
     /**
-    * 使用另外一个${tableName}Schema对象给Schema赋值
-    * @param: a${tableName}Schema ${tableName}Schema
-    **/
+     * 使用另外一个${tableName}Schema对象给Schema赋值
+     * @param: a${tableName}Schema ${tableName}Schema
+     **/
     public void setSchema(${tableName}Schema a${tableName}Schema) {
 <#if tableColumns??>
     <#list tableColumns as column>

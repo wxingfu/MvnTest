@@ -1,7 +1,5 @@
-/**
- * Copyright (c) ${currentYear} Sinosoft Co.,LTD.
- * All right reserved.
- */
+<#import "lib/copyright.ftl" as copyright>
+<@copyright.copyright date="${currentYear}" />
 
 package com.sinosoft.lis.vdb;
 
@@ -20,18 +18,8 @@ import com.sinosoft.utility.StrTool;
 import com.sinosoft.utility.CError;
 import com.sinosoft.utility.CErrors;
 
-/**
- * <p>自动生成的文件，不可手工修改！</p>
- * <p>ClassName: ${tableName}DBSet </p>
- * <p>Description: DB层多记录数据库操作类文件 </p>
- * <p>Company: Sinosoft Co.,LTD </p>
- * @Database: ${dataBase}
- * @author: Makerx
- * @CreateDatetime: ${createDateTime}
- * @vm: ${javaVmName}(build ${javaVmVersion}, ${javaVmVendor})
- * @os: ${osName}(${osArch})
- * @creator: ${userName}(${userCountry})
- */
+<#import "lib/class_comments.ftl" as classComments>
+<@classComments.comment type="DBSet"/>
 public class ${tableName}DBSet extends ${tableName}Set {
 
     // @Field
