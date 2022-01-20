@@ -7,8 +7,12 @@ import freemarker.template.Template;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.jdbc.support.rowset.SqlRowSetMetaData;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -254,6 +258,26 @@ public class MyTest {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @Test
+    public void test() throws SQLException {
+        String sql = "select * from LDMaxNo where RowNum <= 1";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
+        SqlRowSetMetaData rowSetMetaData = rowSet.getMetaData();
+        int columnCount = rowSetMetaData.getColumnCount();
+        for (int i = 0; i < columnCount; i++) {
+            String columnClassName = rowSetMetaData.getColumnClassName(i + 1);
+            System.out.println(columnClassName);
+            int columnType = rowSetMetaData.getColumnType(i + 1);
+            String columnTypeName = rowSetMetaData.getColumnTypeName(i + 1);
+            String columnName = rowSetMetaData.getColumnName(i + 1);
+            System.out.println(columnType + " " + columnTypeName + " " + columnName);
         }
     }
 }

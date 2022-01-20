@@ -1,6 +1,6 @@
 package com.wxf.spring.pdm;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 
@@ -8,9 +8,8 @@ import java.util.ArrayList;
  * @author weixf
  * @since 2022-01-09
  */
+@Slf4j
 public class ConvertPDM {
-
-    private final Logger logger = Logger.getLogger(ConvertPDM.class.getName());
 
     private int DBMSType = DBConst.DB_UnSupported;
     private boolean AllowErrorInPDM = false; //是否允许PDM上有错误信息是继续转换
@@ -213,7 +212,7 @@ public class ConvertPDM {
             String colName) throws Exception {
         if (!dataType.matches(regex)) {
             if (AllowErrorInPDM) {
-                logger.error("表" + tabName + "的字段" + colName + "的类型错误:" + dataType);
+                log.error("表" + tabName + "的字段" + colName + "的类型错误:" + dataType);
             } else {
                 throw new Exception("表" + tabName + "的字段" + colName + "的类型错误:" + dataType);
             }
@@ -226,7 +225,7 @@ public class ConvertPDM {
             String tabName,
             String colName) throws Exception {
         if (AllowErrorInPDM) {
-            logger.error("表" + tabName + "的字段" + colName + "的类型错误:" + oldType + "(" + DBConst.getDBName(DBMSType) + ")");
+            log.error("表" + tabName + "的字段" + colName + "的类型错误:" + oldType + "(" + DBConst.getDBName(DBMSType) + ")");
         } else {
             throw new Exception("表" + tabName + "的字段" + colName + "的数据类型不支持或错误:" + oldType);
         }

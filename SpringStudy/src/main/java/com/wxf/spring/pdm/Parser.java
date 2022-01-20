@@ -1,7 +1,7 @@
 package com.wxf.spring.pdm;
 
 import com.alibaba.fastjson.JSONObject;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -13,11 +13,12 @@ import java.util.ArrayList;
  * @author weixf
  * @since 2022-01-08
  */
+@Slf4j
 public class Parser {
 
     private final PDM pdm = new PDM();
 
-    private static final Logger logger = Logger.getLogger(Parser.class.getName());
+    // private static final Logger logger = Logger.getLogger(Parser.class.getName());
 
     public static void main(String[] args) {
         try {
@@ -57,7 +58,7 @@ public class Parser {
         pdm.setDBMSCode(dbms.selectSingleNode("a:Code").getText());
         pdm.setDBMSName(dbms.selectSingleNode("a:Name").getText());
 
-        logger.info("解析PDM为:" + pdm.getCode() + "(" + pdm.getName() + ")  DBMS为:" + pdm.getDBMSCode() + "(" + pdm.getDBMSName() + ")");
+        log.info("解析PDM为:" + pdm.getCode() + "(" + pdm.getName() + ")  DBMS为:" + pdm.getDBMSCode() + "(" + pdm.getDBMSName() + ")");
 
         pdm.setUsers(pdmUserParser(model));
         pdm.setTables(pdmTableParser(model));
