@@ -31,8 +31,8 @@ public class MyTest {
         Template schemaTemplate = configuration.getTemplate("schema.ftl");
         try {
             Parser parser = new Parser();
-            // PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\NoRealBlcDtl.pdm");
-            PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\LifeInsurancePersonal.pdm");
+            PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\NoRealBlcDtl.pdm");
+            // PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\LifeInsurancePersonal.pdm");
 
             String dataBaseName = pdm.getName();
             Properties properties = System.getProperties();
@@ -60,7 +60,7 @@ public class MyTest {
                 // System.out.println(newColumns);
                 // System.out.println(newColumns.size());
                 Date date = new Date();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss  SSS");
                 SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy");
 
                 Map<String, Object> schemaMap = new HashMap<>();
@@ -93,8 +93,8 @@ public class MyTest {
         Template setTemplate = configuration.getTemplate("set.ftl");
         try {
             Parser parser = new Parser();
-            // PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\NoRealBlcDtl.pdm");
-            PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\LifeInsurancePersonal.pdm");
+            PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\NoRealBlcDtl.pdm");
+            // PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\LifeInsurancePersonal.pdm");
             String dataBaseName = pdm.getName();
             Properties properties = System.getProperties();
             ConvertPDM convertPDM = new ConvertPDM();
@@ -108,7 +108,7 @@ public class MyTest {
                 String code = table.getCode();
 
                 Date date = new Date();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
                 SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy");
 
                 Map<String, Object> setMap = new HashMap<>();
@@ -136,8 +136,8 @@ public class MyTest {
         Template setTemplate = configuration.getTemplate("dbset.ftl");
         try {
             Parser parser = new Parser();
-            // PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\NoRealBlcDtl.pdm");
-            PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\LifeInsurancePersonal.pdm");
+            PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\NoRealBlcDtl.pdm");
+            // PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\LifeInsurancePersonal.pdm");
             String dataBaseName = pdm.getName();
             Properties properties = System.getProperties();
             ConvertPDM convertPDM = new ConvertPDM();
@@ -159,7 +159,7 @@ public class MyTest {
                 // System.out.println(newColumns);
 
                 Date date = new Date();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
                 SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy");
 
                 Map<String, Object> dbSetMap = new HashMap<>();
@@ -199,8 +199,8 @@ public class MyTest {
         Template setTemplate = configuration.getTemplate("db.ftl");
         try {
             Parser parser = new Parser();
-            // PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\NoRealBlcDtl.pdm");
-            PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\LifeInsurancePersonal.pdm");
+            PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\NoRealBlcDtl.pdm");
+            // PDM pdm = parser.pdmParser("D:\\MyWork\\Schema\\LifeInsurancePersonal.pdm");
             String dataBaseName = pdm.getName();
             Properties properties = System.getProperties();
             ConvertPDM convertPDM = new ConvertPDM();
@@ -222,7 +222,7 @@ public class MyTest {
                 // System.out.println(newColumns);
 
                 Date date = new Date();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
                 SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy");
 
                 Map<String, Object> dbSetMap = new HashMap<>();
