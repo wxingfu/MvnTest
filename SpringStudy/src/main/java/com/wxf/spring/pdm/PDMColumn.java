@@ -1,11 +1,7 @@
 package com.wxf.spring.pdm;
 
-/**
- * @author weixf
- * @since 2022-01-08
- */
-public class PDMColumn {
 
+public class PDMColumn {
 
     private String id;
     private String name;

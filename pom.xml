@@ -23,6 +23,7 @@
         <module>SpringStudy</module>
         <module>ThreadStudy</module>
         <module>WordExport</module>
+        <module>CodeGenerator</module>
     </modules>
 
     <properties>

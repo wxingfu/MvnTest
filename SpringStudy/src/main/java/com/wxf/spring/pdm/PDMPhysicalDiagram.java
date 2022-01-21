@@ -2,12 +2,8 @@ package com.wxf.spring.pdm;
 
 import java.util.ArrayList;
 
-/**
- * @author weixf
- * @since 2022-01-08
- */
-public class PDMPhysicalDiagram {
 
+public class PDMPhysicalDiagram {
 
     private String id;
     private String name;

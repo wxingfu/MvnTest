@@ -2,10 +2,7 @@ package com.wxf.spring.pdm;
 
 import java.util.ArrayList;
 
-/**
- * @author weixf
- * @since 2022-01-08
- */
+
 public class PDM {
 
     private String id;

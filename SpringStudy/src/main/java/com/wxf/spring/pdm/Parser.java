@@ -18,28 +18,13 @@ public class Parser {
 
     private final PDM pdm = new PDM();
 
-    // private static final Logger logger = Logger.getLogger(Parser.class.getName());
-
     public static void main(String[] args) {
         try {
             Parser parser = new Parser();
-            // PDM pdm = parser.pdmParser("D:\\NoRealBlcDtl.pdm");
             PDM pdm = parser.pdmParser("D:\\pdmtest.pdm");
             System.out.println(pdm.toString());
             String s = JSONObject.toJSONString(pdm);
             System.out.println(s);
-            // ArrayList<PDMPhysicalDiagram> physicalDiagrams = pdm.getPhysicalDiagrams();
-            // ArrayList<PDMUser> users = pdm.getUsers();
-            // ArrayList<PDMTable> tables = pdm.getTables();
-            // ArrayList<PDMReference> references = pdm.getReferences();
-            // String s = JSONObject.toJSONString(references);
-            // System.out.println(s);
-            // for (PDMTable table : tables) {
-            //     // ArrayList<PDMKey> keys = table.getKeys();
-            //     PDMKey primaryKey = table.getPrimaryKey();
-            //     String s = JSONObject.toJSONString(primaryKey);
-            //     System.out.println(s);
-            // }
         } catch (Exception e) {
             e.printStackTrace();
         }

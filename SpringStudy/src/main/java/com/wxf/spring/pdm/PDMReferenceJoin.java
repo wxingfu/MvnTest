@@ -1,12 +1,7 @@
 package com.wxf.spring.pdm;
 
-/**
- * @author weixf
- * @since 2022-01-08
- */
+
 public class PDMReferenceJoin {
-
-
 
     private String Id;
     private PDMColumn parentTable_Col;

@@ -7,8 +7,6 @@ import java.io.*;
 import java.util.Map;
 
 /**
- * @author weixf
- * @since 2022-01-09
  * <p>
  * 这个类功能：
  * 1. 用来判断包路径是否存在，若不存在，即创建文件夹；

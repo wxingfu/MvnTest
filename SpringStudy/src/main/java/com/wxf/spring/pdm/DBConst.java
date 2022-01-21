@@ -1,12 +1,8 @@
 package com.wxf.spring.pdm;
 
-/**
- * @author weixf
- * @since 2022-01-09
- */
+
 public class DBConst {
 
-    // Prevent instantiation
     private DBConst()
     {}
     //在这里只列出支持的数据库
