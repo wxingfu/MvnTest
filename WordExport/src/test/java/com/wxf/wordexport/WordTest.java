@@ -4,9 +4,14 @@ import com.deepoove.poi.XWPFTemplate;
 import com.deepoove.poi.data.Pictures;
 import com.deepoove.poi.data.Tables;
 import com.deepoove.poi.data.style.BorderStyle;
+import com.deepoove.poi.util.PoitlIOUtils;
+import fr.opensagres.poi.xwpf.converter.pdf.PdfConverter;
+import fr.opensagres.poi.xwpf.converter.pdf.PdfOptions;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.junit.Test;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -69,5 +74,31 @@ public class WordTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void test3() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("ttt", "这是一个文本");
+        XWPFTemplate compile = XWPFTemplate.compile("D:\\wordTemplate\\test.docx");
+        XWPFTemplate template = compile.render(map);
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream("D:\\wordTemplate\\test_out.docx");
+            template.writeAndClose(fileOutputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        PoitlIOUtils.closeQuietlyMulti(template);
+    }
+
+    @Test
+    public void test4() throws Exception {
+        FileInputStream fileInputStream = new FileInputStream("D:\\wordTemplate\\test_out.docx");
+        XWPFDocument xwpfDocument = new XWPFDocument(fileInputStream);
+        PdfOptions pdfOptions = PdfOptions.create();
+        FileOutputStream fileOutputStream = new FileOutputStream("D:\\wordTemplate\\test_out.pdf");
+        PdfConverter.getInstance().convert(xwpfDocument, fileOutputStream, pdfOptions);
+        fileInputStream.close();
+        fileOutputStream.close();
     }
 }

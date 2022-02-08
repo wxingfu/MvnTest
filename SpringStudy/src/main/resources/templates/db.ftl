@@ -1,5 +1,5 @@
 <#import "lib/copyright.ftl" as copyright>
-<@copyright.copyright date="${currentYear}" />
+<@copyright.copyright/>
 
 package com.sinosoft.lis.db;
 
@@ -174,7 +174,7 @@ public class ${tableName}DB extends ${tableName}Schema {
         return true;
     }
 
-<#if pkList?? && (pkNum>0)>
+<#if pkList?? && (pkList?size>0)>
     /**
      * 删除操作
      * 删除条件：主键

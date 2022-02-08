@@ -10,9 +10,9 @@
  *
  * @Database: ${dataBase}
  * @author: Makerx
- * @CreateDatetime: ${createDateTime}
- * @vm: ${javaVmName}(build ${javaVmVersion}, ${javaVmVendor})
- * @o: ${osName}(${osArch})
- * @creator: ${userName}(${userCountry})
+ * @CreateDatetime: ${.now?string('yyyy-MM-dd HH:mm:ss SSS')}
+ * @vm: ${sysProp.javaVmName}(build ${sysProp.javaVmVersion}, ${sysProp.javaVmVendor})
+ * @o: ${sysProp.osName}(${sysProp.osArch})
+ * @creator: ${sysProp.userName}(${sysProp.userCountry})
  */
 </#macro>

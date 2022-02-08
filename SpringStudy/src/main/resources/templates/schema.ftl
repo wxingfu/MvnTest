@@ -1,5 +1,5 @@
 <#import "lib/copyright.ftl" as copyright>
-<@copyright.copyright date="${currentYear}" />
+<@copyright.copyright/>
 
 package com.sinosoft.lis.schema;
 
@@ -27,15 +27,14 @@ public class ${tableName}Schema implements Schema, Cloneable {
     // @Field
     <#list tableColumns as column>
     /**
-     * ${column.name}
-     *
-     * <#if column.comment??>${column.comment}</#if>
+     * <#if column.comment??>${column.comment}<#else>${column.name}</#if>
      */
     private ${column.dataType} ${column.code};
 
     </#list>
+
+    public static final int FIELDNUM = ${tableColumns?size}; // 数据库表的字段个数
 </#if>
-    public static final int FIELDNUM = ${columnNum}; // 数据库表的字段个数
 
     private static String[] PK; // 主键
 
@@ -46,12 +45,12 @@ public class ${tableName}Schema implements Schema, Cloneable {
     // @Constructor
     public ${tableName}Schema() {
         mErrors = new CErrors();
-    <#if pkList?? && (pkNum > 0)>
-        String[] pk = new String[${pkNum}];
-        <#list pkList as pk>
+<#if pkList?? && (pkList?size > 0)>
+        String[] pk = new String[${pkList?size}];
+    <#list pkList as pk>
         pk[${pk_index}] = "${pk.code}";
-        </#list>
-    </#if>
+    </#list>
+</#if>
         PK = pk;
     }
 
@@ -70,7 +69,7 @@ public class ${tableName}Schema implements Schema, Cloneable {
 
     // @Method
     public String[] getPK() {
-    <#if pkList?? && (pkNum > 0) >
+    <#if pkList?? && (pkList?size > 0) >
         return PK;
     <#else>
         return null;

@@ -1,6 +1,6 @@
-<#macro copyright date>
+<#macro copyright>
 /**
- * Copyright (c) ${date} Sinosoft Co.,LTD.
+ * Copyright (c) ${.now?string('yyyy')} Sinosoft Co.,LTD.
  * All right reserved.
  */
 </#macro>

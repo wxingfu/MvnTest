@@ -1,5 +1,5 @@
 <#import "lib/copyright.ftl" as copyright>
-<@copyright.copyright date="${currentYear}" />
+<@copyright.copyright/>
 
 package com.sinosoft.lis.vschema;
 
