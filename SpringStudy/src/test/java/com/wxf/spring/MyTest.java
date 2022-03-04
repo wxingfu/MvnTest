@@ -234,7 +234,7 @@ public class MyTest {
 
     @Test
     public void test() throws SQLException {
-        String sql = "select * from LCQuestionnaireJson where rownum <= 1";
+        String sql = "select * from LDMaxNo where rownum <= 1";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
         SqlRowSetMetaData rowSetMetaData = rowSet.getMetaData();
         int columnCount = rowSetMetaData.getColumnCount();

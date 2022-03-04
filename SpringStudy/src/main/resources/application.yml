@@ -3,7 +3,7 @@ spring:
     druid:
       driver-class-name: oracle.jdbc.OracleDriver
       url: jdbc:oracle:thin:@localhsot:1521:orcl
-      username: test
+      username: system
       password: ff514519
   jackson:
     time-zone: GMT+8
