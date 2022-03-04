@@ -64,10 +64,13 @@ public class MyTest {
 
             ArrayList<PDMTable> tables = pdm.getTables();
             for (PDMTable table : tables) {
+
                 String tableCode = table.getCode();
                 PDMKey primaryKey = table.getPrimaryKey();
+
                 ArrayList<PDMColumn> pkList = primaryKey.getColumns();
                 ArrayList<PDMColumn> newPKList = convertPDM.ConvertColumnType(tableCode, pkList);
+
                 ArrayList<PDMColumn> columns = table.getColumns();
                 ArrayList<PDMColumn> newColumns = convertPDM.ConvertColumnType(tableCode, columns);
 
@@ -231,7 +234,7 @@ public class MyTest {
 
     @Test
     public void test() throws SQLException {
-        String sql = "select * from LDMaxNo where RowNum <= 1";
+        String sql = "select * from LCQuestionnaireJson where rownum <= 1";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
         SqlRowSetMetaData rowSetMetaData = rowSet.getMetaData();
         int columnCount = rowSetMetaData.getColumnCount();
