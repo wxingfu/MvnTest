@@ -2,9 +2,9 @@ spring:
   datasource:
     druid:
       driver-class-name: oracle.jdbc.OracleDriver
-      url: jdbc:oracle:thin:@10.2.0.34:1521:lis
-      username: lis
-      password: kiJyYLdHOY4vPX6M
+      url: jdbc:oracle:thin:@localhsot:1521:orcl
+      username: test
+      password: ff514519
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
