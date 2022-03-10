@@ -1,8 +1,11 @@
 package com.wxf.spring;
 
 import com.wxf.spring.pdm.*;
+import com.wxf.spring.service.LDMaxNoService;
 import com.wxf.spring.utils.CommonUtil;
 import freemarker.template.Configuration;
+import lombok.extern.slf4j.Slf4j;
+import oracle.jdbc.driver.OracleDriver;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,12 +13,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.jdbc.support.rowset.SqlRowSetMetaData;
 
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+@Slf4j
 @SpringBootTest
 public class MyTest {
 
@@ -245,6 +249,46 @@ public class MyTest {
             String columnTypeName = rowSetMetaData.getColumnTypeName(i + 1);
             String columnName = rowSetMetaData.getColumnName(i + 1);
             System.out.println(columnType + " " + columnTypeName + " " + columnName);
+        }
+    }
+
+    @Autowired
+    private LDMaxNoService ldMaxNoService;
+
+    @Test
+    public void test3() {
+        String no = ldMaxNoService.CreateMaxNo("aaaaaa", 10);
+        System.out.println(no);
+        log.error(no);
+    }
+
+    @Test
+    public void test2() {
+        Connection connect = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            Driver driver = new OracleDriver();
+            DriverManager.deregisterDriver(driver);
+            Properties pro = new Properties();
+            pro.put("user", "test");
+            pro.put("password", "ff514519");
+            connect = driver.connect("jdbc:oracle:thin:@localhost:1521:orcl", pro);
+            System.out.println(connect);
+
+            PreparedStatement preState = connect.prepareStatement("select * from LDMaxNo where rownum <= 1");
+            boolean execute = preState.execute();
+            System.out.println(execute);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connect != null) connect.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
