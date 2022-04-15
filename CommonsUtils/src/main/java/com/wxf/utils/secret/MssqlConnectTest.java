@@ -1,4 +1,4 @@
-package com.wxf.utils.myutils;
+package com.wxf.utils.secret;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
 package com.wxf.utils.http;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Consts;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.config.RequestConfig;
@@ -16,7 +17,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
+
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
@@ -27,10 +28,9 @@ import java.util.*;
 /**
  * @author weixf
  */
+@Slf4j
 public class HttpUtils {
 
-
-    private final static Logger log = Logger.getLogger(HttpUtils.class);
     //http连接池
     private static volatile PoolingHttpClientConnectionManager poolingHttpClientConnectionManager;
     //请求配置

@@ -45,7 +45,7 @@ public class CommonUtil {
         pathJudgeExist(filePath);
         File file = new File(filePath, fileName);
         if (!file.exists()) {
-            file.createNewFile();
+            boolean b = file.createNewFile();
         }
         Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "GBK"));
         template.process(root, out);
