@@ -11,6 +11,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.SecureRandom;
 import java.security.Security;
 
+
 public class AESUtil {
 
 
@@ -107,15 +108,24 @@ public class AESUtil {
     }
 
     public static void main(String[] args) {
-        String encrypt = AESUtil.encryptForOpen(
-                "{\"body\":{\"orderNo\":\"SD1542888157671918564334\",\"insuredUsers\":[{\"name\":\"杜克\",\"idCode\":\"510922198305214127\",\"idType\":1}]},\"supplierNo\":\"payb\"}",
-                "0123456789ABCDEF");
-        System.out.println(encrypt);
-        String third = "ooAjaaOKU23wXU1KIsEMbkn38bgtta84/wYO3CIEvprcOm/Rzhje0p0aOemmz8SS2jS+lpge6R84uT3EETynDqwOZvSVSB9uQaoXv2LfbAzh/+vvR2t6/lv4bY5uPq7pAxYdnEJhYNafC1u4U+i0wUaoDpJ+KJlSeecwbtLi9oC4tDULq3lM7mUnPIqhgUzO";
-        System.out.println(encrypt.equals(third));
+        // String encrypt = AESUtil.encryptForOpen(
+        //         "{\"body\":{\"orderNo\":\"SD1542888157671918564334\",\"insuredUsers\":[{\"name\":\"杜克\",\"idCode\":\"510922198305214127\",\"idType\":1}]},\"supplierNo\":\"payb\"}",
+        //         "0123456789ABCDEF");
+        // System.out.println(encrypt);
+        // String third = "ooAjaaOKU23wXU1KIsEMbkn38bgtta84/wYO3CIEvprcOm/Rzhje0p0aOemmz8SS2jS+lpge6R84uT3EETynDqwOZvSVSB9uQaoXv2LfbAzh/+vvR2t6/lv4bY5uPq7pAxYdnEJhYNafC1u4U+i0wUaoDpJ+KJlSeecwbtLi9oC4tDULq3lM7mUnPIqhgUzO";
+        // System.out.println(encrypt.equals(third));
+        //
+        // String result = "N4+GmYYgP0WN3zgh8J5qcNzhLkWis2gsbZad7eEhczqHW9yF6bDZcofRQQKTSYI6v24BYuDoFDbtcPj/PUF0zR8PVdzbZsGOMl9K4S25Rfm0IHPKYNDedPqUk8IRtU+abmVm4AZLWXWZfW0lSWolxg==";
+        // String decrypt = AESUtil.decryptForOpen(result, "0123456789ABCDEF");
+        // System.out.println(decrypt);
 
-        String result = "N4+GmYYgP0WN3zgh8J5qcNzhLkWis2gsbZad7eEhczqHW9yF6bDZcofRQQKTSYI6v24BYuDoFDbtcPj/PUF0zR8PVdzbZsGOMl9K4S25Rfm0IHPKYNDedPqUk8IRtU+abmVm4AZLWXWZfW0lSWolxg==";
-        String decrypt = AESUtil.decryptForOpen(result, "0123456789ABCDEF");
-        System.out.println(decrypt);
+        String s = AESUtil.encryptForOpen("{\"flag\":\"1\",\"tranNo\":\"SD_INTEL_16500031800081569428\"}",
+                "0123456789ABCDEF");
+        System.out.println(s);
+
+        String s1 = AESUtil.decryptForOpen("7nLjiDAvi2lGz2dmwbdpIbPa0ac8awwt+uYjFgc4z7YLQwbaqlSCQovqgdsrNL0fOVBeKorVX8b75OO0jUZa2A==",
+                "0123456789ABCDEF");
+        System.out.println(s1);
+
     }
 }
