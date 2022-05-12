@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.wxf.utils</groupId>
-    <artifactId>CommonsUtils</artifactId>
+    <artifactId>commons-utils</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

@@ -16,15 +16,16 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>CodeTestModule</module>
-        <module>CollectionStudy</module>
-        <module>CommonsUtils</module>
-        <module>RpcStudy</module>
-        <module>SpringStudy</module>
-        <module>ThreadStudy</module>
-        <module>WordExport</module>
-        <module>CodeGenerator</module>
-        <module>Annotation</module>
+        <module>code-test-module</module>
+        <module>collection-study</module>
+        <module>commons-utils</module>
+        <module>rpc-study</module>
+        <module>spring-study</module>
+        <module>thread-study</module>
+        <module>word-export</module>
+        <module>code-generator</module>
+        <module>annotation</module>
+        <module>spring-boot-study</module>
     </modules>
 
     <properties>
