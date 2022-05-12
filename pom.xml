@@ -24,6 +24,7 @@
         <module>ThreadStudy</module>
         <module>WordExport</module>
         <module>CodeGenerator</module>
+        <module>Annotation</module>
     </modules>
 
     <properties>
