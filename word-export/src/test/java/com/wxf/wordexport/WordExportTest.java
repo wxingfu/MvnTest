@@ -40,7 +40,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
-public class wordExportTest {
+public class WordExportTest {
 
 
     public static String base;
