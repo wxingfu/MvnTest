@@ -30,6 +30,7 @@ import org.apache.poi.util.LocaleUtil;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.FileInputStream;
@@ -41,18 +42,30 @@ import java.util.*;
 
 public class wordExportTest {
 
-    public final static String base = "E:\\wordExport\\";
-    public final static String templatePath = base + "templates\\";
-    public final static String imgPath = base + "images\\";
-    public final static String markdownPath = base + "markdown\\";
-    public final static String outPath = base;
 
+    public static String base;
+    public static String templatePath;
+    public static String imgPath;
+    public static String markdownPath;
+    public static String outPath;
+
+    @Before
+    public void init() {
+        Properties properties = System.getProperties();
+        String projectPath = (String) properties.get("user.dir");
+        base = projectPath + "/src/main/resources/wordExport/";
+        templatePath = base + "templates/";
+        imgPath = base + "images/";
+        markdownPath = base + "markdown/";
+        outPath = base;
+    }
 
     /**
      * 入门
      */
     @Test
     public void test1() {
+        System.out.println(base);
         Map<String, Object> map = new HashMap<>();
         map.put("title", "Hello Word!  POI-TL");
         XWPFTemplate compile = XWPFTemplate.compile(templatePath + "test1.docx");
