@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
+import java.util.Properties;
 
 @Controller
 @RequestMapping("/word")
@@ -30,10 +29,14 @@ public class WordExportController {
         data.setStart("2021-08-05 12:12:12");
         data.setAuthor(author);
 
+        Properties properties = System.getProperties();
+        String projectPath = (String) properties.get("user.dir");
+        String base = projectPath + "/word-export/src/main/resources/wordExport/";
 
-        XWPFTemplate compile = XWPFTemplate.compile("F:\\wordExport\\templates\\test2.docx");
+        File wordFile = new File(base + "/out_resume.docx");
+
+        XWPFTemplate compile = XWPFTemplate.compile(wordFile);
         XWPFTemplate template = compile.render(data);
-
 
         response.setContentType("application/octet-stream");
         response.setHeader("Content-disposition", "attachment;filename=\"" + "out_template.docx" + "\"");
