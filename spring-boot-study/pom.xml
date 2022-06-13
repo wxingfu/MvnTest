@@ -19,6 +19,7 @@
         <module>card-analysis</module>
         <module>shiro-test</module>
         <module>security-web-demo</module>
+        <module>grace-controller</module>
     </modules>
 
     <properties>

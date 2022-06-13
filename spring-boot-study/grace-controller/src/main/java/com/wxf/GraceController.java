@@ -1,0 +1,18 @@
+package com.wxf;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+/*
+ *
+ * @author weixf
+ * @date 2022-06-07
+ */
+@SpringBootApplication
+public class GraceController {
+
+    public static void main(String[] args) {
+        SpringApplication.run(GraceController.class, args);
+    }
+
+}
