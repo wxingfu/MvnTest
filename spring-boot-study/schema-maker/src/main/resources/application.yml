@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    druid:
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+      username: lisadmin
+      password: sit_lisadmin
+      url: jdbc:oracle:thin:@10.2.0.42:1521:lis
+      db-type: Oracle
