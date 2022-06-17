@@ -15,6 +15,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class Convert {
 
+    public Convert() {
+    }
+
     private int DBMSType = DBConst.DB_UnSupported;
 
     private boolean AllowErrorInPDM = false; //是否允许PDM上有错误信息是继续转换

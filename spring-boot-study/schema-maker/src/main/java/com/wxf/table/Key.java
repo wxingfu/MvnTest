@@ -22,6 +22,9 @@ public class Key {
     private int DeleteType = -1;
     private int UpdateType = -1;
 
+    public Key() {
+    }
+
     public int getKeyType() {
         return KeyType;
     }

@@ -13,6 +13,9 @@ public class PDMReferenceJoin {
     private String ParentTable_Col_Ref; //Object1
     private String ChildTable_Col_Ref; //Object2
 
+    public PDMReferenceJoin() {
+    }
+
     public String getId() {
         return Id;
     }

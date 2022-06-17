@@ -31,7 +31,7 @@ public class SSRS {
         MaxCol = n;
     }
 
-    protected void SetText(String strValue) {
+    public void SetText(String strValue) {
         RData.addElement(strValue);
         MaxNumber = RData.size();
         if ((MaxNumber % MaxCol) == 0) {
@@ -80,8 +80,7 @@ public class SSRS {
     public String encode() {
         StringBuilder strReturn = new StringBuilder();
         if (MaxNumber != 0) {
-            strReturn = new StringBuilder("0" + SysConst.PACKAGESPILTER + MaxRow +
-                    SysConst.RECORDSPLITER);
+            strReturn = new StringBuilder("0" + SysConst.PACKAGESPILTER + MaxRow + SysConst.RECORDSPLITER);
             for (int i = 1; i <= MaxRow; i++) {
                 for (int j = 1; j <= MaxCol; j++) {
                     if (j != MaxCol) {

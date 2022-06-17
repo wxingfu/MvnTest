@@ -21,8 +21,11 @@ public class PDMReference {
     private int UpdateConstraint = 1;
     private int DeleteConstraint = 1;
     private String ImplementationType;
-    private ArrayList Joins = new ArrayList(3);
+    private ArrayList<PDMReferenceJoin> Joins = new ArrayList<>(3);
     private int Join_Num = 0;
+
+    public PDMReference() {
+    }
 
     public String getId() {
         return Id;

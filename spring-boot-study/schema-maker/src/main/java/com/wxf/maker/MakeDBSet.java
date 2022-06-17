@@ -1,7 +1,6 @@
 package com.wxf.maker;
 
 
-import com.wxf.config.Config;
 import com.wxf.table.Column;
 import com.wxf.table.Key;
 import com.wxf.table.Table;
@@ -14,21 +13,28 @@ import java.io.File;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.file.Files;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 /**
  * @author weixf
  * @since 2022-01-21
  */
+@Component
 public class MakeDBSet {
 
+    private String packageName;
+    private String schemaOutputPATH;
+    private String outputPackagePATH;
+
     private int DBType = DBConst.DB_UnSupported;
-    private static String space4_1 = "    ";
-    private static String space4_2 = space4_1 + space4_1;
-    private static String space4_3 = space4_2 + space4_1;
-    private static String space4_4 = space4_3 + space4_1;
-    private static String space4_5 = space4_4 + space4_1;
-    private static String space4_6 = space4_5 + space4_1;
+    private static final String space4_1 = "    ";
+    private static final String space4_2 = space4_1 + space4_1;
+    private static final String space4_3 = space4_2 + space4_1;
+    private static final String space4_4 = space4_3 + space4_1;
+    private static final String space4_5 = space4_4 + space4_1;
+    private static final String space4_6 = space4_5 + space4_1;
     private String DBName;
     private boolean UserInfo = false;
     private boolean MultiCloseConn = false;
@@ -41,19 +47,30 @@ public class MakeDBSet {
         this.MultiCloseConn = MultiCloseConn;
     }
 
-    public MakeDBSet(String dbname) {
-        DBName = dbname;
-        // JdbcUrl JUrl = new JdbcUrl();
-        // DBType = JUrl.getDBType();
-        DBType = DBConst.DB_Oracle;
+    public MakeDBSet() {
+
     }
 
+    public MakeDBSet(String packageName, String schemaOutputPATH, String outputPackagePATH, String DBName) {
+        this.packageName = packageName;
+        this.schemaOutputPATH = schemaOutputPATH;
+        this.outputPackagePATH = outputPackagePATH;
+        this.DBName = DBName;
+        this.DBType = DBConst.DB_Oracle;
+    }
+
+    private String getTimestamp() {
+        String pattern = "yyyy-MM-dd HH:mm:ss SSS";
+        SimpleDateFormat df = new SimpleDateFormat(pattern);
+        Date today = new Date();
+        return df.format(today);
+    }
 
     public void create(Table tTable) throws Exception {
         String TableName = tTable.getCode();
         PrintWriter out = null;
         String Path = null;
-        Path = Config.schemaOutputPATH + Config.outputPackagePATH + "vdb/";
+        Path = schemaOutputPATH + outputPackagePATH + "vdb/";
         String ClassName = TableName + "DBSet";
         String FileName = ClassName + ".java";
         String SetName = TableName + "Set";
@@ -70,12 +87,12 @@ public class MakeDBSet {
                     true);
             // 文件头信息
             out.println("/**");
-            out.println(" * Copyright (c) " + Config.getTimestamp().substring(0, 4) + " Sinosoft Co.,LTD.");
+            out.println(" * Copyright (c) " + getTimestamp().substring(0, 4) + " Sinosoft Co.,LTD.");
             out.println(" * All right reserved.");
             out.println(" */");
             out.println();
             // @Package
-            out.println("package " + Config.packageName + ".vdb;");
+            out.println("package " + packageName + ".vdb;");
             out.println();
             // @Import
             out.println("import java.io.StringReader;");
@@ -88,9 +105,9 @@ public class MakeDBSet {
             out.println("import java.util.logging.Logger;");
 
             out.println();
-            //out.println("import " + Maker.packageName + ".schema." + SchemaName +
+            //out.println("import " + packageName + ".schema." + SchemaName +
             //            ";");
-            out.println("import " + Config.packageName + ".vschema." + SetName + ";");
+            out.println("import " + packageName + ".vschema." + SetName + ";");
             out.println("import com.sinosoft.utility.DBOper;");
             out.println("import com.sinosoft.utility.DBConnPool;");
             out.println("import com.sinosoft.utility.SQLString;");
@@ -106,7 +123,7 @@ public class MakeDBSet {
             out.println(" * <p>Company: Sinosoft Co.,LTD</p>");
             out.println(" * @Database: " + DBName);
             out.println(" * @author: Makerx");
-            out.println(" * @CreateDatetime： " + Config.getTimestamp());
+            out.println(" * @CreateDatetime： " + getTimestamp());
             if (UserInfo) {
                 Properties props = System.getProperties();
                 out.println(" * @vm: " + props.getProperty("java.vm.name") + "(build " + props.getProperty("java.vm.version") + ", " + props.getProperty("java.vm.vendor") + ")");

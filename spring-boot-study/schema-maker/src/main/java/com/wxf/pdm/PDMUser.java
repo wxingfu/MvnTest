@@ -13,6 +13,9 @@ public class PDMUser {
     private String Name;
     private String Code;
 
+    public PDMUser() {
+    }
+
     public String getCode() {
         return Code;
     }

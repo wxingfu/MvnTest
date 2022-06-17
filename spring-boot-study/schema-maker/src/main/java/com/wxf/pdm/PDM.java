@@ -24,6 +24,9 @@ public class PDM {
     private ArrayList<PDMReference> References = new ArrayList();
     private int RefNum = 0;
 
+    public PDM() {
+    }
+
     public String getId() {
         return Id;
     }

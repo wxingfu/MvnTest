@@ -1,22 +1,30 @@
 package com.wxf.maker;
 
 
-import com.wxf.config.Config;
 import com.wxf.table.Column;
 import com.wxf.table.Table;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 /**
  * @author weixf
  * @since 2022-01-21
  */
+@Component
 public class MakeSet {
+
+    private String packageName;
+    private String schemaOutputPATH;
+    private String outputPackagePATH;
 
     private String DBName;
     private static final String space4_1 = "    ";
@@ -25,45 +33,56 @@ public class MakeSet {
     private static final String space4_4 = space4_3 + space4_1;
     private static final String space4_5 = space4_3 + space4_2;
     private boolean UserInfo = false;
-    private boolean orderby = false;
 
     public void setUserInfo(boolean UserInfo) {
         this.UserInfo = UserInfo;
     }
 
-    public MakeSet(String dbname) {
-        DBName = dbname;
+    public MakeSet() {
+    }
+
+    public MakeSet(String packageName, String schemaOutputPATH, String outputPackagePATH, String DBName) {
+        this.packageName = packageName;
+        this.schemaOutputPATH = schemaOutputPATH;
+        this.outputPackagePATH = outputPackagePATH;
+        this.DBName = DBName;
+    }
+
+    private String getTimestamp() {
+        String pattern = "yyyy-MM-dd HH:mm:ss SSS";
+        SimpleDateFormat df = new SimpleDateFormat(pattern);
+        Date today = new Date();
+        return df.format(today);
     }
 
     public void create(Table tTable) {
         String TableName = tTable.getCode();
         PrintWriter out = null;
-        String Path = null;
-        Path = Config.schemaOutputPATH + Config.outputPackagePATH + "vschema/";
+        String filePath = schemaOutputPATH + outputPackagePATH + "vschema/";
         String ClassName = TableName + "Set";
         String FileName = ClassName + ".java";
         String SchemaName = TableName + "Schema";
         try {
             //创建目录
-            File dir = new File(Path);
+            File dir = new File(filePath);
             if (!dir.exists() || !dir.isDirectory()) {
                 boolean b = dir.mkdirs();
             }
-            // out = new PrintWriter(new FileWriter(new File(Path + FileName)), true);
-            out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-                    Files.newOutputStream(new File(Path + FileName).toPath()), "GBK")),
-                    true);
+            Path path = new File(filePath + FileName).toPath();
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(Files.newOutputStream(path), "GBK");
+            BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+            out = new PrintWriter(bufferedWriter, true);
             // 文件头信息
             out.println("/**");
-            out.println(" * Copyright (c) " + Config.getTimestamp().substring(0, 4) + " Sinosoft Co.,LTD.");
+            out.println(" * Copyright (c) " + getTimestamp().substring(0, 4) + " Sinosoft Co.,LTD.");
             out.println(" * All right reserved.");
             out.println(" */");
             out.println();
             // @Package
-            out.println("package " + Config.packageName + ".vschema;");
+            out.println("package " + packageName + ".vschema;");
             out.println();
             // @Import
-            out.println("import " + Config.packageName + ".schema." + SchemaName + ";");
+            out.println("import " + packageName + ".schema." + SchemaName + ";");
             out.println("import com.sinosoft.utility.SysConst;");
             out.println("import com.sinosoft.utility.CError;");
             out.println("import com.sinosoft.utility.CErrors;");
@@ -77,7 +96,7 @@ public class MakeSet {
             out.println(" * <p>Company: Sinosoft Co.,LTD </p>");
             out.println(" * @Database: " + DBName);
             out.println(" * @author: Makerx");
-            out.println(" * @CreateDatetime: " + Config.getTimestamp());
+            out.println(" * @CreateDatetime: " + getTimestamp());
             if (UserInfo) {
                 Properties props = System.getProperties();
                 out.println(" * @vm: " + props.getProperty("java.vm.name") + "(build " + props.getProperty("java.vm.version") + ", " + props.getProperty("java.vm.vendor") + ")");
@@ -105,10 +124,6 @@ public class MakeSet {
             //说明:此copy方法不是实现Clone，而是复制数据；为了避免未来实现真正的clone,方法名定为copy
             copy(out, ClassName);
             out.println();
-            //xjh Add 2006-10-29 生成内存排序方法
-            if (orderby) {
-                orderby(out, tTable);
-            }
             // 生成 encode 方法
             encode(TableName, out, SchemaName);
             out.println();

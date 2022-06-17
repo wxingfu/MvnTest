@@ -1,7 +1,6 @@
 package com.wxf.maker;
 
 
-import com.wxf.config.Config;
 import com.wxf.table.Column;
 import com.wxf.table.Key;
 import com.wxf.table.Table;
@@ -15,34 +14,51 @@ import java.io.File;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.file.Files;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 /**
  * @author weixf
  * @since 2022-01-21
  */
+@Component
 public class MakeSchema {
 
-    private int DBType = DBConst.DB_UnSupported;
+    private String packageName;
+    private String schemaOutputPATH;
+    private String outputPackagePATH;
+    private final int DBType = DBConst.DB_UnSupported;
     private boolean mFlag = false;
-    private static String space4_1 = "    ";
-    private static String space4_2 = space4_1 + space4_1;
-    private static String space4_3 = space4_2 + space4_1;
-    private static String space4_4 = space4_3 + space4_1;
-    private static String space4_5 = space4_4 + space4_1;
-    private static String newline = "\r\n";
+    private static final String space4_1 = "    ";
+    private static final String space4_2 = space4_1 + space4_1;
+    private static final String space4_3 = space4_2 + space4_1;
+    private static final String space4_4 = space4_3 + space4_1;
+    private static final String space4_5 = space4_4 + space4_1;
+    private static final String newline = "\r\n";
     private String DBName;
     private boolean UserInfo = false;
 
-    // @Constructor
-    public MakeSchema(String dbname) {
-        DBName = dbname;
-        // JdbcUrl JUrl = new JdbcUrl();
-        DBType = DBConst.DB_Oracle;
+    public MakeSchema() {
+    }
+
+    public MakeSchema(String packageName, String schemaOutputPATH, String outputPackagePATH, String DBName) {
+        this.packageName = packageName;
+        this.schemaOutputPATH = schemaOutputPATH;
+        this.outputPackagePATH = outputPackagePATH;
+        this.DBName = DBName;
     }
 
     public void setUserInfo(boolean UserInfo) {
         this.UserInfo = UserInfo;
+    }
+
+
+    private String getTimestamp() {
+        String pattern = "yyyy-MM-dd HH:mm:ss SSS";
+        SimpleDateFormat df = new SimpleDateFormat(pattern);
+        Date today = new Date();
+        return df.format(today);
     }
 
     public void create(Table tTable) {
@@ -50,7 +66,7 @@ public class MakeSchema {
         String TableName = tTable.getCode();
         PrintWriter out = null;
         String Path = null;
-        Path = Config.schemaOutputPATH + Config.outputPackagePATH + "schema/";
+        Path = schemaOutputPATH + outputPackagePATH + "schema/";
         String ClassName = TableName + "Schema";
         String DBOperName = TableName + "DB";
         String FileName = ClassName + ".java";
@@ -68,12 +84,12 @@ public class MakeSchema {
                     true);
             // 文件头信息
             out.println("/**");
-            out.println(" * Copyright (c) " + Config.getTimestamp().substring(0, 4) + " Sinosoft Co.,LTD.");
+            out.println(" * Copyright (c) " + getTimestamp().substring(0, 4) + " Sinosoft Co.,LTD.");
             out.println(" * All right reserved.");
             out.println(" */");
             out.println();
             // @Package
-            out.println("package " + Config.packageName + ".schema;");
+            out.println("package " + packageName + ".schema;");
             out.println();
             // @Import
             out.println("import java.sql.ResultSet;");
@@ -91,7 +107,7 @@ public class MakeSchema {
             out.println("import com.sinosoft.utility.CErrors;");
             out.println("import com.sinosoft.lis.pubfun.Arith;");
             out.println("import com.sinosoft.lis.pubfun.FDate;");
-            //out.println("import " + Config.packageName + ".db." + DBOperName + ";");
+            //out.println("import " + packageName + ".db." + DBOperName + ";");
             out.println();
             // 类信息
             out.println("/**");
@@ -101,7 +117,7 @@ public class MakeSchema {
             out.println(" * <p>Company: Sinosoft Co.,LTD </p>");
             out.println(" * @Database: " + DBName);
             out.println(" * @author: Makerx");
-            out.println(" * @CreateDatetime: " + Config.getTimestamp());
+            out.println(" * @CreateDatetime: " + getTimestamp());
             if (UserInfo) {
                 Properties props = System.getProperties();
                 out.println(" * @vm: " + props.getProperty("java.vm.name") + "(build " + props.getProperty("java.vm.version") + ", " + props.getProperty("java.vm.vendor") + ")");

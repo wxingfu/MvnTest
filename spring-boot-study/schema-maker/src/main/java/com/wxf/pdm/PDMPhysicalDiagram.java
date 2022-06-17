@@ -14,8 +14,11 @@ public class PDMPhysicalDiagram {
     private String Id;
     private String Name;
     private String Code;
-    private ArrayList Tables = new ArrayList(20);
+    private ArrayList<String> Tables = new ArrayList<>(20);
     private int TabNum = 0;
+
+    public PDMPhysicalDiagram() {
+    }
 
     public String getId()
     {

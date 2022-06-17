@@ -20,6 +20,9 @@ public class PDMColumn {
     private String LowValue;
     private String HighValue;
 
+    public PDMColumn() {
+    }
+
     public String getId() {
         return Id;
     }

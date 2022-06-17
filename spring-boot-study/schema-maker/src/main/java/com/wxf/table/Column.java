@@ -21,6 +21,9 @@ public class Column {
 
     private String PDMDataType; //字段类型(PDM)
 
+    public Column() {
+    }
+
     public String getName() {
         return Name;
     }

@@ -17,10 +17,14 @@ import java.io.IOException;
 @Slf4j
 @Component
 public class Parser {
+
+    public Parser() {
+    }
+
     //NameSpace
-    private final String a = "attribute";
-    private final String c = "collection";
-    private final String o = "object";
+    private final String a = new String("attribute");
+    private final String c = new String("collection");
+    private final String o = new String("object");
 
     private boolean AllowErrorInPDM = false; //是否允许PDM上有错误信息
     private boolean PrimaryKeyIsNull = false; //是否允许PK为空

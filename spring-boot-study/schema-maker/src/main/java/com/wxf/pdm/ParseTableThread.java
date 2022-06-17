@@ -15,6 +15,9 @@ import org.w3c.dom.Text;
 @Component
 public class ParseTableThread implements Runnable {
 
+    public ParseTableThread() {
+    }
+
     // NameSpace
     private final String a = new String("attribute");
     private final String c = new String("collection");

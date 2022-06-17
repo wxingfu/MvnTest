@@ -19,6 +19,9 @@ public class Schema {
     private ArrayList<Table> Tables = new ArrayList<>();
     private int TabNum = 0;
 
+    public Schema() {
+    }
+
     public String getName() {
         return Name;
     }
@@ -45,7 +48,7 @@ public class Schema {
     }
 
     public Table getTable(int i) {
-        return Tables.get(i);
+        return (Table) Tables.get(i);
     }
 
     public String getDBMSCode() {

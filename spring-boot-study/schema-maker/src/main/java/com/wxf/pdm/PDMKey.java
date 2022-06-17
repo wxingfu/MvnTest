@@ -18,6 +18,9 @@ public class PDMKey {
     private ArrayList Columns_Ref = new ArrayList(5); //使用Column中的ID
     private int ColNum = 0;
 
+    public PDMKey() {
+    }
+
     public String getId() {
         return Id;
     }

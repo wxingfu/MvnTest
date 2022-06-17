@@ -6,3 +6,11 @@ spring:
       password: sit_lisadmin
       url: jdbc:oracle:thin:@10.2.0.42:1521:lis
       db-type: Oracle
+schema:
+  pdm-filename: D:\MyWork\schema\LifeInsurancePersonal.pdm
+  db-username: lis
+  op-flag: DB
+  package-name: com.sinosoft.lis
+  output-path: D:\MyWork\schema\makfile\
+  output-package-path: com\sinosoft\lis\
+  table-name: ""

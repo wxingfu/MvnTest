@@ -1,11 +1,13 @@
 package com.wxf.table;
 
 
+import com.wxf.repository.MyRepository;
 import com.wxf.utility.DBConst;
 import com.wxf.utility.DBTypes;
 import com.wxf.utility.SQLTypes;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -18,7 +20,6 @@ import java.util.ArrayList;
  */
 @Component
 public class Table {
-
     private String Name; //表名称
     private String Code; //表代码
 
@@ -27,6 +28,9 @@ public class Table {
 
     private ArrayList<Key> Keys = new ArrayList<>(); //表中的Key
     private int KeyNum = 0;
+
+    public Table() {
+    }
 
 
     public String getName() {
@@ -150,27 +154,6 @@ public class Table {
         this.LargeObj_PK = LargeObj_PK;
     }
 
-    @Resource
-    private JdbcTemplate jdbcTemplate;
-
-    public boolean getDBInfo(String schema) throws Exception {
-
-        DataSource dataSource = jdbcTemplate.getDataSource();
-        if (dataSource==null) {
-            throw new Exception("获取数据源出错");
-        }
-        Connection connection = dataSource.getConnection();
-        getDBInfo(connection, schema.toUpperCase());
-        // DBConn con = null;
-        // con = DBConnPool.getConnection();
-        // if (con == null) {
-        //     System.out.println("Connect failed!");
-        //     System.exit(0);
-        // }
-        // getDBInfo(con.getCon(), schema.toUpperCase());
-        // con.close();
-        return true;
-    }
 
     public boolean getDBInfo(Connection con, String schema) throws Exception {
         if (DBType == DBConst.DB_UnSupported) {

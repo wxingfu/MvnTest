@@ -1,5 +1,6 @@
 package com.wxf.pdm;
 
+import com.wxf.table.Key;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,12 +15,15 @@ public class PDMTable {
     public String Id;
     private String Name;
     private String Code;
-    private ArrayList Columns = new ArrayList(20);
+    private ArrayList<PDMColumn> Columns = new ArrayList<>(20);
     private int ColNum = 0;
-    private ArrayList Keys = new ArrayList(3);
+    private ArrayList<PDMKey> Keys = new ArrayList<>(3);
     private int KeyNum = 0;
     private String PrimaryKey_Ref; //Keys中的Key的Id
     private String User;
+
+    public PDMTable() {
+    }
 
     public String getId() {
         return Id;
