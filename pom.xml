@@ -26,6 +26,7 @@
         <module>code-generator</module>
         <module>annotation</module>
         <module>spring-boot-study</module>
+        <module>webservice-demo</module>
     </modules>
 
     <properties>
