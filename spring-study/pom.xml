@@ -17,6 +17,7 @@
     <modules>
         <module>pdm-code-generate</module>
         <module>spring-security-test</module>
+        <module>spring-source-learn</module>
     </modules>
 
     <properties>

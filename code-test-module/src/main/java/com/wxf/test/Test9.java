@@ -6,7 +6,6 @@ import com.alibaba.fastjson.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,28 +17,38 @@ public class Test9 {
 
         // Instant now = Instant.now();
         // System.out.println(now.toEpochMilli());
-        String date = "2022-05-26 11:39:13";
+        String date = "2022-06-21 16:15:56";
         Date datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
         Long timestamp = datetime.getTime();
         System.out.println(timestamp);
 
         String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(timestamp));
         System.out.println(time);
-
-
-        time = "12:00:00";
-        Date timeFormat = new SimpleDateFormat("HH:mm:ss").parse(time);
-        Long timestamp2 = timeFormat.getTime();
-        System.out.println(timestamp2);
-
-        time = new SimpleDateFormat("HH:mm:ss").format(new Date(timestamp2));
-        System.out.println(time);
+        //
+        //
+        // time = "12:00:00";
+        // Date timeFormat = new SimpleDateFormat("HH:mm:ss").parse(time);
+        // Long timestamp2 = timeFormat.getTime();
+        // System.out.println(timestamp2);
+        //
+        // time = new SimpleDateFormat("HH:mm:ss").format(new Date(timestamp2));
+        // System.out.println(time);
 
 
         // time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(1640426071066L));
-        time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(1655350325000L));
+        // time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(1655799356374L));
+        // System.out.println(time);
+
+
+        long l = System.currentTimeMillis();
+        System.out.println(String.valueOf(l));
+
+        time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(l));
         System.out.println(time);
+
     }
+
+
 
     public static StringBuffer getAllKey(JSONObject jsonObject) {
         StringBuffer stringBuffer = new StringBuffer();

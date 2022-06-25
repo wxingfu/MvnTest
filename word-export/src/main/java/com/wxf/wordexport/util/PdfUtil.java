@@ -1,15 +1,11 @@
 package com.wxf.wordexport.util;
 
 import com.documents4j.api.DocumentType;
-import com.documents4j.api.IConversionJobWithPriorityUnspecified;
 import com.documents4j.api.IConverter;
 import com.documents4j.job.LocalConverter;
 
-import java.io.*;
-import java.nio.file.Files;
+import java.io.File;
 import java.util.Properties;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 /*

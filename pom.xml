@@ -27,6 +27,7 @@
         <module>annotation</module>
         <module>spring-boot-study</module>
         <module>webservice-demo</module>
+        <module>design-pattern</module>
     </modules>
 
     <properties>
