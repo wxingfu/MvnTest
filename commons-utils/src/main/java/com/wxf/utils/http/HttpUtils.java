@@ -36,7 +36,7 @@ public class HttpUtils {
     //请求配置
     private static RequestConfig requestConfig;
     //请求超时时间
-    private final static Integer TIME_OUT = 10000;
+    private final static Integer TIME_OUT = 1000000;
 
     public static PoolingHttpClientConnectionManager getPoolingHttpClientConnectionManager() {
         if (poolingHttpClientConnectionManager == null) {
@@ -98,7 +98,7 @@ public class HttpUtils {
      * @return 处理后的参数
      */
     public static List<BasicNameValuePair> toPairs(Map<String, Object> params) {
-        List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
+        List<BasicNameValuePair> pairs = new ArrayList<>();
         if (params != null && !params.isEmpty()) {
             Set<Map.Entry<String, Object>> entries = params.entrySet();
             for (Map.Entry<String, Object> entry : entries) {
@@ -167,7 +167,7 @@ public class HttpUtils {
 
 
     public static Map<String, Object> getParamMap(Object obj) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         Class<?> classObj = obj.getClass();
         Field[] fields = classObj.getDeclaredFields();
         for (Field field : fields) {

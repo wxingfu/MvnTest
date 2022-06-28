@@ -77,8 +77,7 @@ public class AesUtil {
 
     public static String decrypt(String contentStr, String password) {
         try {
-            // byte[] content = (new BASE64Decoder()).decodeBuffer(contentStr);
-            byte[] content = Base64.getDecoder().decode(contentStr);
+            byte[] content = (new BASE64Decoder()).decodeBuffer(contentStr);
             KeyGenerator kgen = KeyGenerator.getInstance("AES");
             SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
             secureRandom.setSeed(password.getBytes(StandardCharsets.UTF_8));
