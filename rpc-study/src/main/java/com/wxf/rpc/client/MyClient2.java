@@ -6,7 +6,7 @@ import com.dtflys.forest.annotation.Body;
 import com.dtflys.forest.annotation.Post;
 
 @BaseRequest(
-        baseURL = "http://172.16.4.68/StockService/PlanService.asmx?wsdl",
+        baseURL = "http://localhost/StockService/PlanService.asmx?wsdl",
         contentType = "text/xml; charset=utf-8"
 )
 public interface MyClient2 {

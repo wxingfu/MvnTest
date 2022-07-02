@@ -27,7 +27,6 @@ import java.nio.charset.StandardCharsets;
  * 加密
  *
  * @author somewhere
- * @date 2018-11-23
  */
 public class EncryptUtil {
 
@@ -35,7 +34,7 @@ public class EncryptUtil {
 
 	private static Cipher cipher;
 
-	private static IvParameterSpec iv = new IvParameterSpec(STR_PARAM.getBytes(StandardCharsets.UTF_8));
+	private static final IvParameterSpec iv = new IvParameterSpec(STR_PARAM.getBytes(StandardCharsets.UTF_8));
 
 	private static DESKeySpec getDesKeySpec(String source) throws Exception {
 		if (source == null || source.length() == 0) {
@@ -96,16 +95,6 @@ public class EncryptUtil {
 			b2[n / 2] = (byte) Integer.parseInt(item, 16);
 		}
 		return b2;
-	}
-
-	public static void main(String[] args) {
-		try {
-			String pwd = desDecrypt("zJOHkvjLmOuBrJXXeZ0mGIqB60Qd6WYDoC");
-			System.out.println(pwd);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 	}
 
 }

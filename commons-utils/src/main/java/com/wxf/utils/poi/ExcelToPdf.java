@@ -13,11 +13,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class ExcelToPdf {
 
     // public static final String DEST = "pdf/tables.pdf";
-    public static final String DEST = "D:\\WorkSpaces\\ideaProjects\\MvnTest\\CommonsUtils\\src\\main\\resources\\pdf/tables.pdf";
+    public static final String DEST = "tables.pdf";
 
     public static void main(String[] args) throws IOException, DocumentException {
         // File file = new File(DEST);
@@ -32,7 +34,7 @@ public class ExcelToPdf {
      */
     public void dataToPdf(String dest) throws IOException, DocumentException {
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(dest));
+        PdfWriter.getInstance(document, Files.newOutputStream(Paths.get(dest)));
         document.open();
 
         // 使用语言包字体
@@ -280,9 +282,9 @@ public class ExcelToPdf {
         BaseFont baseFont = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
         Font font = new Font(baseFont);
         font.setSize(13);
-        PdfWriter writer = PdfWriter.getInstance(document,new FileOutputStream("D:\\WorkSpaces\\ideaProjects\\MvnTest\\CommonsUtils\\src\\main\\resources\\pdf\\tables.pdf"));
+        PdfWriter writer = PdfWriter.getInstance(document, Files.newOutputStream(Paths.get("tables.pdf")));
         document.open();
-        HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File("D:\\WorkSpaces\\ideaProjects\\MvnTest\\CommonsUtils\\src\\main\\resources\\001_01649995252973.xls")));
+        HSSFWorkbook workbook = new HSSFWorkbook(Files.newInputStream(new File("001_01649995252973.xls").toPath()));
         HSSFSheet sheet = workbook.getSheetAt(0);
         int column = sheet.getRow(0).getLastCellNum();
         int row = sheet.getPhysicalNumberOfRows();

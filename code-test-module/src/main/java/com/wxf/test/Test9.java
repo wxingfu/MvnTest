@@ -34,12 +34,9 @@ public class Test9 {
         // time = new SimpleDateFormat("HH:mm:ss").format(new Date(timestamp2));
         // System.out.println(time);
 
-
         // time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(1640426071066L));
         // time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(1655799356374L));
         // System.out.println(time);
-
-
         long l = System.currentTimeMillis();
         System.out.println(String.valueOf(l));
 

@@ -7,8 +7,6 @@ import java.util.List;
 
 /**
  * @author wxf
- * @date 2020-11-11
- * @description
  */
 public class Test5 {
     public static void main(String[] args) {
@@ -24,7 +22,7 @@ public class Test5 {
         /*驱动包名*/
         String driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
         /*连接地址*/
-        String jdbcUrl = "jdbc:sqlserver://10.70.0.102:1433;databaseName=CBHS";
+        String jdbcUrl = "jdbc:sqlserver://10.70.0.102:1433;databaseName=";
 
         try {
             // 2.加载驱动

@@ -23,20 +23,10 @@ public class IpLongUtils {
      * @return long值对应的字符串
      */
     public static String long2Ip(long ipLong) {
-        StringBuilder ip = new StringBuilder();
-        ip.append(ipLong >>> 24).append(".");
-        ip.append((ipLong >>> 16) & 0xFF).append(".");
-        ip.append((ipLong >>> 8) & 0xFF).append(".");
-        ip.append(ipLong & 0xFF);
-        return ip.toString();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(ip2Long("192.168.254.253"));
-        // System.out.println(long2Ip(3232235521L));
-        System.out.println(long2Ip(3232300797L));
-
-        System.out.println(ip2Long("10.0.0.1"));
+        return (ipLong >>> 24) + "." +
+                ((ipLong >>> 16) & 0xFF) + "." +
+                ((ipLong >>> 8) & 0xFF) + "." +
+                (ipLong & 0xFF);
     }
 
 }

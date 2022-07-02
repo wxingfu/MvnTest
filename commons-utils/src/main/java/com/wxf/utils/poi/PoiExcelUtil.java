@@ -405,9 +405,8 @@ public class PoiExcelUtil {
 
     public static void main(String[] args) throws Exception {
 
-
         PoiExcelUtil poiExcelUtil = new PoiExcelUtil();
-        File file = new File("D:\\MyWork\\files\\#2326\\test.xls");
+        File file = new File("test.xls");
         try {
             poiExcelUtil.initWrite(new FileOutputStream(file));
         } catch (FileNotFoundException e) {
@@ -435,14 +434,14 @@ public class PoiExcelUtil {
         cellStyle.setFont(font);
 
         poiExcelUtil.createRow(0);
-        poiExcelUtil.setCell(0, "序号", cellStyle, 2000);
-        poiExcelUtil.setCell(1, "类型", cellStyle, 5000);
-        poiExcelUtil.setCell(2, "保单号", cellStyle, 8000);
-        poiExcelUtil.setCell(3, "应交日", cellStyle, 4000);
-        poiExcelUtil.setCell(4, "原因", cellStyle, 8000);
-        poiExcelUtil.setCell(5, "一级渠道", cellStyle, 4000);
-        poiExcelUtil.setCell(6, "二级渠道", cellStyle, 4000);
-        poiExcelUtil.setCell(7, "三级渠道", cellStyle, 4000);
+        poiExcelUtil.setCell(0, "1", cellStyle, 2000);
+        poiExcelUtil.setCell(1, "2", cellStyle, 5000);
+        poiExcelUtil.setCell(2, "3", cellStyle, 8000);
+        poiExcelUtil.setCell(3, "4", cellStyle, 4000);
+        poiExcelUtil.setCell(4, "5", cellStyle, 8000);
+        poiExcelUtil.setCell(5, "6", cellStyle, 4000);
+        poiExcelUtil.setCell(6, "7", cellStyle, 4000);
+        poiExcelUtil.setCell(7, "8", cellStyle, 4000);
 
         HSSFCellStyle cellStyle2 = poiExcelUtil.createCellStyle();
         cellStyle2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
@@ -454,13 +453,13 @@ public class PoiExcelUtil {
         for (int i = 0; i < 100; i++) {
             poiExcelUtil.createRow(i + 1);
             poiExcelUtil.setCell(0, i + 1, cellStyle2);
-            poiExcelUtil.setCell(1, "宽限期内未抽档", cellStyle2);
-            poiExcelUtil.setCell(2, "888011000000003", cellStyle2);
-            poiExcelUtil.setCell(3, "2022-03-30", cellStyle2);
-            poiExcelUtil.setCell(4, "原因比较长比较长比较长比较长", cellStyle2);
-            poiExcelUtil.setCell(5, "一级渠道", cellStyle2);
-            poiExcelUtil.setCell(6, "二级渠道", cellStyle2);
-            poiExcelUtil.setCell(7, "三级渠道", cellStyle2);
+            poiExcelUtil.setCell(1, "11", cellStyle2);
+            poiExcelUtil.setCell(2, "12", cellStyle2);
+            poiExcelUtil.setCell(3, "13", cellStyle2);
+            poiExcelUtil.setCell(4, "14", cellStyle2);
+            poiExcelUtil.setCell(5, "15", cellStyle2);
+            poiExcelUtil.setCell(6, "16", cellStyle2);
+            poiExcelUtil.setCell(7, "17", cellStyle2);
         }
         poiExcelUtil.export();
     }

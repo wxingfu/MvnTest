@@ -9,60 +9,55 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-/*
- *
- * @author weixf
- * @date 2022-05-31
- */
 public class LocalCacheByJDK6 {
 
     /**
-     * Ä¬ÈÏ»º´æÊ±³¤ µ¥Î»s
+     * é»˜è®¤ç¼“å­˜æ—¶é•¿ å•ä½s
      */
     private static final int DEFAULT_TIMEOUT = 3600;
 
     /**
-     * Ä¬ÈÏ»º´æÈİÁ¿
+     * é»˜è®¤ç¼“å­˜å®¹é‡
      */
     private static final int DEFAULT_SIZE = 1000;
 
     /**
-     * ´æ´¢Êı¾İ
+     * å­˜å‚¨æ•°æ®
      */
     private static final Map<String, Object> data;
 
     /**
-     * ¶¨Ê±Æ÷  ÓÃÀ´¿ØÖÆ »º´æµÄ³¬Ê±Ê±¼ä
+     * å®šæ—¶å™¨  ç”¨æ¥æ§åˆ¶ ç¼“å­˜çš„è¶…æ—¶æ—¶é—´
      * private static Timer timer;
      * timer = new Timer();
      * timer.schedule(CacheCleanTask.cacheTask(key),DEFAULT_TIMEOUT);
      * <p>
-     * 1)¶àÏß³Ì²¢ĞĞ´¦Àí¶¨Ê±ÈÎÎñÊ±£¬TimerÔËĞĞ¶à¸öTimeTaskÊ±£¬Ö»ÒªÆäÖĞÖ®Ò»Ã»ÓĞ²¶»ñÅ×³öµÄÒì³££¬
-     * ÆäËüÈÎÎñ±ã»á×Ô¶¯ÖÕÖ¹ÔËĞĞ£¬Ê¹ÓÃScheduledExecutorServiceÔòÃ»ÓĞÕâ¸öÎÊÌâ
-     * 2)TimerÄÚ²¿ÊÇÒ»¸öÏß³Ì£¬ÈÎÎñ1ËùĞèµÄÊ±¼ä³¬¹ıÁËÁ½¸öÈÎÎñ¼äµÄ¼ä¸ôÊ±»áµ¼ÖÂÎÊÌâ
-     * 3)TimerÖ´ĞĞÖÜÆÚÈÎÎñÊ±ÒÀÀµÏµÍ³Ê±¼ä
+     * 1)å¤šçº¿ç¨‹å¹¶è¡Œå¤„ç†å®šæ—¶ä»»åŠ¡æ—¶ï¼ŒTimerè¿è¡Œå¤šä¸ªTimeTaskæ—¶ï¼Œåªè¦å…¶ä¸­ä¹‹ä¸€æ²¡æœ‰æ•è·æŠ›å‡ºçš„å¼‚å¸¸ï¼Œ
+     * å…¶å®ƒä»»åŠ¡ä¾¿ä¼šè‡ªåŠ¨ç»ˆæ­¢è¿è¡Œï¼Œä½¿ç”¨ScheduledExecutorServiceåˆ™æ²¡æœ‰è¿™ä¸ªé—®é¢˜
+     * 2)Timerå†…éƒ¨æ˜¯ä¸€ä¸ªçº¿ç¨‹ï¼Œä»»åŠ¡1æ‰€éœ€çš„æ—¶é—´è¶…è¿‡äº†ä¸¤ä¸ªä»»åŠ¡é—´çš„é—´éš”æ—¶ä¼šå¯¼è‡´é—®é¢˜
+     * 3)Timeræ‰§è¡Œå‘¨æœŸä»»åŠ¡æ—¶ä¾èµ–ç³»ç»Ÿæ—¶é—´
      */
 
     private static final ScheduledExecutorService executorService;
 
-    // ³õÊ¼»¯
+    // åˆå§‹åŒ–
     static {
         data = new ConcurrentHashMap<String, Object>(DEFAULT_SIZE);
         executorService = new ScheduledThreadPoolExecutor(2);
     }
 
     /**
-     * Ë½ÓĞ»¯¹¹Ôìº¯Êı
+     * ç§æœ‰åŒ–æ„é€ å‡½æ•°
      */
     private LocalCacheByJDK6() {
     }
 
     /**
-     * Ôö¼Ó»º´æ Ä¬ÈÏÓĞĞ§Ê±³¤
+     * å¢åŠ ç¼“å­˜ é»˜è®¤æœ‰æ•ˆæ—¶é•¿
      */
     public static void put(final String key, Object value) {
         data.put(key, value);
-        // ¶¨Ê±Æ÷ µ÷¶ÈÈÎÎñ£¬ÓÃÓÚ¸ù¾İ Ê±¼ä ¶¨Ê±Çå³ı ¶ÔÓ¦key »º´æ
+        // å®šæ—¶å™¨ è°ƒåº¦ä»»åŠ¡ï¼Œç”¨äºæ ¹æ® æ—¶é—´ å®šæ—¶æ¸…é™¤ å¯¹åº”key ç¼“å­˜
         executorService.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -73,13 +68,13 @@ public class LocalCacheByJDK6 {
 
 
     /**
-     * Ôö¼Ó»º´æ  ²¢ÉèÖÃ»º´æÊ±³¤ µ¥Î» s
+     * å¢åŠ ç¼“å­˜  å¹¶è®¾ç½®ç¼“å­˜æ—¶é•¿ å•ä½ s
      *
-     * @param timeout »º´æÊ±³¤ µ¥Î»s
+     * @param timeout ç¼“å­˜æ—¶é•¿ å•ä½s
      */
     public static void put(final String key, Object value, int timeout) {
         data.put(key, value);
-        //lambda Ìæ»»ÄäÃûÄÚ²¿Àà
+        //lambda æ›¿æ¢åŒ¿åå†…éƒ¨ç±»
         executorService.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -89,9 +84,9 @@ public class LocalCacheByJDK6 {
     }
 
     /**
-     * Ôö¼Ó»º´æ ²¢Ö¸¶¨¹ıÆÚÊ±¼äµã
+     * å¢åŠ ç¼“å­˜ å¹¶æŒ‡å®šè¿‡æœŸæ—¶é—´ç‚¹
      *
-     * @param expire Ö¸¶¨¹ıÆÚÊ±¼äµã
+     * @param expire æŒ‡å®šè¿‡æœŸæ—¶é—´ç‚¹
      */
     public static void put(final String key, Object value, Date expire) {
         data.put(key, value);
@@ -111,7 +106,7 @@ public class LocalCacheByJDK6 {
     }
 
     /**
-     * ÅúÁ¿Ôö¼Ó»º´æ
+     * æ‰¹é‡å¢åŠ ç¼“å­˜
      */
     public static void put(Map<String, Object> cache) {
         if (!(cache == null || cache.isEmpty())) {
@@ -138,14 +133,14 @@ public class LocalCacheByJDK6 {
     }
 
     /**
-     * »ñÈ¡»º´æ
+     * è·å–ç¼“å­˜
      */
     public static Object get(String key) {
         return data.get(key);
     }
 
     /**
-     * »ñÈ¡µ±Ç°»º´æÖĞ ËùÓĞµÄkey
+     * è·å–å½“å‰ç¼“å­˜ä¸­ æ‰€æœ‰çš„key
      */
     public static Set<String> cacheKeys() {
         return data.keySet();
@@ -156,28 +151,28 @@ public class LocalCacheByJDK6 {
     }
 
     /**
-     * ÅĞ¶Ï»º´æÊÇ·ñ°üº¬key
+     * åˆ¤æ–­ç¼“å­˜æ˜¯å¦åŒ…å«key
      */
     public boolean containKey(String key) {
         return data.containsKey(key);
     }
 
     /**
-     * »ñÈ¡µ±Ç°»º´æ´óĞ¡
+     * è·å–å½“å‰ç¼“å­˜å¤§å°
      */
     public static int size() {
         return data.size();
     }
 
     /**
-     * É¾³ı»º´æ
+     * åˆ é™¤ç¼“å­˜
      */
     public static void remove(String key) {
         data.remove(key);
     }
 
     /**
-     * Çå¿ÕËùÓĞ»º´æ
+     * æ¸…ç©ºæ‰€æœ‰ç¼“å­˜
      */
     public static void clear() {
         if (size() > 0) {

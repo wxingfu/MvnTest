@@ -16,6 +16,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,15 +36,14 @@ public class ExcelUtils {
      *
      * @param excel Excel 文件
      * @param clazz pojo类型
-     * @return
      */
-    public static List<?> parseExcelToList(File excel, Class clazz) {
+    public static List<?> parseExcelToList(File excel, Class<?> clazz) {
         List<Object> res = new ArrayList<Object>();
         // 创建输入流，读取Excel
         InputStream is = null;
         HSSFSheet sheet = null;
         try {
-            is = new FileInputStream(excel.getAbsolutePath());
+            is = Files.newInputStream(Paths.get(excel.getAbsolutePath()));
             HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(is));
             //默认只获取第一个工作表
             sheet = workbook.getSheetAt(0);
@@ -101,7 +102,7 @@ public class ExcelUtils {
      * @param excel Excel 文件输入流
      * @param clazz pojo类型
      */
-    public static List<?> parseExcelToList(InputStream excel, Class clazz) throws Exception {
+    public static List<?> parseExcelToList(InputStream excel, Class<?> clazz) throws Exception {
         List<Object> res = new ArrayList<Object>();
         // 创建输入流，读取Excel
         InputStream is = null;
@@ -179,7 +180,7 @@ public class ExcelUtils {
      */
     public static void exportExcel(
             OutputStream outputStream, List dataList,
-            Class clazz, Map<Integer, Map<String, String>> selectListMap,
+            Class<?> clazz, Map<Integer, Map<String, String>> selectListMap,
             String exportTitle) {
         //创建一个Excel工作簿
         HSSFWorkbook workbook = new HSSFWorkbook();
@@ -421,7 +422,7 @@ public class ExcelUtils {
         if (isNumeric(valueStr)) {
             hssfcell.setCellStyle(cellStyle);
             hssfcell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            hssfcell.setCellValue(Double.valueOf(valueStr));
+            hssfcell.setCellValue(Double.parseDouble(valueStr));
         } else {
             hssfcell.setCellStyle(cellStyle);
             hssfcell.setCellType(HSSFCell.CELL_TYPE_STRING);

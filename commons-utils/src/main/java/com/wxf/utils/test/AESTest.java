@@ -2,12 +2,12 @@ package com.wxf.utils.test;
 
 import org.apache.commons.codec.binary.Base64;
 
-import javax.crypto.*;
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 
 /*
@@ -24,7 +24,6 @@ public class AESTest {
      *
      * @param content  明文
      * @param password 密码，用于生成密钥
-     * @return
      */
     public static String encrypt(String content, String password) {
         try {
@@ -41,7 +40,7 @@ public class AESTest {
             SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
             //创建密码器
             Cipher cipher = Cipher.getInstance("AES");
-            byte[] byteContent = content.getBytes("UTF-8");
+            byte[] byteContent = content.getBytes(StandardCharsets.UTF_8);
             cipher.init(Cipher.ENCRYPT_MODE, key);
             //加密
             byte[] result = cipher.doFinal(byteContent);
@@ -57,7 +56,6 @@ public class AESTest {
      *
      * @param ecryptContent 密文
      * @param password      密码，用于生成密钥
-     * @return
      */
     public static String decrypt(String ecryptContent, String password) {
         try {
@@ -74,7 +72,7 @@ public class AESTest {
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.DECRYPT_MODE, key);
             byte[] result = cipher.doFinal(encrypted);
-            return new String(result, "UTF-8");
+            return new String(result, StandardCharsets.UTF_8);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,7 +93,7 @@ public class AESTest {
             Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding");//"算法/模式/补码方式"
             int blockSize = cipher.getBlockSize();
 
-            byte[] dataBytes = data.getBytes("UTF-8");//如果有中文，记得加密前的字符集
+            byte[] dataBytes = data.getBytes(StandardCharsets.UTF_8);//如果有中文，记得加密前的字符集
             int plaintextLength = dataBytes.length;
             if (plaintextLength % blockSize != 0) {
                 plaintextLength = plaintextLength + (blockSize - (plaintextLength % blockSize));
@@ -120,7 +118,6 @@ public class AESTest {
      * @param data 密文
      * @param key  密匙
      * @param iv   密钥位移量
-     * @return
      */
     public static String decryptData(String data, String key, String iv) {
         try {
@@ -130,8 +127,7 @@ public class AESTest {
             IvParameterSpec ivspec = new IvParameterSpec(iv.getBytes());
             cipher.init(Cipher.DECRYPT_MODE, keyspec, ivspec);
             byte[] original = cipher.doFinal(encrypted1);
-            String originalString = new String(original);
-            return originalString;
+            return new String(original);
         } catch (Exception e) {
             e.printStackTrace();
         }

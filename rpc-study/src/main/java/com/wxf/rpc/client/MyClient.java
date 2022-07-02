@@ -12,7 +12,7 @@ import com.wxf.rpc.entity.outvehicle.OutVehicleRecord;
 
 
 @BaseRequest(
-        baseURL = "http://172.16.52.210:60009/api",
+        baseURL = "http://localhost:60009/api",
         contentType = "application/json;charset=utf-8"
 )
 public interface MyClient {

@@ -1,16 +1,16 @@
 package com.wxf.utils.secret;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.xml.bind.DatatypeConverter;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.security.spec.*;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.RSAPrivateKeySpec;
+import java.security.spec.RSAPublicKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,13 +29,10 @@ public class RSAUtil {
 
     /**
      * 生成RAS公钥与私钥字符串，直接返回
-     *
-     * @throws NoSuchAlgorithmException
-     * @return
      */
-    public static Map<String,String> getKeys() throws NoSuchAlgorithmException {
-        Map<String, String> map = new HashMap<String, String>();
-        KeyPairGenerator keyPairGen =  KeyPairGenerator.getInstance(RSA);
+    public static Map<String, String> getKeys() throws NoSuchAlgorithmException {
+        Map<String, String> map = new HashMap<>();
+        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(RSA);
         // 初始化密钥对生成器，密钥大小为96-1024位
         keyPairGen.initialize(1024, new SecureRandom());
         // 生成一个密钥对，保存在keyPair中
@@ -57,24 +54,8 @@ public class RSAUtil {
         return DatatypeConverter.parseBase64Binary(str);
     }
 
-    /**
-     *
-     * @desc rsa 解密操作
-     * @date 2020-11-25 11:28:23
-     * @author 022099_zhuxin
-     * @param publicKeyText
-     * @param cipherText
-     * @return
-     * @throws NoSuchAlgorithmException
-     * @throws NoSuchProviderException
-     * @throws NoSuchPaddingException
-     * @throws InvalidKeySpecException
-     * @throws InvalidKeyException
-     * @throws IllegalBlockSizeException
-     * @throws BadPaddingException
-     * @throws IOException
-     */
-    public static String decrypt(String publicKeyText, String cipherText) throws NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, InvalidKeySpecException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, IOException {
+
+    public static String decrypt(String publicKeyText, String cipherText) throws Exception {
         byte[] publicKeyBytes = Base64.getDecoder().decode(publicKeyText);
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(publicKeyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(RSA, "SunRsaSign");
@@ -112,14 +93,13 @@ public class RSAUtil {
             i++;
             offSet = i * MAX_DECRYPT_BLOCK;
         }
-        byte[] decryptedData = out.toByteArray();
         out.close();
         // 结束分段加密
         // return new String(plainBytes);
-        return new String(decryptedData);
+        return out.toString();
     }
 
-    public static String encrypt(String privatekey, String plainText) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, IOException {
+    public static String encrypt(String privatekey, String plainText) throws Exception {
         byte[] keyBytes = Base64.getDecoder().decode(privatekey);
         PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory factory = KeyFactory.getInstance(RSA, "SunRsaSign");
@@ -137,7 +117,7 @@ public class RSAUtil {
             cipher.init(Cipher.ENCRYPT_MODE, fakePublicKey);
         }
         // 开始分段处理
-        byte[] data = plainText.getBytes("UTF-8");
+        byte[] data = plainText.getBytes(StandardCharsets.UTF_8);
         int inputLen = data.length;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         int offSet = 0;
@@ -156,7 +136,6 @@ public class RSAUtil {
         byte[] encryptedData = out.toByteArray();
         out.close();
         // 结束分段处理
-        String encryptedString = Base64.getEncoder().encodeToString(encryptedData);
-        return encryptedString;
+        return Base64.getEncoder().encodeToString(encryptedData);
     }
 }

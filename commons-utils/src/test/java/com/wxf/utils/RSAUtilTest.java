@@ -16,7 +16,7 @@ import java.util.Map;
 public class RSAUtilTest {
 
     @Test
-    public void test() throws NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, InvalidKeySpecException, BadPaddingException, IOException, NoSuchProviderException, InvalidKeyException {
+    public void test() throws Exception {
         Map<String, String> keys = RSAUtil.getKeys();
 
         String publicKey = keys.get("publicKey");

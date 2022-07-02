@@ -3,7 +3,6 @@ package com.wxf.utils.test;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 
 /*
  *
@@ -12,14 +11,16 @@ import java.nio.charset.StandardCharsets;
  */
 public class Md5Util {
 
-    public static String digestByMd5(String data) {
-        return DigestUtils.md5Hex(data.getBytes(StandardCharsets.UTF_8));
+    public static String Md5(String data) {
+        String charset = "UTF-8";
+        return Md5(data, charset);
     }
 
-    public static String digestByMd5(String data, String charset) throws UnsupportedEncodingException {
-        if (charset == null || "".equals(charset)) {
-            charset = "UTF-8";
+    public static String Md5(String data, String charset) {
+        try {
+            return DigestUtils.md5Hex(data.getBytes(charset));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
-        return DigestUtils.md5Hex(data.getBytes(charset));
     }
 }

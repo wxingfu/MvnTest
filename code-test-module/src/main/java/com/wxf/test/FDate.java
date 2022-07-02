@@ -1,24 +1,14 @@
 package com.wxf.test;
 
-import java.text.ParseException;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/*
- *
- * @author weixf
- * @date 2022-06-10
- */
-public class FDate implements Cloneable, java.io.Serializable {
 
-    private static final long serialVersionUID = -4834488486777133288L;
+public class FDate implements Cloneable, Serializable {
+
     private final static String pattern1 = "yyyy-MM-dd";
-    private final static String pattern2 = "MM-dd-yyyy";
-    private final static String pattern3 = "yyyy/MM/dd";
-    private final static String pattern4 = "MM/dd/yyyy";
-    private final static String pattern5 = "yyyyMMdd";
-
 
     public FDate() {
     }
@@ -27,24 +17,12 @@ public class FDate implements Cloneable, java.io.Serializable {
         return super.clone();
     }
 
-    /**
-     * 输入符合格式要求的日期字符串，返回日期类型变量
-     * <p>
-     * <b>支持的格式: </b>yyyy-MM-dd MM-dd-yyyy yyyy/MM/dd MM/dd/yyyy yyyyMMdd
-     * <p>
-     * <b>Example: </b>
-     * <p>
-     * getDate("2002-10-8") returns "Tue Oct 08 00:00:00 CST 2002"
-     *
-     * @param dateString 日期字符串
-     * @return 日期类型变量
-     */
+
     public Date getDate(String dateString) {
         Date tDate = null;
         String[] tsDate;
         try {
             if (dateString.indexOf("-") != -1 && dateString.indexOf("-") == 4) {
-                //tDate = df1.parse(dateString);
                 if (dateString.length() > 10)
                     dateString = dateString.substring(0, 10);
                 tsDate = dateString.split("-");
@@ -95,18 +73,6 @@ public class FDate implements Cloneable, java.io.Serializable {
         return tDate;
     }
 
-    /**
-     * 输入日期类型变量，返回日期字符串
-     * <p>
-     * <b>Example: </b>
-     * <p>
-     * <p>
-     * getString("Tue Oct 08 00:00:00 CST 2002") returns "2002-10-8"
-     * <p>
-     *
-     * @param mDate 日期类型变量
-     * @return 日期字符串
-     */
     public String getString(Date mDate) {
         SimpleDateFormat df1 = new SimpleDateFormat(pattern1);
         String tString = null;
