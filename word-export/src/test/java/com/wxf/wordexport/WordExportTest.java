@@ -321,7 +321,7 @@ public class WordExportTest {
         List<AddrModel> subData = new ArrayList<>();
         subData.add(new AddrModel("Hangzhou,China"));
         subData.add(new AddrModel("Shanghai,China"));
-        map.put("nested", Includes.ofLocal("sub.docx").setRenderModel(subData).create());
+        map.put("nested", Includes.ofLocal(templatePath + "sub.docx").setRenderModel(subData).create());
 
 
         XWPFTemplate compile = XWPFTemplate.compile(templatePath + "test8.docx");
