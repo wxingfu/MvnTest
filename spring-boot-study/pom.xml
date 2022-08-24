@@ -22,6 +22,8 @@
         <module>grace-controller</module>
         <module>schema-maker</module>
         <module>encrypt-spring-boot-starter</module>
+        <module>web-demo</module>
+        <module>security-auth-menu</module>
     </modules>
 
     <properties>
