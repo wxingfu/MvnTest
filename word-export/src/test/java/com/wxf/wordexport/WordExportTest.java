@@ -321,7 +321,7 @@ public class WordExportTest {
         List<AddrModel> subData = new ArrayList<>();
         subData.add(new AddrModel("Hangzhou,China"));
         subData.add(new AddrModel("Shanghai,China"));
-        map.put("nested", Includes.ofLocal("sub.docx").setRenderModel(subData).create());
+        map.put("nested", Includes.ofLocal(templatePath + "sub.docx").setRenderModel(subData).create());
 
 
         XWPFTemplate compile = XWPFTemplate.compile(templatePath + "test8.docx");
@@ -768,7 +768,7 @@ public class WordExportTest {
      */
     @Test
     public void test20_1() {
-// comment
+        // comment
         CommentRenderData comment0 = Comments.of().signature("Sayi", "s", LocaleUtil.getLocaleCalendar()).addText(Texts.of("咏鹅").fontSize(20).bold().create())
                 .comment(Documents.of()
                         .addParagraph(Paragraphs.of(Pictures.ofLocal(imgPath + "/logo.png").create()).create())
