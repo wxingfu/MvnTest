@@ -97,4 +97,149 @@ public class CommonUtil {
         }
         return sdf.format(c.getTime());
     }
+
+
+    public static String getCurrentDate(String format) {
+        GregorianCalendar tGCalendar = new GregorianCalendar();
+        StringBuffer tStringBuffer = new StringBuffer(10);
+        int sYears = tGCalendar.get(Calendar.YEAR);
+        int sMonths = tGCalendar.get(Calendar.MONTH) + 1;
+        int sDays = tGCalendar.get(Calendar.DAY_OF_MONTH);
+        if ("yyyy-mm-dd".equals(format.toLowerCase())) {
+            tStringBuffer.append(sYears);
+            tStringBuffer.append('-');
+            if (sMonths < 10) {
+                tStringBuffer.append('0');
+            }
+            tStringBuffer.append(sMonths);
+            tStringBuffer.append('-');
+            if (sDays < 10) {
+                tStringBuffer.append('0');
+            }
+            tStringBuffer.append(sDays);
+            return tStringBuffer.toString();
+        } else if ("mm-dd-yyyy".equals(format.toLowerCase())) {
+            if (sMonths < 10) {
+                tStringBuffer.append('0');
+            }
+            tStringBuffer.append(sMonths);
+            tStringBuffer.append('-');
+            if (sDays < 10) {
+                tStringBuffer.append('0');
+            }
+            tStringBuffer.append(sDays);
+            tStringBuffer.append('-');
+            tStringBuffer.append(sYears);
+            return tStringBuffer.toString();
+        } else if ("yyyy/mm/dd".equals(format.toLowerCase())) {
+            tStringBuffer.append(sYears);
+            tStringBuffer.append('/');
+            if (sMonths < 10) {
+                tStringBuffer.append('0');
+            }
+            tStringBuffer.append(sMonths);
+            tStringBuffer.append('/');
+            if (sDays < 10) {
+                tStringBuffer.append('0');
+            }
+            tStringBuffer.append(sDays);
+            return tStringBuffer.toString();
+        } else if ("mm/dd/yyyy".equals(format.toLowerCase())) {
+            if (sMonths < 10) {
+                tStringBuffer.append('0');
+            }
+            tStringBuffer.append(sMonths);
+            tStringBuffer.append('/');
+            if (sDays < 10) {
+                tStringBuffer.append('0');
+            }
+            tStringBuffer.append(sDays);
+            tStringBuffer.append('/');
+            tStringBuffer.append(sYears);
+            return tStringBuffer.toString();
+        } else if ("yyyymmdd".equals(format.toLowerCase())) {
+            tStringBuffer.append(sYears);
+            if (sMonths < 10) {
+                tStringBuffer.append('0');
+            }
+            tStringBuffer.append(sMonths);
+            if (sDays < 10) {
+                tStringBuffer.append('0');
+            }
+            tStringBuffer.append(sDays);
+            return tStringBuffer.toString();
+        }
+        else if ("yyyy年mm月dd日".equals(format.toLowerCase())) {
+            tStringBuffer.append(sYears);
+            tStringBuffer.append('年');
+            if (sMonths < 10) {
+                tStringBuffer.append('0');
+            }
+            tStringBuffer.append(sMonths);
+            tStringBuffer.append('月');
+            if (sDays < 10) {
+                tStringBuffer.append('0');
+            }
+            tStringBuffer.append(sDays);
+            tStringBuffer.append('日');
+            return tStringBuffer.toString();
+        }
+        else {
+            return null;
+        }
+    }
+
+    public static String getCurrentDate() {
+        // String pattern = "yyyy-MM-dd";
+        // SimpleDateFormat df = new SimpleDateFormat(pattern);
+        // Date today = new Date();
+        // String tString = df.format(today);
+        // return tString;
+        GregorianCalendar tGCalendar = new GregorianCalendar();
+        StringBuffer tStringBuffer = new StringBuffer(10);
+        int sYears = tGCalendar.get(Calendar.YEAR);
+        tStringBuffer.append(sYears);
+        tStringBuffer.append('-');
+        int sMonths = tGCalendar.get(Calendar.MONTH) + 1;
+        if (sMonths < 10) {
+            tStringBuffer.append('0');
+        }
+        tStringBuffer.append(sMonths);
+        tStringBuffer.append('-');
+        int sDays = tGCalendar.get(Calendar.DAY_OF_MONTH);
+        if (sDays < 10) {
+            tStringBuffer.append('0');
+        }
+        tStringBuffer.append(sDays);
+        return tStringBuffer.toString();
+    }
+
+    public static String getCurrentTime() {
+        // String pattern = "HH:mm:ss";
+        // SimpleDateFormat df = new SimpleDateFormat(pattern);
+        // Date today = new Date();
+        // String tString = df.format(today);
+        // return tString;
+        GregorianCalendar tGCalendar = new GregorianCalendar();
+        StringBuffer tStringBuffer = new StringBuffer(8);
+        int sHOUR = tGCalendar.get(Calendar.HOUR_OF_DAY);
+        if (sHOUR < 10) {
+            tStringBuffer.append('0');
+        }
+        tStringBuffer.append(sHOUR);
+        tStringBuffer.append(':');
+        int sMINUTE = tGCalendar.get(Calendar.MINUTE);
+        if (sMINUTE < 10) {
+            tStringBuffer.append('0');
+        }
+        tStringBuffer.append(sMINUTE);
+        tStringBuffer.append(':');
+        int sSECOND = tGCalendar.get(Calendar.SECOND);
+        if (sSECOND < 10) {
+            tStringBuffer.append('0');
+        }
+        tStringBuffer.append(sSECOND);
+        return tStringBuffer.toString();
+    }
+
 }
