@@ -28,5 +28,6 @@ public class Main {
         B annotation = method.getAnnotation(B.class);
 
         String value = annotation.value();
+        System.out.println(value);
     }
 }

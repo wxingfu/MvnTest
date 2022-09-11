@@ -1,0 +1,12 @@
+package com.wxf.card.analysis;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class CardAnalysisApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(CardAnalysisApplication.class, args);
+    }
+}
