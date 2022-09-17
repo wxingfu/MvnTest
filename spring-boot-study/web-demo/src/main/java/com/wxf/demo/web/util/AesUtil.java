@@ -2,8 +2,6 @@ package com.wxf.demo.web.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -11,6 +9,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
+import java.util.Base64;
 
 /*
  *
@@ -65,8 +64,8 @@ public class AesUtil {
             cipher.init(Cipher.ENCRYPT_MODE, key);
             // 加密
             byte[] result = cipher.doFinal(byteContent);
-            // return Base64.getEncoder().encodeToString(result);
-            return (new BASE64Encoder()).encode(result);
+            return Base64.getEncoder().encodeToString(result);
+            // return (new BASE64Encoder()).encode(result);
         } catch (Exception e) {
             log.info("Aes encrypt exception ", e);
         }
@@ -77,8 +76,8 @@ public class AesUtil {
     public static String decrypt(String contentStr, String password) {
         try {
 
-            byte[] content = (new BASE64Decoder()).decodeBuffer(contentStr);
-
+            // byte[] content = (new BASE64Decoder()).decodeBuffer(contentStr);
+            byte[] content = Base64.getDecoder().decode(contentStr);
             KeyGenerator kgen = KeyGenerator.getInstance("AES");
             SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
             secureRandom.setSeed(password.getBytes(StandardCharsets.UTF_8));
