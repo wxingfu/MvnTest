@@ -1,0 +1,2 @@
+数据表初始化sql放置在External Libraries的org/quartz/impl/jdbcjobstore中，直接用其初始化相关表即可。
+要注意的是，用来放置这些表的库要与quartz.properties的库一致。

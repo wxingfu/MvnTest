@@ -1,0 +1,12 @@
+server:
+  port: 8088
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test_quartz
+    username: root
+    password: ff514519
+mybatis:
+  type-aliases-package: com.weixf.quartz.entity
+  configuration:
+    map-underscore-to-camel-case: true # 驼峰命名规范
