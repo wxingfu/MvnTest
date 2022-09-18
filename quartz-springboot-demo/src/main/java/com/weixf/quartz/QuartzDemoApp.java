@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @MapperScan(value = "com.weixf.quartz.mapper")
 @SpringBootApplication
-public class QuartzApp {
+public class QuartzDemoApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(QuartzApp.class, args);
+        SpringApplication.run(QuartzDemoApp.class, args);
     }
 }
