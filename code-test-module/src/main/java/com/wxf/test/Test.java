@@ -17,11 +17,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.CharsetUtils;
 import org.apache.http.util.EntityUtils;
-import sun.misc.BASE64Decoder;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,7 +72,8 @@ public class Test {
             JSONObject getObjectData = resultGetObjectJson.getJSONObject("data");
             String ossobject = getObjectData.getString("ossobject");//文件码
 
-            byte[] buffer = new BASE64Decoder().decodeBuffer(ossobject);
+            // byte[] buffer = new BASE64Decoder().decodeBuffer(ossobject);
+            byte[] buffer = Base64.getDecoder().decode(ossobject);
             out = new FileOutputStream(filePathName);
             out.write(buffer);
             resultCode = true;

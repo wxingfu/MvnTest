@@ -46,7 +46,6 @@ public class Test9 {
     }
 
 
-
     public static StringBuffer getAllKey(JSONObject jsonObject) {
         StringBuffer stringBuffer = new StringBuffer();
         for (String key : jsonObject.keySet()) {
@@ -64,7 +63,7 @@ public class Test9 {
 
     public static StringBuffer getAllKey(JSONArray jsonArray) {
         StringBuffer stringBuffer = new StringBuffer();
-        if (jsonArray != null ) {
+        if (jsonArray != null) {
             for (Object key : jsonArray) {
                 if (key instanceof JSONObject) {
                     JSONObject innerObject = (JSONObject) key;
