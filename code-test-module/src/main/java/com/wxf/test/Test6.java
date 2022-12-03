@@ -1,18 +1,19 @@
 package com.wxf.test;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class Test6 {
 
-    private static final Map<HandlerEnum, HandlerStrategy> strategyMap =
-            new HashMap<HandlerEnum, HandlerStrategy>();
+    private static String FORMATMODOL = "0.00";
+    // 数字转换对象
+    private static DecimalFormat mDecimalFormat = new DecimalFormat(FORMATMODOL);
 
     public static void main(String[] args) {
-        strategyMap.put(HandlerEnum.REPORT, new Handler());
+        String format = mDecimalFormat.format("0.00");
+        System.out.println(format);
 
-        HandlerStrategy strategy = strategyMap.get(HandlerEnum.REPORT);
-        System.out.println(strategy);
     }
 }

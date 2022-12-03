@@ -20,15 +20,26 @@ public class Test2 {
 
     public static void main(String[] args) throws IOException, JDOMException {
         SAXBuilder saxBuilder = new SAXBuilder();
-        Document document = saxBuilder.build(Files.newInputStream(Paths.get("C:\\Users\\weixf\\Desktop\\new 3.xml")));
+        Document document = saxBuilder.build(Files.newInputStream(Paths.get("C:\\Users\\weixf\\Desktop\\回销.xml")));
         Element rootElement = document.getRootElement();
         Element body = rootElement.getChild("Body");
 
-        Element renewContReturns = body.getChild("RenewContReturns");
-        List<Element> children = renewContReturns.getChildren("RenewContReturn");
-        for (Element child : children) {
-            System.out.println(child.getChildText("ActualPayPrem"));
+        Element Images = body.getChild("Images");
+        List<Element> children = Images.getChildren("Image");
+        int size = children.size();
+        if (children.size() == 0) {
+            System.out.println(size);
         }
+        for (Element child : children) {
+            System.out.println(child.getChildText("ImageName"));
+        }
+
+
+        // Element renewContReturns = body.getChild("RenewContReturns");
+        // List<Element> children = renewContReturns.getChildren("RenewContReturn");
+        // for (Element child : children) {
+        //     System.out.println(child.getChildText("ActualPayPrem"));
+        // }
 
         // System.out.println(rootElement.getText());
 

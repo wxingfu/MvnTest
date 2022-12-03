@@ -1,7 +1,6 @@
 package com.wxf.spring;
 
 import com.wxf.spring.pdm.*;
-import com.wxf.spring.service.LDMaxNoService;
 import com.wxf.spring.utils.CommonUtil;
 import freemarker.template.Configuration;
 import lombok.extern.slf4j.Slf4j;

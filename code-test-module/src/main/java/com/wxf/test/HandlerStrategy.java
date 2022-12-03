@@ -6,4 +6,6 @@ package com.wxf.test;
  * @date 2022-09-21
  */
 public interface HandlerStrategy {
+
+    void commonMethod();
 }
