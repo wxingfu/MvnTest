@@ -122,4 +122,6 @@ public class SendMailText_Picture_Enclosure {
 
         return msg;
     }
+
+
 }

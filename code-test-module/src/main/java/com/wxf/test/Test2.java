@@ -17,58 +17,7 @@ public class Test2 {
 
 
     public static void main(String[] args) throws IOException, JDOMException {
-        // SAXBuilder saxBuilder = new SAXBuilder();
-        // Document document = saxBuilder.build(Files.newInputStream(Paths.get("C:\\Users\\weixf\\Desktop\\回销.xml")));
-        // Element rootElement = document.getRootElement();
-        // Element body = rootElement.getChild("Body");
-        //
-        // Element Images = body.getChild("Images");
-        // List<Element> children = Images.getChildren("Image");
-        // int size = children.size();
-        // if (children.size() == 0) {
-        //     System.out.println(size);
-        // }
-        // for (Element child : children) {
-        //     System.out.println(child.getChildText("ImageName"));
-        // }
 
-        File file = new File("E:\\MyWork\\files\\temp\\GWL\\1.XML");
-        SAXBuilder sax = new SAXBuilder();
-        Document doc = sax.build(Files.newInputStream(file.toPath()));
-        Element rootElement = doc.getRootElement();
-        Element entities = rootElement.getChild("entities");
-        List<Element> entitiesChildren = entities.getChildren();
-        for (Element entitie : entitiesChildren) {
-            Element eleNativeCharNames = entitie.getChild("nativeCharNames");
-            if (eleNativeCharNames != null) {
-                List<Element> eleNativeCharNameChildren = eleNativeCharNames.getChildren("nativeCharName");
-                for (Element eleNativeCharName : eleNativeCharNameChildren) {
-                    String str = eleNativeCharName.getText();
-                    System.out.println("----------------------------");
-                    System.out.println(str);
-                    System.out.println(convert(str));
-                    System.out.println(string2Unicode(str));
-                    System.out.println(unicode2String(convert(str)));
-                    System.out.println(unicode2String(string2Unicode(str)));
-                    System.out.println("----------------------------");
-                }
-            }
-        }
-
-        // Element renewContReturns = body.getChild("RenewContReturns");
-        // List<Element> children = renewContReturns.getChildren("RenewContReturn");
-        // for (Element child : children) {
-        //     System.out.println(child.getChildText("ActualPayPrem"));
-        // }
-
-        // System.out.println(rootElement.getText());
-
-        // BigDecimal mDuePayPrem = new BigDecimal(0);
-        // for (int i = 1; i <= 3; i++) {
-        //     mDuePayPrem = mDuePayPrem.add(new BigDecimal(""));
-        // }
-        // String a = mDuePayPrem.toString();
-        // System.out.println(a);
     }
 
 

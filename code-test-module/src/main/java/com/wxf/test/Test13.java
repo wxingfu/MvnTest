@@ -25,11 +25,6 @@ public class Test13 {
 
     public static void main(String[] args) throws Exception {
 
-        // BigDecimal SumPrem = new BigDecimal("71");
-        //
-        // if (SumPrem.compareTo(new BigDecimal("70")) > 0) {
-        //     System.out.println("true");
-        // }
 
         CustomCallable cRunnacle = new CustomCallable();
         FutureTask<String> futureTask = new FutureTask<String>(cRunnacle);
