@@ -1,9 +1,5 @@
 package com.wxf.rpc;
 
-import org.junit.Test;
-
-import javax.annotation.Resource;
-
 /*
  *
  * @author weixf

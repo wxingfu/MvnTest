@@ -29,14 +29,9 @@ public class Test12 {
         // Matcher matcher = pattern.matcher("91234520120131123X");
         // System.out.println(matcher.matches());
 
-        Document document = new Document();
         Element tranData = new Element("TranData");
-        document.addContent(tranData);
 
         Element head = new Element("Head");
-        Element body = new Element("Body");
-        tranData.addContent(head);
-        tranData.addContent(body);
 
         Element Flag = new Element("Flag");
         Flag.setText("000000");
@@ -67,6 +62,9 @@ public class Test12 {
         head.addContent(Version);
         head.addContent(RequestType);
         head.addContent(ComId);
+
+
+        Element body = new Element("Body");
 
         Element ContNo = new Element("ContNo");
         String contNo = "120077000000122";
@@ -146,12 +144,22 @@ public class Test12 {
 
         body.addContent(A);
 
+
+        tranData.addContent(head);
+        Element head1 = new Element("Head");
+        head1.addContent(head.cloneContent());
+        tranData.addContent(head1);
+        tranData.addContent(body);
+
+        Document document = new Document();
+        document.addContent(tranData);
+
         byte[] xmlBytes = XMLGetBytes(document);
         String xml = new String(xmlBytes != null ? xmlBytes : new byte[0]);
         System.out.println(xml);
 
-        JSONObject jsonObject = XML.toJSONObject(xml);
-        System.out.println(jsonObject.toString());
+        // JSONObject jsonObject = XML.toJSONObject(xml);
+        // System.out.println(jsonObject.toString());
     }
 
     public static byte[] XMLGetBytes(Document doc) {
