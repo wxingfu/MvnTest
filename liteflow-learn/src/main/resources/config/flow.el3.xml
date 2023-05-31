@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE flow PUBLIC  "liteflow" "liteflow.dtd">
+<flow>
+    <!--<chain name="test2">-->
+    <!--    THEN(-->
+    <!--        a,-->
+    <!--        SWITCH(b2).to(-->
+    <!--            THEN(d, e, f).id("t1"),-->
+    <!--            THEN(-->
+    <!--                c,-->
+    <!--                WHEN(-->
+    <!--                    THEN(-->
+    <!--                        SWITCH(g).to(THEN(h, i).id("t2"), j),-->
+    <!--                        k-->
+    <!--                    ),-->
+    <!--                    THEN(l, m)-->
+    <!--                )-->
+    <!--            ).id("t3")-->
+    <!--        ),-->
+    <!--        z-->
+    <!--    );-->
+    <!--</chain>-->
+    <chain name="test2">
+        item1 = THEN(d, e, f).id("t1");
+        item2_1 = THEN(
+            SWITCH(g).to(
+                THEN(h, i).id("t2"),
+                j
+            ),
+            k
+        );
+        item2_2 = THEN(l, m);
+        item2 = THEN(c, WHEN(item2_1, item2_2)).id("t3");
+
+        THEN(
+            a,
+            SWITCH(b2).to(item1, item2),
+            z
+        );
+    </chain>
+
+</flow>
