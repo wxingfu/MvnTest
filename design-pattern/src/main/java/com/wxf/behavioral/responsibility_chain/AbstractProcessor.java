@@ -7,7 +7,7 @@ package com.wxf.behavioral.responsibility_chain;
  */
 public abstract class AbstractProcessor implements Processor {
 
-    private Processor next;
+    private final Processor next;
 
     public AbstractProcessor(Processor processor) {
         this.next = processor;
