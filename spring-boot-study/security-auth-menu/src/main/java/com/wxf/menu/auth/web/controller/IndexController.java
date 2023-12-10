@@ -22,7 +22,7 @@ public class IndexController {
 
     @RequestMapping(value = "/main")
     public String main(ModelMap map) {
-        //加载菜单
+        // 加载菜单
         List<TbMenu> menus = menuService.findAuditMenu();
         map.put("menus", menus);
         if (menus.isEmpty()) {

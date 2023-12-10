@@ -5,6 +5,7 @@ import com.wxf.schema.maker.table.Key;
 import com.wxf.schema.maker.table.Table;
 import com.wxf.schema.maker.utility.DBConst;
 import com.wxf.schema.maker.utility.SqlTypes;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedWriter;
@@ -23,41 +24,37 @@ import java.util.Properties;
 @Component
 public class MakeDB {
 
-    private String packageName;
-    private String schemaOutputPATH;
-    private String outputPackagePATH;
-
-    private final int DBType = DBConst.DB_UnSupported;
     private static final String space4_1 = "    ";
     private static final String space4_2 = space4_1 + space4_1;
     private static final String space4_3 = space4_2 + space4_1;
     private static final String space4_4 = space4_3 + space4_1;
     private static final String space4_5 = space4_4 + space4_1;
     private static final String space4_6 = space4_5 + space4_1;
+    private final int DBType = DBConst.DB_UnSupported;
+    public boolean addOrderBy = false;
+    private String packageName;
+    private String schemaOutputPATH;
+    private String outputPackagePATH;
     private String DBName;
+    @Setter
     private boolean UserInfo = false;
     private boolean MultiCloseConn = false;
     private boolean hasTimeStamp = false;
-    public boolean addOrderBy = false;
 
-
-    public void setUserInfo(boolean UserInfo) {
-        this.UserInfo = UserInfo;
-    }
-
-
-    public void isMultiCloseConn(boolean MultiCloseConn) {
-        this.MultiCloseConn = MultiCloseConn;
-    }
 
     public MakeDB() {
     }
+
 
     public MakeDB(String packageName, String schemaOutputPATH, String outputPackagePATH, String DBName) {
         this.packageName = packageName;
         this.schemaOutputPATH = schemaOutputPATH;
         this.outputPackagePATH = outputPackagePATH;
         this.DBName = DBName;
+    }
+
+    public void isMultiCloseConn(boolean MultiCloseConn) {
+        this.MultiCloseConn = MultiCloseConn;
     }
 
     public boolean hasTimeStamp(Table tTable) {
@@ -250,7 +247,7 @@ public class MakeDB {
             out.println();
             // 生成closeData方法
             closeData(out, ClassName);
-            //xjh Add 2006-10-29 生成addOrderBy方法
+            // xjh Add 2006-10-29 生成addOrderBy方法
             if (addOrderBy) {
                 addOrderBy(out, tTable);
             }
@@ -452,7 +449,7 @@ public class MakeDB {
         out.println(space4_2 + "finally{");
         out.println(space4_3 + "if(!mflag){");
         out.println(space4_4 + "try{");
-        //xijiahui 2006-07-07 finally里重复关闭数据库连接在有些JDBC驱动下会报错，例如Sql Server的jDts驱动
+        // xijiahui 2006-07-07 finally里重复关闭数据库连接在有些JDBC驱动下会报错，例如Sql Server的jDts驱动
         if (MultiCloseConn) {
             out.println(space4_5 + "con.close();");
         } else {
@@ -537,7 +534,7 @@ public class MakeDB {
         out.println(space4_2 + "finally{");
         out.println(space4_3 + "if(!mflag){");
         out.println(space4_4 + "try{");
-        //xijiahui 2006-07-07 finally里重复关闭数据库连接在有些JDBC驱动下会报错，例如Sql Server的jDts驱动
+        // xijiahui 2006-07-07 finally里重复关闭数据库连接在有些JDBC驱动下会报错，例如Sql Server的jDts驱动
         if (MultiCloseConn) {
             out.println(space4_5 + "con.close();");
         } else {
@@ -608,7 +605,7 @@ public class MakeDB {
         out.println(space4_2 + "finally{");
         out.println(space4_3 + "if(!mflag){");
         out.println(space4_4 + "try{");
-        //xijiahui 2006-07-07 finally里重复关闭数据库连接在有些JDBC驱动下会报错，例如Sql Server的jDts驱动
+        // xijiahui 2006-07-07 finally里重复关闭数据库连接在有些JDBC驱动下会报错，例如Sql Server的jDts驱动
         if (MultiCloseConn) {
             out.println(space4_5 + "con.close();");
         } else {
@@ -705,7 +702,7 @@ public class MakeDB {
         out.println(space4_3 + "// 断开数据库连接");
         out.println(space4_3 + "if(!mflag){");
         out.println(space4_4 + "try{");
-        //xijiahui 2006-07-07 finally里重复关闭数据库连接在有些JDBC驱动下会报错，例如Sql Server的jDts驱动
+        // xijiahui 2006-07-07 finally里重复关闭数据库连接在有些JDBC驱动下会报错，例如Sql Server的jDts驱动
         if (MultiCloseConn) {
             out.println(space4_5 + "con.close();");
         } else {
@@ -842,7 +839,7 @@ public class MakeDB {
         out.println(space4_2 + "finally{");
         out.println(space4_3 + "if(!mflag){");
         out.println(space4_4 + "try{");
-        //xijiahui 2006-07-07 finally里重复关闭数据库连接在有些JDBC驱动下会报错，例如Sql Server的jDts驱动
+        // xijiahui 2006-07-07 finally里重复关闭数据库连接在有些JDBC驱动下会报错，例如Sql Server的jDts驱动
         if (MultiCloseConn) {
             out.println(space4_5 + "con.close();");
         } else {
@@ -909,7 +906,7 @@ public class MakeDB {
         out.println(space4_3 + "// 断开数据库连接");
         out.println(space4_3 + "if(!mflag){");
         out.println(space4_4 + "try{");
-        //xijiahui 2006-07-07 finally里重复关闭数据库连接在有些JDBC驱动下会报错，例如Sql Server的jDts驱动
+        // xijiahui 2006-07-07 finally里重复关闭数据库连接在有些JDBC驱动下会报错，例如Sql Server的jDts驱动
         if (MultiCloseConn) {
             out.println(space4_5 + "con.close();");
         } else {
@@ -1054,8 +1051,8 @@ public class MakeDB {
         out.println(space4_1 + " */");
         out.println(space4_1 + "public " + TableName + "Set getData(){");
         out.println(space4_2 + "int tCount = 0;");
-        out.println(space4_2 + "" + TableName + "Set t" + TableName + "Set = new " + TableName + "Set();");
-        out.println(space4_2 + "" + TableName + "Schema t" + TableName + "Schema = null;");
+        out.println(space4_2 + TableName + "Set t" + TableName + "Set = new " + TableName + "Set();");
+        out.println(space4_2 + TableName + "Schema t" + TableName + "Schema = null;");
         out.println(space4_2 + "if(null == mResultSet){");
         out.println(space4_3 + "CError tError = new CError();");
         out.println(space4_3 + "tError.moduleName = \"" + ClassName + "\";");
@@ -1153,7 +1150,7 @@ public class MakeDB {
         out.println(space4_2 + "finally{");
         out.println(space4_3 + "if(!mflag){");
         out.println(space4_4 + "try{");
-        //xijiahui 2006-07-07 finally里重复关闭数据库连接在有些JDBC驱动下会报错，例如Sql Server的jDts驱动
+        // xijiahui 2006-07-07 finally里重复关闭数据库连接在有些JDBC驱动下会报错，例如Sql Server的jDts驱动
         if (MultiCloseConn) {
             out.println(space4_5 + "con.close();");
         } else {
@@ -1201,7 +1198,7 @@ public class MakeDB {
                 out.println(space4_3 + "schema.set" + FieldCode + "(rs.getInt(" + (i + 1) + "));");
             }
             if (FieldType.equals("String")) {
-                if (DBType == DBConst.DB_Oracle && f.getDBSqlType() == SqlTypes.LONGVARCHAR) { //使用流传输，只能取一次
+                if (DBType == DBConst.DB_Oracle && f.getDBSqlType() == SqlTypes.LONGVARCHAR) { // 使用流传输，只能取一次
                     out.println(space4_3 + "schema.set" + FieldCode + "(rs.getString(" + (i + 1) + "));");
                 } else if (f.getDBSqlType() == SqlTypes.TIMESTAMP) {
                     out.println(space4_3 + "schema.set" + FieldCode + "(fDate.getString(rs.getTimestamp(" + (i + 1) + ")));");
@@ -1263,7 +1260,7 @@ public class MakeDB {
                 out.println(strAppend + "}");
                 break;
             case SqlTypes.VARCHAR:
-            case SqlTypes.TIMESTAMP: //For SQL Server
+            case SqlTypes.TIMESTAMP: // For SQL Server
                 out.println(strAppend + "if(this.get" + ColumnInfo.getCode() + "() == null || this.get" + ColumnInfo.getCode() + "().equals(\"null\")){");
                 out.println(strAppend + space4_1 + strStatementVar + ".setNull(" + nParamIndex + ", " + "Types." + SqlTypes.getSQLTypeStr(nColumnType) + ");");
 
@@ -1277,8 +1274,8 @@ public class MakeDB {
 
                 out.println(strAppend + "}");
                 break;
-            case SqlTypes.LONGVARCHAR: //For SQL Server的Text类型(MS SQL Server JDBC 2005驱动下)和Oracle下的Long类型
-            case SqlTypes.CLOB: //For SQL Server的Text类型(jTds驱动下)
+            case SqlTypes.LONGVARCHAR: // For SQL Server的Text类型(MS SQL Server JDBC 2005驱动下)和Oracle下的Long类型
+            case SqlTypes.CLOB: // For SQL Server的Text类型(jTds驱动下)
                 out.println(strAppend + "if(this.get" + ColumnInfo.getCode() + "() == null || this.get" + ColumnInfo.getCode() + "().equals(\"null\")){");
                 out.println(strAppend + space4_1 + strStatementVar + ".setNull(" + nParamIndex + ", " + "Types." + SqlTypes.getSQLTypeStr(nColumnType) + ");");
 

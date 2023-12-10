@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 class Phone {
 
     public static synchronized void sendSMS() throws Exception {
-        //停留4秒
+        // 停留4秒
         TimeUnit.SECONDS.sleep(4);
         System.out.println("------sendSMS");
     }
@@ -63,7 +63,7 @@ public class Lock_8 {
 
         new Thread(() -> {
             try {
-                phone.sendSMS();
+                Phone.sendSMS();
             } catch (Exception e) {
                 e.printStackTrace();
             }

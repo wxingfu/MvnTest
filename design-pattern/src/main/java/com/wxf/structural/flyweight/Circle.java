@@ -1,7 +1,7 @@
 package com.wxf.structural.flyweight;
 
 public class Circle implements Shape {
-    private String color;
+    private final String color;
     private int x;
     private int y;
     private int radius;

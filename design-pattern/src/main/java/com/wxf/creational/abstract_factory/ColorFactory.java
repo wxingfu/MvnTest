@@ -13,14 +13,14 @@ public class ColorFactory extends ShapeAbstractFactory {
 
     @Override
     public Color getColor(String color) {
-        if(color == null){
+        if (color == null) {
             return null;
         }
-        if("RED".equalsIgnoreCase(color)){
+        if ("RED".equalsIgnoreCase(color)) {
             return new Red();
-        } else if("GREEN".equalsIgnoreCase(color)){
+        } else if ("GREEN".equalsIgnoreCase(color)) {
             return new Green();
-        } else if("BLUE".equalsIgnoreCase(color)){
+        } else if ("BLUE".equalsIgnoreCase(color)) {
             return new Blue();
         }
         return null;

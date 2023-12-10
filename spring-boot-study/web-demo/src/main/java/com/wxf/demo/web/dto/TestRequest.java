@@ -1,7 +1,6 @@
 package com.wxf.demo.web.dto;
 
 
-
 public class TestRequest {
     /**
      * 手机号码

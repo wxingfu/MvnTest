@@ -3,6 +3,7 @@ package com.wxf.schema.maker.maker;
 
 import com.wxf.schema.maker.table.Column;
 import com.wxf.schema.maker.table.Table;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedWriter;
@@ -22,21 +23,17 @@ import java.util.Properties;
 @Component
 public class MakeSet {
 
-    private String packageName;
-    private String schemaOutputPATH;
-    private String outputPackagePATH;
-
-    private String DBName;
     private static final String space4_1 = "    ";
     private static final String space4_2 = space4_1 + space4_1;
     private static final String space4_3 = space4_2 + space4_1;
     private static final String space4_4 = space4_3 + space4_1;
     private static final String space4_5 = space4_3 + space4_2;
+    private String packageName;
+    private String schemaOutputPATH;
+    private String outputPackagePATH;
+    private String DBName;
+    @Setter
     private boolean UserInfo = false;
-
-    public void setUserInfo(boolean UserInfo) {
-        this.UserInfo = UserInfo;
-    }
 
     public MakeSet() {
     }
@@ -63,7 +60,7 @@ public class MakeSet {
         String FileName = ClassName + ".java";
         String SchemaName = TableName + "Schema";
         try {
-            //创建目录
+            // 创建目录
             File dir = new File(filePath);
             if (!dir.exists() || !dir.isDirectory()) {
                 boolean b = dir.mkdirs();
@@ -120,8 +117,8 @@ public class MakeSet {
             // 生成 set 方法
             set(out, ClassName, SchemaName);
             out.println();
-            //xjh Add 2006-08-28 生成 copy 方法
-            //说明:此copy方法不是实现Clone，而是复制数据；为了避免未来实现真正的clone,方法名定为copy
+            // xjh Add 2006-08-28 生成 copy 方法
+            // 说明:此copy方法不是实现Clone，而是复制数据；为了避免未来实现真正的clone,方法名定为copy
             copy(out, ClassName);
             out.println();
             // 生成 encode 方法
@@ -165,16 +162,22 @@ public class MakeSet {
                     out.println(space4_2 + "}");
                 }
                 out.println(space4_2 + "int iPos = 0;");
-                if (FieldType.equals("int")) {
-                    out.println(space4_2 + "int iTemp = 0;");
-                } else if (FieldType.equals("double")) {
-                    out.println(space4_2 + "double iTemp = 0d;");
-                } else if (FieldType.equals("float")) {
-                    out.println(space4_2 + "float iTemp = 0f;");
-                } else if (FieldType.equals("String")) {
-                    out.println(space4_2 + "String iTemp = null;");
-                } else if (FieldType.equals("Date")) {
-                    out.println(space4_2 + "Date iTemp = null;");
+                switch (FieldType) {
+                    case "int":
+                        out.println(space4_2 + "int iTemp = 0;");
+                        break;
+                    case "double":
+                        out.println(space4_2 + "double iTemp = 0d;");
+                        break;
+                    case "float":
+                        out.println(space4_2 + "float iTemp = 0f;");
+                        break;
+                    case "String":
+                        out.println(space4_2 + "String iTemp = null;");
+                        break;
+                    case "Date":
+                        out.println(space4_2 + "Date iTemp = null;");
+                        break;
                 }
                 out.println(space4_2 + tTable.getCode() + "Schema tSchema = null;");
                 out.println(space4_2 + "for(int i = 1; i < this.size(); i++){");

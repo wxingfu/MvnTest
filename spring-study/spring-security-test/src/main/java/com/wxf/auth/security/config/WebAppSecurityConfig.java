@@ -31,7 +31,7 @@ public class WebAppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //关闭默认的csrf认证
+        // 关闭默认的csrf认证
         // http.csrf().disable();
 
         http.formLogin()
@@ -40,7 +40,7 @@ public class WebAppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/do/login.html") // 指定提交登录表单的地址
                 .usernameParameter("loginAcct")
                 .passwordParameter("userPswd") // 定制登录账号和密码的请求参数名
-                .defaultSuccessUrl("/main.html"); //设置登录成功后默认前往的URL 地址
+                .defaultSuccessUrl("/main.html"); // 设置登录成功后默认前往的URL 地址
 
         http.logout()
                 .logoutUrl("/do/logout.html")

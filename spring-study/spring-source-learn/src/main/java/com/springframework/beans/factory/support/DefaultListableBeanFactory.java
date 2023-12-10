@@ -4,7 +4,11 @@ import com.springframework.beans.BeansException;
 import com.springframework.beans.factory.ConfigurableListableBeanFactory;
 import com.springframework.beans.factory.config.BeanDefinition;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /*
  *
@@ -14,7 +18,7 @@ import java.util.*;
 public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory
         implements ConfigurableListableBeanFactory, BeanDefinitionRegistry {
 
-    private Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
+    private final Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
 
     @Override
     public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition) {
@@ -75,7 +79,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     @Override
     public void preInstantiateSingletons() throws BeansException {
         beanDefinitionMap.forEach((beanName, beanDefinition) -> {
-            if(beanDefinition.isSingleton()){
+            if (beanDefinition.isSingleton()) {
                 getBean(beanName);
             }
         });

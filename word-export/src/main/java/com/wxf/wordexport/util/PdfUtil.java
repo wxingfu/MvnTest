@@ -31,7 +31,7 @@ public class PdfUtil {
                 .to(target).as(DocumentType.PDF).execute();
         if (execute) {
             converter.shutDown();
-        }else {
+        } else {
             converter.kill();
         }
     }

@@ -43,7 +43,7 @@ public class SysRoleController extends CommonController<SysRole, Integer, SysRol
             str.append(menu.getId()).append(",");
         }
         str = new StringBuilder(str.substring(0, str.length() - 1));
-        if (!"".equals(str.toString())) {
+        if (!"".contentEquals(str)) {
             str.append("]");
         }
         map.put("defaults", str.toString());

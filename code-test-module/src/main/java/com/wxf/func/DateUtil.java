@@ -31,7 +31,7 @@ public class DateUtil implements Cloneable, Serializable {
                 GregorianCalendar tGCalendar = new GregorianCalendar(Integer.parseInt(tsDate[0]), Integer.parseInt(tsDate[1]) - 1, Integer.parseInt(tsDate[2]));
                 tDate = new Date(tGCalendar.getTimeInMillis());
             } else if (dateString.indexOf("-") != -1 && dateString.indexOf("-") == 2) {
-                //tDate = df2.parse(dateString);
+                // tDate = df2.parse(dateString);
                 if (dateString.length() > 10)
                     dateString = dateString.substring(0, 10);
                 tsDate = dateString.split("-");
@@ -40,7 +40,7 @@ public class DateUtil implements Cloneable, Serializable {
                 GregorianCalendar tGCalendar = new GregorianCalendar(Integer.parseInt(tsDate[2]), Integer.parseInt(tsDate[1]) - 1, Integer.parseInt(tsDate[0]));
                 tDate = new Date(tGCalendar.getTimeInMillis());
             } else if (dateString.indexOf("/") != -1 && dateString.indexOf("/") == 4) {
-                //tDate = df3.parse(dateString);
+                // tDate = df3.parse(dateString);
                 if (dateString.length() > 10)
                     dateString = dateString.substring(0, 10);
                 tsDate = dateString.split("/");
@@ -49,7 +49,7 @@ public class DateUtil implements Cloneable, Serializable {
                 GregorianCalendar tGCalendar = new GregorianCalendar(Integer.parseInt(tsDate[0]), Integer.parseInt(tsDate[1]) - 1, Integer.parseInt(tsDate[2]));
                 tDate = new Date(tGCalendar.getTimeInMillis());
             } else if (dateString.indexOf("/") != -1 && dateString.indexOf("/") == 2) {
-                //tDate = df4.parse(dateString);
+                // tDate = df4.parse(dateString);
                 if (dateString.length() > 10)
                     dateString = dateString.substring(0, 10);
                 tsDate = dateString.split("/");

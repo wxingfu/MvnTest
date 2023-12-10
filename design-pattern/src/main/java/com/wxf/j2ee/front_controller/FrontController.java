@@ -2,7 +2,7 @@ package com.wxf.j2ee.front_controller;
 
 public class FrontController {
 
-    private Dispatcher dispatcher;
+    private final Dispatcher dispatcher;
 
     public FrontController() {
         dispatcher = new Dispatcher();
@@ -18,9 +18,9 @@ public class FrontController {
     }
 
     public void dispatchRequest(String request) {
-        //记录每一个请求
+        // 记录每一个请求
         trackRequest(request);
-        //对用户进行身份验证
+        // 对用户进行身份验证
         if (isAuthenticUser()) {
             dispatcher.dispatch(request);
         }

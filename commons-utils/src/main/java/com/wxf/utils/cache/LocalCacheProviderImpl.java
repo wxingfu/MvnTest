@@ -25,13 +25,14 @@ import java.util.function.Function;
 public class LocalCacheProviderImpl implements CacheProviderService {
 
     private static final Map<String, Cache<String, Object>> _cacheMap = Maps.newConcurrentMap();
+    private static final Lock lock = new ReentrantLock();
 
     static {
         Cache<String, Object> cacheContainer = CacheBuilder.newBuilder()
                 .maximumSize(AppConst.CACHE_MAXIMUM_SIZE)
-                .expireAfterWrite(AppConst.CACHE_MINUTE, TimeUnit.MILLISECONDS)//最后一次写入后的一段时间移出
+                .expireAfterWrite(AppConst.CACHE_MINUTE, TimeUnit.MILLISECONDS)// 最后一次写入后的一段时间移出
                 //.expireAfterAccess(AppConst.CACHE_MINUTE, TimeUnit.MILLISECONDS) //最后一次访问后的一段时间移出
-                .recordStats()//开启统计功能
+                .recordStats()// 开启统计功能
                 .build();
         _cacheMap.put(String.valueOf(AppConst.CACHE_MINUTE), cacheContainer);
     }
@@ -178,8 +179,6 @@ public class LocalCacheProviderImpl implements CacheProviderService {
         return exists;
     }
 
-    private static final Lock lock = new ReentrantLock();
-
     private Cache<String, Object> getCacheContainer(Long expireTime) {
         Cache<String, Object> cacheContainer = null;
         if (expireTime == null) {
@@ -194,9 +193,9 @@ public class LocalCacheProviderImpl implements CacheProviderService {
             lock.lock();
             cacheContainer = CacheBuilder.newBuilder()
                     .maximumSize(AppConst.CACHE_MAXIMUM_SIZE)
-                    .expireAfterWrite(expireTime, TimeUnit.MILLISECONDS)//最后一次写入后的一段时间移出
+                    .expireAfterWrite(expireTime, TimeUnit.MILLISECONDS)// 最后一次写入后的一段时间移出
                     //.expireAfterAccess(AppConst.CACHE_MINUTE, TimeUnit.MILLISECONDS) //最后一次访问后的一段时间移出
-                    .recordStats()//开启统计功能
+                    .recordStats()// 开启统计功能
                     .build();
             _cacheMap.put(mapKey, cacheContainer);
         } finally {

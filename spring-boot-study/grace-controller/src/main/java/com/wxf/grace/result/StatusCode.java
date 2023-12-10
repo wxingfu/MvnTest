@@ -7,7 +7,7 @@ package com.wxf.grace.result;
  */
 public interface StatusCode {
 
-    public int getCode();
+    int getCode();
 
-    public String getMsg();
+    String getMsg();
 }

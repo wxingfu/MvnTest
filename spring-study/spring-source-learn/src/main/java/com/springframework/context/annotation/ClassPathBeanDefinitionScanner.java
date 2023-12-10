@@ -5,6 +5,7 @@ import com.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostP
 import com.springframework.beans.factory.config.BeanDefinition;
 import com.springframework.beans.factory.support.BeanDefinitionRegistry;
 import com.springframework.stereotype.Component;
+
 import java.util.Set;
 
 /*
@@ -17,7 +18,7 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
     public static final String AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME =
             "com.springframework.context.annotation.internalAutowiredAnnotationProcessor";
 
-    private BeanDefinitionRegistry registry;
+    private final BeanDefinitionRegistry registry;
 
     public ClassPathBeanDefinitionScanner(BeanDefinitionRegistry registry) {
         this.registry = registry;
@@ -32,14 +33,14 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
                 if (StrUtil.isNotEmpty(beanScope)) {
                     candidate.setScope(beanScope);
                 }
-                //生成bean的名称
+                // 生成bean的名称
                 String beanName = determineBeanName(candidate);
-                //注册BeanDefinition
+                // 注册BeanDefinition
                 registry.registerBeanDefinition(beanName, candidate);
             }
         }
 
-        //注册处理@Autowired和@Value注解的BeanPostProcessor
+        // 注册处理@Autowired和@Value注解的BeanPostProcessor
         registry.registerBeanDefinition(AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME,
                 new BeanDefinition(AutowiredAnnotationBeanPostProcessor.class));
     }

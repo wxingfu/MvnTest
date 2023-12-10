@@ -1,6 +1,6 @@
 package com.wxf.behavioral.visitor;
 
-public class Keyboard  implements ComputerPart {
+public class Keyboard implements ComputerPart {
 
     @Override
     public void accept(ComputerPartVisitor computerPartVisitor) {

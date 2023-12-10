@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,10 +21,8 @@ import java.util.Properties;
  */
 public class IdCard {
 
-    private static Logger log = LoggerFactory.getLogger(IdCard.class);
-
     private static final String AREA_CODE = "/area-code.properties";
-
+    private static final Logger log = LoggerFactory.getLogger(IdCard.class);
 
     public static JSONObject analysisIdCard(String idCard) {
         JSONObject map = new JSONObject();
@@ -62,7 +61,7 @@ public class IdCard {
             if (area == null) {
                 return "未知区域";
             }
-            area = new String(area.getBytes("iso-8859-1"), "utf-8");
+            area = new String(area.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
             return area;
         } catch (IOException ioe) {
             ioe.printStackTrace();

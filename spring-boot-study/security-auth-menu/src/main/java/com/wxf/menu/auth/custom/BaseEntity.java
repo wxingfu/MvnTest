@@ -13,6 +13,15 @@ import javax.persistence.MappedSuperclass;
 public class BaseEntity<ID> {
     private ID id;
 
+    public BaseEntity() {
+        super();
+    }
+
+    public BaseEntity(ID id) {
+        super();
+        this.id = id;
+    }
+
     @Id
     @GeneratedValue
     public ID getId() {
@@ -20,15 +29,6 @@ public class BaseEntity<ID> {
     }
 
     public void setId(ID id) {
-        this.id = id;
-    }
-
-    public BaseEntity() {
-        super();
-    }
-
-    public BaseEntity(ID id) {
-        super();
         this.id = id;
     }
 }

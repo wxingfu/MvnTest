@@ -1,9 +1,7 @@
 package com.wxf.card.analysis.controller;
 
 import com.alibaba.fastjson.JSONObject;
-
 import com.wxf.card.analysis.entity.JsonResult;
-
 import com.wxf.card.analysis.service.CardServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

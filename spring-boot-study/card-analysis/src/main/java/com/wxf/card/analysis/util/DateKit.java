@@ -2,7 +2,11 @@ package com.wxf.card.analysis.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * 日期工具类
@@ -13,6 +17,8 @@ import java.util.*;
 public class DateKit {
 
 
+    private final static SimpleDateFormat sdfDays = new SimpleDateFormat(
+            "yyyyMMdd");
     /**
      * 格式是默认格式
      */
@@ -21,24 +27,18 @@ public class DateKit {
      * 英文全格式
      */
     public static String FORMAR_LONG = "yyyy-MM-dd HH:mm:ss";
-
     /**
      * 中文全格式
      * 精确到秒
      */
 
     public static String FORMAR_CHINA = "yyyy年MM月dd日HH:mm:ss";
-
     /**
      * 中文格式
      * 精确到天
      */
 
     public static String FORMAR_CHINA1 = "yyyy年MM月dd日";
-
-
-    private final static SimpleDateFormat sdfDays = new SimpleDateFormat(
-            "yyyyMMdd");
 
     /**
      * 把日期字符串格式化成日期类型
@@ -633,9 +633,9 @@ public class DateKit {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         datas.add(format.format(calendar.getTime()));
-        //得到当前时间的时
+        // 得到当前时间的时
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        //判断是否是0点 是赋值为24点  并且时间日 向后退一天
+        // 判断是否是0点 是赋值为24点  并且时间日 向后退一天
         if (hour == 0) {
             hour = 24;
             datas.add(format.format(calendar.getTime()));

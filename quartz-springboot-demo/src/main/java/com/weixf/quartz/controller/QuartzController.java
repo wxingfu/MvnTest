@@ -4,12 +4,19 @@ package com.weixf.quartz.controller;
 import com.weixf.quartz.mapper.PersonMapper;
 import com.weixf.quartz.schedule.MajorJob;
 import com.weixf.quartz.utils.QuartzUtils;
-import org.quartz.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.JobKey;
+import org.quartz.SchedulerException;
+import org.quartz.SimpleScheduleBuilder;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.TriggerKey;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 
@@ -17,13 +24,13 @@ import java.util.Date;
 @RequestMapping("/quartz")
 public class QuartzController {
 
-    @Autowired
-    private PersonMapper personMapper;
-
     static String jobName = "jobName-1";
     static String triggerName = "triggerName-1";
     static String jobGroupName = "job-group";
     static String triggerGroupName = "trigger-group";
+
+    @Resource
+    private PersonMapper personMapper;
 
     /**
      * 任务启动

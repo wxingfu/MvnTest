@@ -2,7 +2,12 @@ package com.wxf.demo.web.util;
 
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.*;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -14,24 +19,6 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisUtil {
 
-    @Autowired
-    private RedisTemplate redisTemplate;
-
-    @Resource(name = "redisTemplate")
-    private ValueOperations<String, String> valueOperations;
-
-    @Resource(name = "redisTemplate")
-    private HashOperations<String, String, Object> hashOperations;
-
-    @Resource(name = "redisTemplate")
-    private ListOperations<String, Object> listOperations;
-
-    @Resource(name = "redisTemplate")
-    private SetOperations<String, Object> setOperations;
-
-    @Resource(name = "redisTemplate")
-    private ZSetOperations<String, Object> zSetOperations;
-
     /**
      * 默认过期时长，单位：秒
      */
@@ -40,6 +27,18 @@ public class RedisUtil {
      * 不设置过期时长
      */
     public final static long NOT_EXPIRE = -1;
+    @Autowired
+    private RedisTemplate redisTemplate;
+    @Resource(name = "redisTemplate")
+    private ValueOperations<String, String> valueOperations;
+    @Resource(name = "redisTemplate")
+    private HashOperations<String, String, Object> hashOperations;
+    @Resource(name = "redisTemplate")
+    private ListOperations<String, Object> listOperations;
+    @Resource(name = "redisTemplate")
+    private SetOperations<String, Object> setOperations;
+    @Resource(name = "redisTemplate")
+    private ZSetOperations<String, Object> zSetOperations;
 
     public void set(String key, Object value, long expire) {
         valueOperations.set(key, toJson(value));

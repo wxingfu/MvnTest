@@ -4,7 +4,15 @@ import javax.crypto.Cipher;
 import javax.xml.bind.DatatypeConverter;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
-import java.security.*;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.SecureRandom;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -69,7 +77,7 @@ public class RSAUtil {
             RSAPublicKey rsaPublicKey = (RSAPublicKey) publicKey;
             RSAPrivateKeySpec spec = new RSAPrivateKeySpec(rsaPublicKey.getModulus(), rsaPublicKey.getPublicExponent());
             Key fakePrivateKey = KeyFactory.getInstance(RSA).generatePrivate(spec);
-            cipher = Cipher.getInstance(RSA); //It is a stateful object. so we need to get new one.
+            cipher = Cipher.getInstance(RSA); // It is a stateful object. so we need to get new one.
             cipher.init(Cipher.DECRYPT_MODE, fakePrivateKey);
         }
         if (cipherText == null || cipherText.length() == 0) {
@@ -108,7 +116,7 @@ public class RSAUtil {
         try {
             cipher.init(Cipher.ENCRYPT_MODE, privateKey);
         } catch (InvalidKeyException e) {
-            //For IBM JDK, 原因请看解密方法中的说明
+            // For IBM JDK, 原因请看解密方法中的说明
             RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) privateKey;
             RSAPublicKeySpec publicKeySpec = new RSAPublicKeySpec(rsaPrivateKey.getModulus(),
                     rsaPrivateKey.getPrivateExponent());

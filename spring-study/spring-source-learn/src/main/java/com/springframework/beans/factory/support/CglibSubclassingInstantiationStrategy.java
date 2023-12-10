@@ -19,7 +19,7 @@ public class CglibSubclassingInstantiationStrategy implements InstantiationStrat
      */
     @Override
     public Object instantiate(BeanDefinition beanDefinition) throws BeansException {
-        //TODO 感兴趣的小伙伴可以实现下
+        // TODO 感兴趣的小伙伴可以实现下
         throw new UnsupportedOperationException("CGLIB instantiation strategy is not supported");
     }
 }

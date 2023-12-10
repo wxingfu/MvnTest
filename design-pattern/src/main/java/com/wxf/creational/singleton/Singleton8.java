@@ -8,5 +8,5 @@ package com.wxf.creational.singleton;
  * Singleton8.INSTANCE.getInstance()
  */
 public enum Singleton8 {
-    INSTANCE;
+    INSTANCE
 }

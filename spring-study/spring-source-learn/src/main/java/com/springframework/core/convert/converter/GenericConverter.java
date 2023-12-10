@@ -13,7 +13,7 @@ public interface GenericConverter {
 
     Object convert(Object source, Class sourceType, Class targetType);
 
-    public static final class ConvertiblePair {
+    final class ConvertiblePair {
 
         private final Class<?> sourceType;
 

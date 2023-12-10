@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class DeadLock {
 
-    //创建两个对象
+    // 创建两个对象
     static Object a = new Object();
     static Object b = new Object();
 

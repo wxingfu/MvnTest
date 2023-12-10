@@ -3,7 +3,11 @@ package com.wxf.freemarker;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /*
  *
@@ -37,6 +41,23 @@ public class BarCode {
 
     public BarCode(String code) {
         this.codeStr = code;
+    }
+
+    // 设置条码图像的背景色
+    private static void setImageBgColor(BufferedImage image, String strColor) {
+        Graphics g = image.getGraphics();
+        String t_Str = strColor;
+        Color t_Color = g.getColor();
+        if (!t_Str.startsWith("#")) {
+            t_Str = "#" + t_Str;
+        }
+        if (t_Str.length() != 7) {
+            System.out.println("BarCode:错误的颜色值" + t_Str);
+            return;
+        }
+        g.setColor(Color.decode(t_Str));
+        g.fillRect(0, 0, image.getWidth(), image.getHeight());
+        g.setColor(t_Color);
     }
 
     // 返回一个BufferedImage对象
@@ -168,22 +189,5 @@ public class BarCode {
     // 设置精细码元的宽度比
     public void setBarRatio(int br) {
         this.barRatio = br;
-    }
-
-    // 设置条码图像的背景色
-    private static void setImageBgColor(BufferedImage image, String strColor) {
-        Graphics g = image.getGraphics();
-        String t_Str = new String(strColor);
-        Color t_Color = g.getColor();
-        if (!t_Str.startsWith("#")) {
-            t_Str = "#" + t_Str;
-        }
-        if (t_Str.length() != 7) {
-            System.out.println("BarCode:错误的颜色值" + t_Str);
-            return;
-        }
-        g.setColor(Color.decode(t_Str));
-        g.fillRect(0, 0, image.getWidth(), image.getHeight());
-        g.setColor(t_Color);
     }
 }

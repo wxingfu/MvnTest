@@ -1,11 +1,15 @@
 package com.wxf.schema.maker.pdm;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 /**
  * @author weixf
  * @since 2022-01-21
  */
+@Setter
+@Getter
 @Component
 public class PDMUser {
 
@@ -16,27 +20,4 @@ public class PDMUser {
     public PDMUser() {
     }
 
-    public String getCode() {
-        return Code;
-    }
-
-    public String getId() {
-        return Id;
-    }
-
-    public String getName() {
-        return Name;
-    }
-
-    public void setCode(String Code) {
-        this.Code = Code;
-    }
-
-    public void setId(String Id) {
-        this.Id = Id;
-    }
-
-    public void setName(String Name) {
-        this.Name = Name;
-    }
 }

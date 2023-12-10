@@ -11,10 +11,10 @@ import java.util.NoSuchElementException;
 public class IntHashtableEnumerator implements Enumeration {
     boolean keys;
     int index;
-    IntHashtableEntry table[];
+    IntHashtableEntry[] table;
     IntHashtableEntry entry;
 
-    IntHashtableEnumerator(IntHashtableEntry table[], boolean keys) {
+    IntHashtableEnumerator(IntHashtableEntry[] table, boolean keys) {
         this.table = table;
         this.keys = keys;
         this.index = table.length;
@@ -35,7 +35,6 @@ public class IntHashtableEnumerator implements Enumeration {
     public Object nextElement() {
         if (entry == null) {
             while ((index-- > 0) && ((entry = table[index]) == null)) {
-                ;
             }
         }
         if (entry != null) {

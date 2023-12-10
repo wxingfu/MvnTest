@@ -27,13 +27,13 @@ public class PropertyPlaceholderConfigurer implements BeanFactoryPostProcessor {
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        //加载属性配置文件
+        // 加载属性配置文件
         Properties properties = loadProperties();
 
-        //属性值替换占位符
+        // 属性值替换占位符
         processProperties(beanFactory, properties);
 
-        //往容器中添加字符解析器，供解析@Value注解使用
+        // 往容器中添加字符解析器，供解析@Value注解使用
         StringValueResolver valueResolver = new PlaceholderResolvingStringValueResolver(properties);
         beanFactory.addEmbeddedValueResolver(valueResolver);
     }
@@ -82,7 +82,7 @@ public class PropertyPlaceholderConfigurer implements BeanFactoryPostProcessor {
     }
 
     private String resolvePlaceholder(String value, Properties properties) {
-        //TODO 仅简单支持一个占位符的格式
+        // TODO 仅简单支持一个占位符的格式
         String strVal = value;
         StringBuffer buf = new StringBuffer(strVal);
         int startIndex = strVal.indexOf(PLACEHOLDER_PREFIX);

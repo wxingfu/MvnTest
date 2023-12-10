@@ -5,7 +5,11 @@ import com.wxf.test.shiro.domain.Permission;
 import com.wxf.test.shiro.domain.Role;
 import com.wxf.test.shiro.domain.User;
 import com.wxf.test.shiro.service.UserService;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -21,12 +25,17 @@ import java.util.Set;
  */
 public class CustomRealm extends AuthorizingRealm {
 
+    @Autowired
+    private UserService userService;
+
+    public static void main(String[] args) {
+        String s = new Md5Hash("123456", "wangwu", 3).toString();
+        System.out.println(s);
+    }
+
     public void setName(String name) {
         super.setName("customRealm");
     }
-
-    @Autowired
-    private UserService userService;
 
     /**
      * 授权方法
@@ -35,12 +44,12 @@ public class CustomRealm extends AuthorizingRealm {
      * 再授权 -- 根据安全数据获取用户具有的所有操作权限
      */
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        //1.获取已认证的用户数据
-        User user = (User) principalCollection.getPrimaryPrincipal();//得到唯一的安全数据
-        //2.根据用户数据获取用户的权限信息（所有角色，所有权限）
+        // 1.获取已认证的用户数据
+        User user = (User) principalCollection.getPrimaryPrincipal();// 得到唯一的安全数据
+        // 2.根据用户数据获取用户的权限信息（所有角色，所有权限）
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        Set<String> roles = new HashSet<>();//所有角色
-        Set<String> perms = new HashSet<>();//所有权限
+        Set<String> roles = new HashSet<>();// 所有角色
+        Set<String> perms = new HashSet<>();// 所有权限
         for (Role role : user.getRoles()) {
             roles.add(role.getName());
             for (Permission perm : role.getPermissions()) {
@@ -52,7 +61,6 @@ public class CustomRealm extends AuthorizingRealm {
         return info;
     }
 
-
     /**
      * 认证方法
      * 参数：传递的用户名密码
@@ -60,35 +68,27 @@ public class CustomRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(
             AuthenticationToken authenticationToken)
             throws AuthenticationException {
-        //1.获取登录的用户名密码（token）
+        // 1.获取登录的用户名密码（token）
         UsernamePasswordToken upToken = (UsernamePasswordToken) authenticationToken;
         String username = upToken.getUsername();
         String password = new String(upToken.getPassword());
-        //2.根据用户名查询数据库
+        // 2.根据用户名查询数据库
         User user = userService.findByName(username);
 
         String pwd = new Md5Hash(user.getPassword(), user.getUsername(), 3).toString();
 
-        //3.判断用户是否存在或者密码是否一致
+        // 3.判断用户是否存在或者密码是否一致
         // if (user != null && user.getPassword().equals(password)) {
         if (pwd.equals(password)) {
-            //4.如果一致返回安全数据
-            //构造方法：安全数据，密码，realm域名
+            // 4.如果一致返回安全数据
+            // 构造方法：安全数据，密码，realm域名
             // SimpleAuthenticationInfo info =
             //         new SimpleAuthenticationInfo(
             //                 user, user.getPassword(), this.getName());
-            SimpleAuthenticationInfo info =
-                    new SimpleAuthenticationInfo(
-                            user, pwd, this.getName());
-            return info;
+            return new SimpleAuthenticationInfo(
+                    user, pwd, this.getName());
         }
-        //5.不一致，返回null（抛出异常）
+        // 5.不一致，返回null（抛出异常）
         return null;
-    }
-
-
-    public static void main(String[] args) {
-        String s = new Md5Hash("123456", "wangwu", 3).toString();
-        System.out.println(s);
     }
 }

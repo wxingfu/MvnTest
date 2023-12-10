@@ -1,11 +1,22 @@
 package com.wxf.utils.poi;
 
-import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.hssf.util.Region;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Calendar;
 
 public class PoiExcelUtil {
@@ -38,6 +49,67 @@ public class PoiExcelUtil {
     private HSSFWorkbook workbook = null;
 
     public PoiExcelUtil() {
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        PoiExcelUtil poiExcelUtil = new PoiExcelUtil();
+        File file = new File("test.xls");
+        try {
+            poiExcelUtil.initWrite(new FileOutputStream(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        HSSFCellStyle cellStyle = poiExcelUtil.createCellStyle();
+
+        cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+
+        cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+
+        cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        cellStyle.setFillForegroundColor((short) 22);
+
+        cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN); // 下边框
+        cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN); // 左边框
+        cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN); // 右边框
+        cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN); // 上边框
+
+        HSSFFont font = poiExcelUtil.createFont();
+        font.setColor(HSSFColor.BLACK.index);
+        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+        font.setFontHeightInPoints((short) 12);
+        cellStyle.setFont(font);
+
+        poiExcelUtil.createRow(0);
+        poiExcelUtil.setCell(0, "1", cellStyle, 2000);
+        poiExcelUtil.setCell(1, "2", cellStyle, 5000);
+        poiExcelUtil.setCell(2, "3", cellStyle, 8000);
+        poiExcelUtil.setCell(3, "4", cellStyle, 4000);
+        poiExcelUtil.setCell(4, "5", cellStyle, 8000);
+        poiExcelUtil.setCell(5, "6", cellStyle, 4000);
+        poiExcelUtil.setCell(6, "7", cellStyle, 4000);
+        poiExcelUtil.setCell(7, "8", cellStyle, 4000);
+
+        HSSFCellStyle cellStyle2 = poiExcelUtil.createCellStyle();
+        cellStyle2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        cellStyle2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        cellStyle2.setBorderBottom(HSSFCellStyle.BORDER_THIN); // 下边框
+        cellStyle2.setBorderLeft(HSSFCellStyle.BORDER_THIN); // 左边框
+        cellStyle2.setBorderRight(HSSFCellStyle.BORDER_THIN); // 右边框
+        cellStyle2.setBorderTop(HSSFCellStyle.BORDER_THIN); // 上边框
+        for (int i = 0; i < 100; i++) {
+            poiExcelUtil.createRow(i + 1);
+            poiExcelUtil.setCell(0, i + 1, cellStyle2);
+            poiExcelUtil.setCell(1, "11", cellStyle2);
+            poiExcelUtil.setCell(2, "12", cellStyle2);
+            poiExcelUtil.setCell(3, "13", cellStyle2);
+            poiExcelUtil.setCell(4, "14", cellStyle2);
+            poiExcelUtil.setCell(5, "15", cellStyle2);
+            poiExcelUtil.setCell(6, "16", cellStyle2);
+            poiExcelUtil.setCell(7, "17", cellStyle2);
+        }
+        poiExcelUtil.export();
     }
 
     /*
@@ -215,7 +287,6 @@ public class PoiExcelUtil {
         return strExcelCell;
     }
 
-
     /**
      * 导出Excel文件
      */
@@ -362,7 +433,6 @@ public class PoiExcelUtil {
         cell.setCellValue(value);
     }
 
-
     /**
      * 设置单元格
      *
@@ -400,68 +470,6 @@ public class PoiExcelUtil {
 
     public void setDefaultHeight(int height) {
         this.sheet.setDefaultRowHeight((short) height);
-    }
-
-
-    public static void main(String[] args) throws Exception {
-
-        PoiExcelUtil poiExcelUtil = new PoiExcelUtil();
-        File file = new File("test.xls");
-        try {
-            poiExcelUtil.initWrite(new FileOutputStream(file));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        HSSFCellStyle cellStyle = poiExcelUtil.createCellStyle();
-
-        cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-
-        cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-
-        cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-        cellStyle.setFillForegroundColor((short) 22);
-
-        cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框
-        cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN); //左边框
-        cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN); //右边框
-        cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN); //上边框
-
-        HSSFFont font = poiExcelUtil.createFont();
-        font.setColor(HSSFColor.BLACK.index);
-        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-        font.setFontHeightInPoints((short) 12);
-        cellStyle.setFont(font);
-
-        poiExcelUtil.createRow(0);
-        poiExcelUtil.setCell(0, "1", cellStyle, 2000);
-        poiExcelUtil.setCell(1, "2", cellStyle, 5000);
-        poiExcelUtil.setCell(2, "3", cellStyle, 8000);
-        poiExcelUtil.setCell(3, "4", cellStyle, 4000);
-        poiExcelUtil.setCell(4, "5", cellStyle, 8000);
-        poiExcelUtil.setCell(5, "6", cellStyle, 4000);
-        poiExcelUtil.setCell(6, "7", cellStyle, 4000);
-        poiExcelUtil.setCell(7, "8", cellStyle, 4000);
-
-        HSSFCellStyle cellStyle2 = poiExcelUtil.createCellStyle();
-        cellStyle2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        cellStyle2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-        cellStyle2.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框
-        cellStyle2.setBorderLeft(HSSFCellStyle.BORDER_THIN); //左边框
-        cellStyle2.setBorderRight(HSSFCellStyle.BORDER_THIN); //右边框
-        cellStyle2.setBorderTop(HSSFCellStyle.BORDER_THIN); //上边框
-        for (int i = 0; i < 100; i++) {
-            poiExcelUtil.createRow(i + 1);
-            poiExcelUtil.setCell(0, i + 1, cellStyle2);
-            poiExcelUtil.setCell(1, "11", cellStyle2);
-            poiExcelUtil.setCell(2, "12", cellStyle2);
-            poiExcelUtil.setCell(3, "13", cellStyle2);
-            poiExcelUtil.setCell(4, "14", cellStyle2);
-            poiExcelUtil.setCell(5, "15", cellStyle2);
-            poiExcelUtil.setCell(6, "16", cellStyle2);
-            poiExcelUtil.setCell(7, "17", cellStyle2);
-        }
-        poiExcelUtil.export();
     }
 }
 

@@ -6,6 +6,7 @@ import com.wxf.schema.maker.table.Key;
 import com.wxf.schema.maker.table.Table;
 import com.wxf.schema.maker.utility.DBConst;
 import com.wxf.schema.maker.utility.SqlTypes;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedWriter;
@@ -24,28 +25,20 @@ import java.util.Properties;
 @Component
 public class MakeDBSet {
 
-    private String packageName;
-    private String schemaOutputPATH;
-    private String outputPackagePATH;
-
-    private int DBType = DBConst.DB_UnSupported;
     private static final String space4_1 = "    ";
     private static final String space4_2 = space4_1 + space4_1;
     private static final String space4_3 = space4_2 + space4_1;
     private static final String space4_4 = space4_3 + space4_1;
     private static final String space4_5 = space4_4 + space4_1;
     private static final String space4_6 = space4_5 + space4_1;
+    private String packageName;
+    private String schemaOutputPATH;
+    private String outputPackagePATH;
+    private int DBType = DBConst.DB_UnSupported;
     private String DBName;
+    @Setter
     private boolean UserInfo = false;
     private boolean MultiCloseConn = false;
-
-    public void setUserInfo(boolean UserInfo) {
-        this.UserInfo = UserInfo;
-    }
-
-    public void isMultiCloseConn(boolean MultiCloseConn) {
-        this.MultiCloseConn = MultiCloseConn;
-    }
 
     public MakeDBSet() {
 
@@ -57,6 +50,10 @@ public class MakeDBSet {
         this.outputPackagePATH = outputPackagePATH;
         this.DBName = DBName;
         this.DBType = DBConst.DB_Oracle;
+    }
+
+    public void isMultiCloseConn(boolean MultiCloseConn) {
+        this.MultiCloseConn = MultiCloseConn;
     }
 
     private String getTimestamp() {
@@ -105,7 +102,7 @@ public class MakeDBSet {
             out.println("import java.util.logging.Logger;");
 
             out.println();
-            //out.println("import " + packageName + ".schema." + SchemaName +
+            // out.println("import " + packageName + ".schema." + SchemaName +
             //            ";");
             out.println("import " + packageName + ".vschema." + SetName + ";");
             out.println("import com.sinosoft.utility.DBOper;");
@@ -141,7 +138,7 @@ public class MakeDBSet {
             out.println();
             // 生成方法
             out.println(space4_1 + "// @Method");
-            //deleteSQL方法
+            // deleteSQL方法
             if (!tTable.haveLargeObjInPK()) {
                 deleteSQL(out, ClassName);
                 out.println();
@@ -178,7 +175,7 @@ public class MakeDBSet {
                 insert(out, tTable, ClassName, sbInsertColumnClause);
                 out.println();
             }
-            //2006-05-25 xijiahui如果没有主键不允许使用Java类去删除修改数据
+            // 2006-05-25 xijiahui如果没有主键不允许使用Java类去删除修改数据
             if (t_PK != null && t_PK.getColumnNum() > 0) {
                 // 2005-11-14 Kevin
                 // 修改delete方法，使用preparedStatement方法。
@@ -429,7 +426,7 @@ public class MakeDBSet {
         out.println(space4_2 + "finally{");
         out.println(space4_3 + "if(!mflag){");
         out.println(space4_4 + "try{");
-        //xijiahui 2006-07-07 finally里重复关闭数据库连接在有些JDBC驱动下会报错，例如Sql Server的jDts驱动
+        // xijiahui 2006-07-07 finally里重复关闭数据库连接在有些JDBC驱动下会报错，例如Sql Server的jDts驱动
         if (MultiCloseConn) {
             out.println(space4_5 + "con.close();");
         } else {
@@ -452,61 +449,61 @@ public class MakeDBSet {
                                    PrintWriter out, String strAppend, boolean bWherePart) throws Exception {
         int nColumnType = ColumnInfo.getDBSqlType();
 
-        if (strStatementVar == null || strStatementVar.equals("")) {
+        if (strStatementVar == null || "".equals(strStatementVar)) {
             strStatementVar = "pstmt";
         }
         switch (nColumnType) {
             case SqlTypes.CHAR:
                 out.println(strAppend + "if(this.get(i).get" + ColumnInfo.getCode() + "() == null || this.get(i).get" + ColumnInfo.getCode() + "().equals(\"null\")){");
-                out.println(strAppend + space4_1 + strStatementVar + ".setString(" + String.valueOf(nParamIndex) + ", null);");
+                out.println(strAppend + space4_1 + strStatementVar + ".setString(" + nParamIndex + ", null);");
 
                 out.println(strAppend + space4_1 + "paramStringBuilder.append(\"null\").append(\",\");");
 
                 out.println(strAppend + "}");
                 out.println(strAppend + "else{");
                 if (bWherePart) {
-                    out.println(strAppend + space4_1 + strStatementVar + ".setString(" + String.valueOf(nParamIndex) + ", StrTool.space(this.get(i).get" + ColumnInfo.getCode() + "(), " + ColumnInfo.getDBLength() + "));");
+                    out.println(strAppend + space4_1 + strStatementVar + ".setString(" + nParamIndex + ", StrTool.space(this.get(i).get" + ColumnInfo.getCode() + "(), " + ColumnInfo.getDBLength() + "));");
 
                     out.println(strAppend + space4_1 + "paramStringBuilder.append(StrTool.space(this.get(i).get" + ColumnInfo.getCode() + "()," + ColumnInfo.getDBLength() + ")).append(\",\");");
                 } else {
-                    out.println(strAppend + space4_1 + strStatementVar + ".setString(" + String.valueOf(nParamIndex) + ", this.get(i).get" + ColumnInfo.getCode() + "());");
+                    out.println(strAppend + space4_1 + strStatementVar + ".setString(" + nParamIndex + ", this.get(i).get" + ColumnInfo.getCode() + "());");
 
                     out.println(strAppend + space4_1 + "paramStringBuilder.append(this.get(i).get" + ColumnInfo.getCode() + "()).append(\",\");");
                 }
                 out.println(strAppend + "}");
                 break;
             case SqlTypes.VARCHAR:
-            case SqlTypes.TIMESTAMP: //For SQL Server
+            case SqlTypes.TIMESTAMP: // For SQL Server
                 out.println(strAppend + "if(this.get(i).get" + ColumnInfo.getCode() + "() == null || this.get(i).get" + ColumnInfo.getCode() + "().equals(\"null\")){");
-                out.println(strAppend + space4_1 + strStatementVar + ".setString(" + String.valueOf(nParamIndex) + ", null);");
+                out.println(strAppend + space4_1 + strStatementVar + ".setString(" + nParamIndex + ", null);");
 
                 out.println(strAppend + space4_1 + "paramStringBuilder.append(\"null\").append(\",\");");
 
                 out.println(strAppend + "}");
                 out.println(strAppend + "else{");
-                out.println(strAppend + space4_1 + strStatementVar + ".setString(" + String.valueOf(nParamIndex) + ", this.get(i).get" + ColumnInfo.getCode() + "());");
+                out.println(strAppend + space4_1 + strStatementVar + ".setString(" + nParamIndex + ", this.get(i).get" + ColumnInfo.getCode() + "());");
 
                 out.println(strAppend + space4_1 + "paramStringBuilder.append(this.get(i).get" + ColumnInfo.getCode() + "()).append(\",\");");
 
                 out.println(strAppend + "}");
                 break;
-            case SqlTypes.LONGVARCHAR: //For SQL Server的Text类型(MS SQL Server JDBC 2005驱动下)和Oracle下的Long类型
-            case SqlTypes.CLOB: //For SQL Server的Text类型(jTds驱动下)
+            case SqlTypes.LONGVARCHAR: // For SQL Server的Text类型(MS SQL Server JDBC 2005驱动下)和Oracle下的Long类型
+            case SqlTypes.CLOB: // For SQL Server的Text类型(jTds驱动下)
                 out.println(strAppend + "if(this.get(i).get" + ColumnInfo.getCode() + "() == null || this.get(i).get" + ColumnInfo.getCode() + "().equals(\"null\")){");
-                out.println(strAppend + space4_1 + strStatementVar + ".setString(" + String.valueOf(nParamIndex) + ", null);");
+                out.println(strAppend + space4_1 + strStatementVar + ".setString(" + nParamIndex + ", null);");
 
                 out.println(strAppend + space4_1 + "paramStringBuilder.append(\"null\").append(\",\");");
 
                 out.println(strAppend + "}");
                 out.println(strAppend + "else{");
                 if (DBType == DBConst.DB_SQLServer) {
-                    out.println(strAppend + space4_1 + strStatementVar + ".setString(" + String.valueOf(nParamIndex) + ", this.get(i).get" + ColumnInfo.getCode() + "());");
+                    out.println(strAppend + space4_1 + strStatementVar + ".setString(" + nParamIndex + ", this.get(i).get" + ColumnInfo.getCode() + "());");
 
                     out.println(strAppend + space4_1 + "paramStringBuilder.append(this.get(i).get" + ColumnInfo.getCode() + "()).append(\",\");");
 
                 } else if (DBType == DBConst.DB_Oracle) {
                     out.println(strAppend + space4_1 + "StringReader strReader = new StringReader(this.get(i).get" + ColumnInfo.getCode() + "());");
-                    out.println(strAppend + space4_1 + strStatementVar + ".setCharacterStream(" + String.valueOf(nParamIndex) + ",strReader,this.get(i).get" + ColumnInfo.getCode() + "().length());");
+                    out.println(strAppend + space4_1 + strStatementVar + ".setCharacterStream(" + nParamIndex + ",strReader,this.get(i).get" + ColumnInfo.getCode() + "().length());");
 
                     out.println(strAppend + space4_1 + "paramStringBuilder.append(this.get(i).get" + ColumnInfo.getCode() + "()).append(\",\");");
                 }
@@ -514,13 +511,13 @@ public class MakeDBSet {
                 break;
             case SqlTypes.DATE:
                 out.println(strAppend + "if(this.get(i).get" + ColumnInfo.getCode() + "() == null || this.get(i).get" + ColumnInfo.getCode() + "().equals(\"null\")){");
-                out.println(strAppend + space4_1 + strStatementVar + ".setDate(" + String.valueOf(nParamIndex) + ", null);");
+                out.println(strAppend + space4_1 + strStatementVar + ".setDate(" + nParamIndex + ", null);");
 
                 out.println(strAppend + space4_1 + "paramStringBuilder.append(\"null\").append(\",\");");
 
                 out.println(strAppend + "}");
                 out.println(strAppend + "else{");
-                out.println(strAppend + space4_1 + strStatementVar + ".setDate(" + String.valueOf(nParamIndex) + ", Date.valueOf(this.get(i).get" + ColumnInfo.getCode() + "()));");
+                out.println(strAppend + space4_1 + strStatementVar + ".setDate(" + nParamIndex + ", Date.valueOf(this.get(i).get" + ColumnInfo.getCode() + "()));");
 
                 out.println(strAppend + space4_1 + "paramStringBuilder.append(Date.valueOf(this.get(i).get" + ColumnInfo.getCode() + "())).append(\",\");");
 
@@ -529,7 +526,7 @@ public class MakeDBSet {
             case SqlTypes.INTEGER:
             case SqlTypes.SMALLINT:
             case SqlTypes.TINYINT:
-                out.println(strAppend + strStatementVar + ".setInt(" + String.valueOf(nParamIndex) + ", this.get(i).get" + ColumnInfo.getCode() + "());");
+                out.println(strAppend + strStatementVar + ".setInt(" + nParamIndex + ", this.get(i).get" + ColumnInfo.getCode() + "());");
 
                 out.println(strAppend + "paramStringBuilder.append(this.get(i).get" + ColumnInfo.getCode() + "()).append(\",\");");
 
@@ -538,7 +535,7 @@ public class MakeDBSet {
             case SqlTypes.DOUBLE:
             case SqlTypes.DECIMAL:
             case SqlTypes.REAL:
-                out.println(strAppend + strStatementVar + ".setDouble(" + String.valueOf(nParamIndex) + ", this.get(i).get" + ColumnInfo.getCode() + "());");
+                out.println(strAppend + strStatementVar + ".setDouble(" + nParamIndex + ", this.get(i).get" + ColumnInfo.getCode() + "());");
 
                 out.println(strAppend + "paramStringBuilder.append(this.get(i).get" + ColumnInfo.getCode() + "()).append(\",\");");
 

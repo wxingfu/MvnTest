@@ -6,12 +6,15 @@ import com.wxf.utils.poi.annotation.EnableExportField;
 import com.wxf.utils.poi.annotation.EnableSelectList;
 import com.wxf.utils.poi.annotation.ImportIndex;
 import com.wxf.utils.poi.enums.ColorEnum;
-import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.Region;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
@@ -45,22 +48,22 @@ public class ExcelUtils {
         try {
             is = Files.newInputStream(Paths.get(excel.getAbsolutePath()));
             HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(is));
-            //默认只获取第一个工作表
+            // 默认只获取第一个工作表
             sheet = workbook.getSheetAt(0);
             if (sheet != null) {
                 int i = 2;
                 String[] values;
                 HSSFRow row = sheet.getRow(i);
                 while (row != null) {
-                    //获取单元格数目
+                    // 获取单元格数目
                     int cellNum = row.getPhysicalNumberOfCells();
                     values = new String[cellNum];
                     for (int j = 0; j <= cellNum; j++) {
                         HSSFCell cell = row.getCell((short) j);
                         if (cell != null) {
-                            //设置单元格内容类型
+                            // 设置单元格内容类型
                             cell.setCellType(HSSFCell.CELL_TYPE_STRING);
-                            //获取单元格值
+                            // 获取单元格值
                             String value = cell.getStringCellValue() == null ? null : cell.getStringCellValue();
                             values[j] = value;
                         }
@@ -111,22 +114,22 @@ public class ExcelUtils {
         is = excel;
         if (is != null) {
             HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(is));
-            //默认只获取第一个工作表
+            // 默认只获取第一个工作表
             sheet = workbook.getSheetAt(0);
             if (sheet != null) {
                 int i = 2;
                 String[] values;
                 HSSFRow row = sheet.getRow(i);
                 while (row != null) {
-                    //获取单元格数目
+                    // 获取单元格数目
                     int cellNum = row.getPhysicalNumberOfCells();
                     values = new String[cellNum];
                     for (int j = 0; j <= cellNum; j++) {
                         HSSFCell cell = row.getCell((short) j);
                         if (cell != null) {
-                            //设置单元格内容类型
+                            // 设置单元格内容类型
                             cell.setCellType(HSSFCell.CELL_TYPE_STRING);
-                            //获取单元格值
+                            // 获取单元格值
                             String value = cell.getStringCellValue() == null ? null : cell.getStringCellValue();
                             values[j] = value;
                         }
@@ -182,19 +185,19 @@ public class ExcelUtils {
             OutputStream outputStream, List dataList,
             Class<?> clazz, Map<Integer, Map<String, String>> selectListMap,
             String exportTitle) {
-        //创建一个Excel工作簿
+        // 创建一个Excel工作簿
         HSSFWorkbook workbook = new HSSFWorkbook();
-        //建立表
+        // 建立表
         HSSFSheet hssfsheet = workbook.createSheet();
         hssfsheet.setDefaultRowHeight((short) (20 * 20));
-        //检查当前pojo是否允许导出
+        // 检查当前pojo是否允许导出
         if (clazz.isAnnotationPresent(EnableExport.class)) {
-            EnableExport export = (EnableExport) clazz.getAnnotation(EnableExport.class);
-            //获取所有标题名称
+            EnableExport export = clazz.getAnnotation(EnableExport.class);
+            // 获取所有标题名称
             List<String> colNames = new ArrayList<String>();
-            //获取所有标题的背景颜色
+            // 获取所有标题的背景颜色
             List<ColorEnum> colors = new ArrayList<ColorEnum>();
-            //所有允许导出的字段
+            // 所有允许导出的字段
             List<Field> fieldList = new ArrayList<Field>();
             for (Field field : clazz.getDeclaredFields()) {
                 if (field.isAnnotationPresent(EnableExportField.class)) {
@@ -204,7 +207,7 @@ public class ExcelUtils {
                     fieldList.add(field);
                 }
             }
-            //设置每列的宽度
+            // 设置每列的宽度
             for (int i = 0; i < fieldList.size(); i++) {
                 Field field = fieldList.get(i);
                 hssfsheet.setColumnWidth((short) i, (short) (field.getAnnotation(EnableExportField.class).colWidth() * 20));
@@ -213,24 +216,24 @@ public class ExcelUtils {
             HSSFRow hssfRow = hssfsheet.createRow(0);
             HSSFCell hssfcell = hssfRow.createCell((short) 0);
 
-            //绘制表头以及菜单
+            // 绘制表头以及菜单
             String fileName = export.fileName();
             if (exportTitle != null) {
                 fileName = exportTitle;
             }
-            //绘制标题
+            // 绘制标题
             createTitle(workbook, hssfRow, hssfcell, hssfsheet, colNames.size() - 1, fileName, export.cellColor());
-            //创建标题行（表头）
+            // 创建标题行（表头）
             createHeadRow(workbook, hssfRow, hssfcell, hssfsheet, colNames, colors);
             try {
-                //表格样式
+                // 表格样式
                 HSSFCellStyle cellStyle = getBasicCellStyle(workbook);
-                //插入内容
+                // 插入内容
                 int i = 0;
                 for (Object obj : dataList) {
                     hssfRow = hssfsheet.createRow(i + 2);
-                    //设置每列的宽度
-                    //此处设置j=-1 ：添加一列，序号列
+                    // 设置每列的宽度
+                    // 此处设置j=-1 ：添加一列，序号列
                     for (int j = 0; j < fieldList.size(); j++) {
                         Field field = fieldList.get(j);
                         field.setAccessible(true);
@@ -250,7 +253,7 @@ public class ExcelUtils {
                     }
                     i++;
                 }
-                //创建下拉列表
+                // 创建下拉列表
                 // createDataValidation(hssfsheet, selectListMap);
                 workbook.write(outputStream);
                 outputStream.flush();
@@ -295,7 +298,7 @@ public class ExcelUtils {
             HSSFWorkbook workbook, HSSFRow hssfRow,
             HSSFCell hssfcell, HSSFSheet hssfsheet,
             int allColNum, String title, ColorEnum color) {
-        //在sheet里增加合并单元格
+        // 在sheet里增加合并单元格
         // CellRangeAddress cra = new CellRangeAddress(0, 0, 0, allColNum);
         Region region = new Region(0, (short) 0, 0, (short) allColNum);
         hssfsheet.addMergedRegion(region);
@@ -307,12 +310,12 @@ public class ExcelUtils {
 
         HSSFCellStyle cellStyle = workbook.createCellStyle();
         cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框
-        cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN); //左边框
-        cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN); //右边框
-        cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN); //上边框
+        cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN); // 下边框
+        cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN); // 左边框
+        cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN); // 右边框
+        cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN); // 上边框
 
-        //设置表头
+        // 设置表头
         hssfRow = hssfsheet.getRow(0);
         hssfcell = hssfRow.getCell((short) 0);
         hssfcell.setCellStyle(getTitleCellStyle(workbook, color));
@@ -328,7 +331,7 @@ public class ExcelUtils {
             HSSFWorkbook workbook, HSSFRow hssfRow,
             HSSFCell hssfcell, HSSFSheet hssfsheet,
             List<String> colNames, List<ColorEnum> colors) {
-        //插入标题行
+        // 插入标题行
         hssfRow = hssfsheet.createRow(1);
         for (int i = 0; i < colNames.size(); i++) {
             hssfcell = hssfRow.createCell((short) i);
@@ -418,7 +421,7 @@ public class ExcelUtils {
     private static void setCellValue(Object value, HSSFCell hssfcell, HSSFRow hssfRow, HSSFCellStyle cellStyle, int cellIndex) {
         String valueStr = String.valueOf(value);
         hssfcell = hssfRow.createCell((short) cellIndex);
-        //暂时认为数字类型不会有下拉列表
+        // 暂时认为数字类型不会有下拉列表
         if (isNumeric(valueStr)) {
             hssfcell.setCellStyle(cellStyle);
             hssfcell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);

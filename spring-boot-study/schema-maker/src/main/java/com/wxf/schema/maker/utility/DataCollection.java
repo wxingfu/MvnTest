@@ -1,5 +1,6 @@
 package com.wxf.schema.maker.utility;
 
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import java.util.Vector;
@@ -11,18 +12,16 @@ import java.util.Vector;
 @Component
 public class DataCollection {
 
-    private Vector<String> RData = new Vector<>();
-
+    @Getter
     public int MaxCol = 0;
-
+    @Getter
     public int MaxRow = 0;
-
+    @Getter
     public int MaxNumber = 0;
-
     public Errors mErrors = new Errors(); // 错误信息
-
     // false没有错，true有错
     public boolean ErrorFlag = false;
+    private final Vector<String> RData = new Vector<>();
 
     public DataCollection() {
     }
@@ -57,18 +56,6 @@ public class DataCollection {
             this.ErrorFlag = true;
         }
         return Result;
-    }
-
-    public int getMaxCol() {
-        return MaxCol;
-    }
-
-    public int getMaxRow() {
-        return MaxRow;
-    }
-
-    public int getMaxNumber() {
-        return MaxNumber;
     }
 
     public void Clear() {

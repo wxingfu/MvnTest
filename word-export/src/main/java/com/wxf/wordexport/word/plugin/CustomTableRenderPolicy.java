@@ -32,7 +32,7 @@ public class CustomTableRenderPolicy extends AbstractRenderPolicy<Object> {
         // ......
         TableTools.mergeCellsHorizonal(table, 0, 0, 7);
         TableTools.mergeCellsVertically(table, 0, 1, 9);
-        
+
     }
 
     @Override

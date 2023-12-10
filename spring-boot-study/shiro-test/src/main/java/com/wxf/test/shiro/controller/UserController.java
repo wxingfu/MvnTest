@@ -8,7 +8,11 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
@@ -19,8 +23,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //个人主页
-    //使用shiro注解鉴权
+    // 个人主页
+    // 使用shiro注解鉴权
     //@RequiresPermissions()  -- 访问此方法必须具备的权限
     //@RequiresRoles() -- 访问此方法必须具备的角色
 
@@ -34,25 +38,25 @@ public class UserController {
         return "访问个人主页成功";
     }
 
-    //添加
+    // 添加
     @PostMapping(value = "/user")
     public String add() {
         return "添加用户成功";
     }
 
-    //查询
+    // 查询
     @GetMapping(value = "/user")
     public String find() {
         return "查询用户成功";
     }
 
-    //更新
+    // 更新
     @GetMapping(value = "/user/{id}")
     public String update(String id) {
         return "更新用户成功";
     }
 
-    //删除
+    // 删除
     @DeleteMapping(value = "/user/{id}")
     public String delete() {
         return "删除用户成功";
@@ -64,10 +68,10 @@ public class UserController {
      * 2.shiro登录
      * 前端发送登录请求 => 接口部分获取用户名密码 => 通过subject.login =>  realm域的认证方法
      */
-    //用户登录
+    // 用户登录
     @RequestMapping(value = "/login")
     public String login(String username, String password) {
-        //构造登录令牌
+        // 构造登录令牌
         try {
 
             /**
@@ -84,13 +88,13 @@ public class UserController {
             password = new Md5Hash(password, username, 3).toString();
 
             UsernamePasswordToken upToken = new UsernamePasswordToken(username, password);
-            //1.获取subject
+            // 1.获取subject
             Subject subject = SecurityUtils.getSubject();
 
-            //获取session
+            // 获取session
             String sid = (String) subject.getSession().getId();
 
-            //2.调用subject进行登录
+            // 2.调用subject进行登录
             subject.login(upToken);
             return "登录成功" + sid;
         } catch (Exception e) {
@@ -99,7 +103,7 @@ public class UserController {
     }
 
 
-    //登录成功后，打印所有session内容
+    // 登录成功后，打印所有session内容
     @RequestMapping(value = "/show")
     public String show(HttpSession session) {
         // 获取session中所有的键值

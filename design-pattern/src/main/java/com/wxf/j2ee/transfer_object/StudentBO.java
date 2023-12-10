@@ -5,7 +5,7 @@ import java.util.List;
 
 public class StudentBO {
 
-    //列表是当作一个数据库
+    // 列表是当作一个数据库
     List<StudentVO> students;
 
     public StudentBO() {
@@ -21,7 +21,7 @@ public class StudentBO {
         System.out.println("Student: Roll No " + student.getRollNo() + ", deleted from database");
     }
 
-    //从数据库中检索学生名单
+    // 从数据库中检索学生名单
     public List<StudentVO> getAllStudents() {
         return students;
     }

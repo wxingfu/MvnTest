@@ -26,7 +26,7 @@ public class UserUtils {
      * @return 当前者信息
      */
     public SysUser getUser() {
-        //获取当前用户的用户名
+        // 获取当前用户的用户名
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return userService.findByUsername(username);
     }
@@ -35,11 +35,11 @@ public class UserUtils {
      * 判断此用户中是否包含roleName菜单权限
      */
     public Boolean hasRole(String roleName) {
-        //获取UserDetails类，
+        // 获取UserDetails类，
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<String> roleCodes = new ArrayList<>();
         for (GrantedAuthority authority : userDetails.getAuthorities()) {
-            //getAuthority()返回用户对应的菜单权限
+            // getAuthority()返回用户对应的菜单权限
             roleCodes.add(authority.getAuthority());
         }
         return roleCodes.contains(roleName);

@@ -3,7 +3,13 @@ package com.wxf.spring.utils;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.Map;
 
 /**
@@ -28,7 +34,7 @@ public class CommonUtil {
         }
     }
 
-    //输出到文件
+    // 输出到文件
 
     /**
      * @param root     要在 Templet 中替换的内容
@@ -61,7 +67,7 @@ public class CommonUtil {
     public static void printConsole(Map<String, Object> root, Template template) throws TemplateException, IOException {
         StringWriter out = new StringWriter();
         template.process(root, out);
-        System.out.println(out.toString());
+        System.out.println(out);
     }
 
     /**
@@ -90,26 +96,6 @@ public class CommonUtil {
             }
         }
         return result.toString();
-    }
-
-
-    /***
-     * 驼峰命名转为下划线命名
-     *
-     * @param para
-     *        驼峰命名的字符串
-     */
-
-    public String humpToUnderline(String para) {
-        StringBuilder sb = new StringBuilder(para);
-        int temp = 0;
-        for (int i = 0; i < para.length(); i++) {
-            if (Character.isUpperCase(para.charAt(i))) {
-                sb.insert(i + temp, "_");
-                temp += 1;
-            }
-        }
-        return sb.toString().toUpperCase();
     }
 
     /**
@@ -157,5 +143,24 @@ public class CommonUtil {
             }
         }
         return result;
+    }
+
+    /***
+     * 驼峰命名转为下划线命名
+     *
+     * @param para
+     *        驼峰命名的字符串
+     */
+
+    public String humpToUnderline(String para) {
+        StringBuilder sb = new StringBuilder(para);
+        int temp = 0;
+        for (int i = 0; i < para.length(); i++) {
+            if (Character.isUpperCase(para.charAt(i))) {
+                sb.insert(i + temp, "_");
+                temp += 1;
+            }
+        }
+        return sb.toString().toUpperCase();
     }
 }

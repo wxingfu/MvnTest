@@ -9,10 +9,10 @@ import org.springframework.data.domain.Sort.Order;
  * 分页的一个工具类，接收分页信息
  */
 public class TablePageable {
-    private Integer limit; //分页
-    private Integer offset;//首记录号（从0开始）
-    private String sort;   //排序字段
-    private String order;  //顺序，逆序
+    private Integer limit; // 分页
+    private Integer offset;// 首记录号（从0开始）
+    private String sort;   // 排序字段
+    private String order;  // 顺序，逆序
 
     public Integer getLimit() {
         return limit;

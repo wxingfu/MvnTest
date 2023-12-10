@@ -1,8 +1,13 @@
 package com.wxf.schema.maker.pdm;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.w3c.dom.*;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -18,36 +23,30 @@ import java.io.IOException;
 @Component
 public class Parser {
 
-    public Parser() {
-    }
+    private static final String space4 = "    ";
+    // NameSpace
+    private final String a = "attribute";
+    private final String c = "collection";
+    private final String o = "object";
 
-    //NameSpace
-    private final String a = new String("attribute");
-    private final String c = new String("collection");
-    private final String o = new String("object");
+    @Setter
+    private boolean AllowErrorInPDM = false; // 是否允许PDM上有错误信息
 
-    private boolean AllowErrorInPDM = false; //是否允许PDM上有错误信息
-    private boolean PrimaryKeyIsNull = false; //是否允许PK为空
-    private boolean ParserForeignKey = true; //是否允许解析FK
+    @Setter
+    private boolean PrimaryKeyIsNull = false; // 是否允许PK为空
+
+    @Setter
+    private boolean ParserForeignKey = true; // 是否允许解析FK
 
     private int runThreadCount = 0; //
 
-    public void setAllowErrorInPDM(boolean AllowErrorInPDM) {
-        this.AllowErrorInPDM = AllowErrorInPDM;
-    }
-
-    public void setParserForeignKey(boolean ParserForeignKey) {
-        this.ParserForeignKey = ParserForeignKey;
-    }
-
-    public void setPrimaryKeyIsNull(boolean PrimaryKeyIsNull) {
-        this.PrimaryKeyIsNull = PrimaryKeyIsNull;
+    public Parser() {
     }
 
     public PDM readPDMFile(String inFile) throws Exception {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setNamespaceAware(true);
-        //dbf.setValidating(true);
+        // dbf.setValidating(true);
         DocumentBuilder db = null;
         try {
             db = dbf.newDocumentBuilder();
@@ -90,7 +89,7 @@ public class Parser {
             }
         } else {
             log.info("  开始解析Tables");
-            //多线程，每个线程取size个表
+            // 多线程，每个线程取size个表
             int size = 90;
             int threadCount = 1;
             int position = 0;
@@ -116,8 +115,7 @@ public class Parser {
             while (this.runThreadCount > 0) {
                 log.info("runThreadCount--" + runThreadCount);
             }
-            ;
-            //ParserTables(tPDM, eTables);
+            // ParserTables(tPDM, eTables);
             if (ParserForeignKey) {
                 log.info("  开始解析References");
                 ParserReferences(tPDM, eModel);
@@ -160,8 +158,6 @@ public class Parser {
             tPDM.addPhysicalDiagram(tPDMPhyDiag);
         }
     }
-
-    private static final String space4 = "    ";
 
     private void ParserTables(PDM tPDM, Element eTables) throws Exception {
         NodeList oTable = eTables.getElementsByTagNameNS(o, "Table");
@@ -225,7 +221,7 @@ public class Parser {
                 if (errorInColumn) {
                     continue;
                 }
-                //Element eOwner = get1stChildElement(eTable, c, "Owner");
+                // Element eOwner = get1stChildElement(eTable, c, "Owner");
 //                if(eOwner != null)
 //                {
 //                    Element eUser = get1stChildElement(eOwner, o, "User");
@@ -381,8 +377,8 @@ public class Parser {
         return (Element) nodeList.item(0);
     }
 
-    //用来取得标签中间的值(String)
-    //和getNodeValueStr不同的地方在于使用这个方法必须有返回值，如果没有则表示PDM文件错误
+    // 用来取得标签中间的值(String)
+    // 和getNodeValueStr不同的地方在于使用这个方法必须有返回值，如果没有则表示PDM文件错误
     private String getNodeValue(Element element, String TagName) throws DOMException {
         NodeList aName = element.getElementsByTagNameNS(a, TagName);
         Element eName = (Element) aName.item(0);
@@ -390,7 +386,7 @@ public class Parser {
         return tName.getNodeValue();
     }
 
-    //用来取得标签中间的值(String)，值可有可无
+    // 用来取得标签中间的值(String)，值可有可无
     private String getNodeValueStr(Element element, String TagName) throws DOMException {
         NodeList aName = element.getElementsByTagNameNS(a, TagName);
         if (aName.getLength() > 0) {
@@ -402,7 +398,7 @@ public class Parser {
         }
     }
 
-    //用来取得标签中间的值(int)，值可有可无
+    // 用来取得标签中间的值(int)，值可有可无
     private int getNodeValueInt(Element element, String TagName) throws DOMException {
         String NodeValuestr = getNodeValueStr(element, TagName);
         if (NodeValuestr == null) {

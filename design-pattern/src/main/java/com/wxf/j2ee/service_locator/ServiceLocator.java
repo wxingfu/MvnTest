@@ -2,7 +2,7 @@ package com.wxf.j2ee.service_locator;
 
 public class ServiceLocator {
 
-    private static Cache cache;
+    private static final Cache cache;
 
     static {
         cache = new Cache();

@@ -4,7 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wxf.menu.auth.custom.BaseEntity;
 import org.springframework.data.annotation.CreatedBy;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +31,31 @@ public class TbMenu extends BaseEntity<Integer> {
 
     @JsonIgnore
     private List<TbMenu> children = new ArrayList<>();
+
+    public TbMenu(Integer id) {
+        super(id);
+    }
+
+    public TbMenu() {
+        super();
+    }
+
+    public TbMenu(String name, String url, Integer idx, TbMenu parent, List<TbMenu> children) {
+        this.name = name;
+        this.url = url;
+        this.idx = idx;
+        this.parent = parent;
+        this.children = children;
+    }
+
+    public TbMenu(Integer integer, String name, String url, Integer idx, TbMenu parent, List<TbMenu> children) {
+        super(integer);
+        this.name = name;
+        this.url = url;
+        this.idx = idx;
+        this.parent = parent;
+        this.children = children;
+    }
 
     @Column(unique = true)
     public String getName() {
@@ -68,31 +99,6 @@ public class TbMenu extends BaseEntity<Integer> {
     }
 
     public void setChildren(List<TbMenu> children) {
-        this.children = children;
-    }
-
-    public TbMenu(Integer id) {
-        super(id);
-    }
-
-    public TbMenu() {
-        super();
-    }
-
-    public TbMenu(String name, String url, Integer idx, TbMenu parent, List<TbMenu> children) {
-        this.name = name;
-        this.url = url;
-        this.idx = idx;
-        this.parent = parent;
-        this.children = children;
-    }
-
-    public TbMenu(Integer integer, String name, String url, Integer idx, TbMenu parent, List<TbMenu> children) {
-        super(integer);
-        this.name = name;
-        this.url = url;
-        this.idx = idx;
-        this.parent = parent;
         this.children = children;
     }
 

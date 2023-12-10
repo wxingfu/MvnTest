@@ -13,18 +13,14 @@ import java.util.ResourceBundle;
 public class PropertiesConfig {
 
 
-    private static Logger logger = Logger.getLogger(PropertiesConfig.class);
-
+    private static final String FINAL_BUNDLE_NAME = "PropertiesConfig";
+    private static final String ENV_PROFILE_NAME = "profile.active";
+    private static final ResourceBundle res = ResourceBundle.getBundle(FINAL_BUNDLE_NAME);
+    private static final Logger logger = Logger.getLogger(PropertiesConfig.class);
     /**
      * 成员变量
      */
-    private static String filename = "PropertiesConfig";
-
-    private static final String FINAL_BUNDLE_NAME = "PropertiesConfig";
-
-    private static final String ENV_PROFILE_NAME = "profile.active";
-
-    private static final ResourceBundle res = ResourceBundle.getBundle(FINAL_BUNDLE_NAME);
+    private static final String filename = "PropertiesConfig";
 
     private PropertiesConfig() {
     }

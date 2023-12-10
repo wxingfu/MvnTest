@@ -8,7 +8,7 @@ import lombok.Getter;
  * @date 2022-06-07
  */
 @Getter
-public enum ResultCode implements StatusCode{
+public enum ResultCode implements StatusCode {
 
     SUCCESS(1000, "请求成功"),
     FAILED(1001, "请求失败"),

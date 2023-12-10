@@ -1,9 +1,9 @@
 package com.wxf.rpc.entity.invehicle;
 
+import com.wxf.rpc.entity.common.PageAttri;
+import com.wxf.rpc.entity.common.State;
 import lombok.Data;
 
-import com.wxf.rpc.entity.common.State;
-import com.wxf.rpc.entity.common.PageAttri;
 import java.util.List;
 
 @Data

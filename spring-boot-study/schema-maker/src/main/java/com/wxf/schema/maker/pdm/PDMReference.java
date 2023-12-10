@@ -1,5 +1,7 @@
 package com.wxf.schema.maker.pdm;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,52 +13,34 @@ import java.util.ArrayList;
 @Component
 public class PDMReference {
 
+    @Setter
+    @Getter
     private String Id;
+    @Setter
+    @Getter
     private String Name;
+    @Setter
+    @Getter
     private String Code;
+    @Setter
+    @Getter
     private String ConstraintName;
-    private String ParentTable_Ref; //Object1
+    private String ParentTable_Ref; // Object1
     private String ParentKey_Ref;
-    private String ChildTable_Ref; //Object2
+    private String ChildTable_Ref; // Object2
+    @Setter
+    @Getter
     private int UpdateConstraint = 1;
+    @Setter
+    @Getter
     private int DeleteConstraint = 1;
+    @Setter
+    @Getter
     private String ImplementationType;
-    private ArrayList<PDMReferenceJoin> Joins = new ArrayList<>(3);
+    private final ArrayList<PDMReferenceJoin> Joins = new ArrayList<>(3);
     private int Join_Num = 0;
 
     public PDMReference() {
-    }
-
-    public String getId() {
-        return Id;
-    }
-
-    public void setId(String id) {
-        Id = id;
-    }
-
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public String getCode() {
-        return Code;
-    }
-
-    public void setCode(String code) {
-        Code = code;
-    }
-
-    public String getConstraintName() {
-        return ConstraintName;
-    }
-
-    public void setConstraintName(String name) {
-        ConstraintName = name;
     }
 
     public String getParentTable() {
@@ -83,30 +67,6 @@ public class PDMReference {
         ChildTable_Ref = code;
     }
 
-    public String getImplementationType() {
-        return ImplementationType;
-    }
-
-    public void setImplementationType(String code) {
-        ImplementationType = code;
-    }
-
-    public void setUpdateConstraint(int code) {
-        UpdateConstraint = code;
-    }
-
-    public int getUpdateConstraint() {
-        return UpdateConstraint;
-    }
-
-    public void setDeleteConstraint(int code) {
-        DeleteConstraint = code;
-    }
-
-    public int getDeleteConstraint() {
-        return DeleteConstraint;
-    }
-
     public void addJoin(PDMReferenceJoin col) {
         Joins.add(col);
         Join_Num++;
@@ -117,6 +77,6 @@ public class PDMReference {
     }
 
     public PDMReferenceJoin getJoin(int i) {
-        return (PDMReferenceJoin) Joins.get(i);
+        return Joins.get(i);
     }
 }

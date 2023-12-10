@@ -7,8 +7,6 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
-import org.json.JSONObject;
-import org.json.XML;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

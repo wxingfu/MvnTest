@@ -5,8 +5,7 @@ package com.wxf.creational.builder;
  * @author weixf
  * @date 2022-08-25
  */
-public class Bottle implements Packing
-{
+public class Bottle implements Packing {
     @Override
     public String pack() {
         return "Bottle";

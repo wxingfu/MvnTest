@@ -1,9 +1,15 @@
 package com.wxf.schema.maker.table;
 
 
-import com.wxf.schema.maker.pdm.*;
+import com.wxf.schema.maker.pdm.PDM;
+import com.wxf.schema.maker.pdm.PDMColumn;
+import com.wxf.schema.maker.pdm.PDMKey;
+import com.wxf.schema.maker.pdm.PDMReference;
+import com.wxf.schema.maker.pdm.PDMReferenceJoin;
+import com.wxf.schema.maker.pdm.PDMTable;
 import com.wxf.schema.maker.utility.DBConst;
 import com.wxf.schema.maker.utility.DBTypes;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -15,25 +21,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class Convert {
 
-    public Convert() {
-    }
-
+    @Setter
     private int DBMSType = DBConst.DB_UnSupported;
+    @Setter
+    private boolean AllowErrorInPDM = false; // 是否允许PDM上有错误信息是继续转换
+    @Setter
+    private boolean AllowJavaType = false; // 是否允许Integer或Double等Java类型
+    private boolean AllowJavaMath = false; // 是否允许使用BigDecimal代替Double类型
 
-    private boolean AllowErrorInPDM = false; //是否允许PDM上有错误信息是继续转换
-    private boolean AllowJavaType = false; //是否允许Integer或Double等Java类型
-    private boolean AllowJavaMath = false; //是否允许使用BigDecimal代替Double类型
-
-    public void setDBMSType(int DBMSType) {
-        this.DBMSType = DBMSType;
-    }
-
-    public void setAllowErrorInPDM(boolean AllowErrorInPDM) {
-        this.AllowErrorInPDM = AllowErrorInPDM;
-    }
-
-    public void setAllowJavaType(boolean AllowJavaType) {
-        this.AllowJavaType = AllowJavaType;
+    public Convert() {
     }
 
     public void setAllowJavaMath(boolean AllowJavaMath) {
@@ -103,14 +99,14 @@ public class Convert {
             for (int j = 0; j < tPDMTable.getKeyNum(); j++) {
                 PDMKey tPDMKey = tPDMTable.getKey(j);
                 Key tKey = new Key();
-                //设置PK
+                // 设置PK
                 if (tPDMKey.getId().equals(tPDMTable.getPrimaryKey())) {
                     tKey.setKeyType(DBTypes.PrimaryKey);
                 } else {
                     tKey.setKeyType(DBTypes.UniqueKey);
                 }
                 String cn = tPDMKey.getConstraintName();
-                if (cn == null || cn.equals("")) {
+                if (cn == null || "".equals(cn)) {
                     if (tPDMKey.getId().equals(tPDMTable.getPrimaryKey())) {
                         if (DBMSType == DBConst.DB_DB2) {
                             cn = "P_" + (tPDMKey.getCode().trim().length() > 16 ? tPDMKey.getCode().substring(0, 16) : tPDMKey.getCode().trim());
@@ -157,7 +153,7 @@ public class Convert {
                         if (aPMDTable.getId().equals(tPDMRef.getParentTable())) {
                             tFK.setRefTable(aPMDTable.getCode());
                             String cn = tPDMRef.getConstraintName();
-                            if (cn == null || cn.equals("")) {
+                            if (cn == null || "".equals(cn)) {
                                 if (DBMSType == DBConst.DB_DB2) {
                                     cn = "F_" + (tPDMRef.getCode().trim().length() > 16 ? tPDMRef.getCode().substring(0, 16) : tPDMRef.getCode().trim());
                                 }
@@ -230,7 +226,7 @@ public class Convert {
     private String changeType(String oldType, String tabName, String colName) throws Exception {
         oldType = oldType.toLowerCase().trim();
         String regex = null;
-        if (oldType.indexOf("int") >= 0) {
+        if (oldType.contains("int")) {
             if (oldType.equalsIgnoreCase("tinyint") && DBMSType != DBConst.DB_SQLServer) {
                 dealDbError(oldType, tabName, colName);
             }
@@ -242,20 +238,20 @@ public class Convert {
                 return "int";
             }
         }
-        if (oldType.indexOf("dec") >= 0 || oldType.indexOf("num") >= 0) {
-            if (oldType.indexOf("number") >= 0 && DBMSType != DBConst.DB_Oracle) {
+        if (oldType.contains("dec") || oldType.contains("num")) {
+            if (oldType.contains("number") && DBMSType != DBConst.DB_Oracle) {
                 dealDbError(oldType, tabName, colName);
             }
-            if (oldType.indexOf("numeric") < 0 && oldType.indexOf("number") < 0 && oldType.indexOf("num") >= 0 && DBMSType != DBConst.DB_DB2) {
+            if (!oldType.contains("numeric") && !oldType.contains("number") && oldType.contains("num") && DBMSType != DBConst.DB_DB2) {
                 dealDbError(oldType, tabName, colName);
             }
             regex = "(dec|decimal|numeric|num|number)\\s*(\\(\\s*[0-9]+\\s*(,\\s*[0-9]+|)\\s*\\)|)";
             checkDataType(regex, oldType, tabName, colName);
-            //符合dec,dec(*),dec(*,0),decimal,decimal(*),decimal(*,0)
-            //numeric,numeric(*),numeric(*,0),num,num(*),num(*,0),number(*),number(*,0)的都为整数
-            //注意number类型不为整数
+            // 符合dec,dec(*),dec(*,0),decimal,decimal(*),decimal(*,0)
+            // numeric,numeric(*),numeric(*,0),num,num(*),num(*,0),number(*),number(*,0)的都为整数
+            // 注意number类型不为整数
             String regexI = null;
-            if (oldType.indexOf("number") >= 0) {
+            if (oldType.contains("number")) {
                 regexI = "number\\s*\\(\\s*[0-9]+\\s*(,\\s*[0]\\s*|)\\)";
             } else {
                 regexI = "(dec|decimal|numeric|num)\\s*(\\(\\s*[0-9]+\\s*(,\\s*[0]|)\\s*\\)|)";
@@ -264,7 +260,7 @@ public class Convert {
 //            Matcher m = pc.matcher(oldType);
 //            if(m.matches())
             if (oldType.matches(regexI)) {
-                //如果定义的整数范围大于2147483647可能会出现溢出
+                // 如果定义的整数范围大于2147483647可能会出现溢出
                 if (AllowJavaType) {
                     if (AllowJavaMath) {
                         String regexB = "(dec|decimal|numeric|num|number)\\s*(\\(\\s*[1-9][0-9]\\s*(,\\s*[0-9]+|)\\s*\\)|)";
@@ -294,7 +290,7 @@ public class Convert {
                 }
             }
         }
-        if (oldType.indexOf("float") >= 0) {
+        if (oldType.contains("float")) {
             regex = "float(|\\s*\\(\\s*[0-9]+\\s*\\))";
             checkDataType(regex, oldType, tabName, colName);
             if (AllowJavaType) {
@@ -307,12 +303,12 @@ public class Convert {
                 return "double";
             }
         }
-        if (oldType.indexOf("char") >= 0) {
-            if (oldType.indexOf("varchar2") >= 0 &&
+        if (oldType.contains("char")) {
+            if (oldType.contains("varchar2") &&
                     DBMSType != DBConst.DB_Oracle) {
                 dealDbError(oldType, tabName, colName);
             }
-            if (oldType.indexOf("nvarchar") >= 0 &&
+            if (oldType.contains("nvarchar") &&
                     (DBMSType != DBConst.DB_Oracle &&
                             DBMSType != DBConst.DB_SQLServer)) {
                 dealDbError(oldType, tabName, colName);
@@ -322,35 +318,35 @@ public class Convert {
             checkDataType(regex, oldType, tabName, colName);
             return "String";
         }
-        //不推荐使用timestamp。timestamp在Microsoft SQL Server JDBC中没有对应的java.sql.Types类型
-        if (oldType.indexOf("timestamp") >= 0 ||
-                oldType.indexOf("date") >= 0) {
-            if (oldType.indexOf("datetime") >= 0 &&
+        // 不推荐使用timestamp。timestamp在Microsoft SQL Server JDBC中没有对应的java.sql.Types类型
+        if (oldType.contains("timestamp") ||
+                oldType.contains("date")) {
+            if (oldType.contains("datetime") &&
                     DBMSType != DBConst.DB_SQLServer) {
                 dealDbError(oldType, tabName, colName);
             }
-            if (oldType.indexOf("datetime") < 0 &&
-                    oldType.indexOf("date") >= 0 &&
+            if (!oldType.contains("datetime") &&
+                    oldType.contains("date") &&
                     DBMSType != DBConst.DB_Oracle &&
                     DBMSType != DBConst.DB_DB2) {
                 dealDbError(oldType, tabName, colName);
             }
             regex = "(datetime|smalldatetime|timestamp|date)";
             checkDataType(regex, oldType, tabName, colName);
-            if (oldType.indexOf("datetime") < 0 &&
-                    oldType.indexOf("date") >= 0) {
+            if (!oldType.contains("datetime") &&
+                    oldType.contains("date")) {
                 return "Date";
             } else {
                 return "String";
             }
         }
-        if (oldType.indexOf("text") >= 0) {
+        if (oldType.contains("text")) {
             if (DBMSType != DBConst.DB_SQLServer) {
                 dealDbError(oldType, tabName, colName);
             }
             regex = "text";
             checkDataType(regex, oldType, tabName, colName);
-            return "String"; //SQL Server用String
+            return "String"; // SQL Server用String
         }
         if (oldType.equalsIgnoreCase("long")) {
             if (DBMSType != DBConst.DB_Oracle) {
@@ -360,7 +356,7 @@ public class Convert {
             checkDataType(regex, oldType, tabName, colName);
             return "String";
         }
-        if (oldType.indexOf("image") >= 0) {
+        if (oldType.contains("image")) {
             if (DBMSType != DBConst.DB_SQLServer) {
                 dealDbError(oldType, tabName, colName);
             }
@@ -368,7 +364,7 @@ public class Convert {
             checkDataType(regex, oldType, tabName, colName);
             return "InputStream";
         }
-        if (oldType.indexOf("blob") >= 0) {
+        if (oldType.contains("blob")) {
             if (DBMSType != DBConst.DB_Oracle && DBMSType != DBConst.DB_DB2) {
                 dealDbError(oldType, tabName, colName);
             }

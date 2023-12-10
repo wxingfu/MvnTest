@@ -12,7 +12,11 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,10 +30,9 @@ import java.util.Map;
  */
 public class FreemarkerUtils {
 
+    public static final String BAR_CODE_FILE_TEMP_NAME = "tempBarCodeFile";
     private static final String basePath = "D:/WorkSpaces/ideaProjects/maven-test/code-test-module/src/main/resources/";
     private static final String fontPath = "font/simsun.ttf";
-
-    public static final String BAR_CODE_FILE_TEMP_NAME = "tempBarCodeFile";
 
     public static void main(String[] args) throws Exception {
         Map<String, Object> data = new HashMap<>();
@@ -204,7 +207,7 @@ public class FreemarkerUtils {
             fileOutputStream = new FileOutputStream(barCodePath);
             // 获得条形码参数
             if (sParam != null && !sParam.equalsIgnoreCase("")) {
-                String params[] = sParam.split("&");
+                String[] params = sParam.split("&");
                 for (int j = 0; j < params.length; j++) {
                     // 获得条形码宽度
                     if (params[j].toLowerCase().startsWith("barheight")) {

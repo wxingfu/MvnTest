@@ -3,11 +3,11 @@ package com.wxf.menu.auth.web.form;
 import com.wxf.menu.auth.custom.BaseForm;
 
 public class SysUserForm extends BaseForm<Integer> {
-    private String username;    //账号
-    private String password;    //密码
-    private String name;        //姓名
-    private String address;     //地址
-    private String roles;       //权限
+    private String username;    // 账号
+    private String password;    // 密码
+    private String name;        // 姓名
+    private String address;     // 地址
+    private String roles;       // 权限
 
     public String getUsername() {
         return username;

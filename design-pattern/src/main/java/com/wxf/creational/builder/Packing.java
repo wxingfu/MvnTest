@@ -7,5 +7,5 @@ package com.wxf.creational.builder;
  */
 public interface Packing {
 
-    public String pack();
+    String pack();
 }

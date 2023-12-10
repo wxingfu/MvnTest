@@ -63,7 +63,7 @@ public class JWTAuthenticationTokenFilter extends BasicAuthenticationFilter {
                             }
                         }
                     }
-                    //组装参数
+                    // 组装参数
                     SecurityUser securityUser = new SecurityUser();
                     securityUser.setUsername(claims.getSubject());
                     securityUser.setUserId(Long.parseLong(claims.getId()));

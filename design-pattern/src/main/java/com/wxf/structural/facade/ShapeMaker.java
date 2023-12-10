@@ -2,9 +2,9 @@ package com.wxf.structural.facade;
 
 public class ShapeMaker {
 
-    private Shape circle;
-    private Shape rectangle;
-    private Shape square;
+    private final Shape circle;
+    private final Shape rectangle;
+    private final Shape square;
 
     public ShapeMaker() {
         circle = new Circle();

@@ -45,7 +45,7 @@ public class CglibAopProxy implements AopProxy {
         public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
             CglibMethodInvocation methodInvocation = new CglibMethodInvocation(advised.getTargetSource().getTarget(), method, objects, methodProxy);
             if (advised.getMethodMatcher().matches(method, advised.getTargetSource().getTarget().getClass())) {
-                //代理方法
+                // 代理方法
                 return advised.getMethodInterceptor().invoke(methodInvocation);
             }
             return methodInvocation.proceed();

@@ -18,12 +18,15 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URI;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author weixf
@@ -31,23 +34,23 @@ import java.util.*;
 @Slf4j
 public class HttpUtils {
 
-    //http连接池
-    private static volatile PoolingHttpClientConnectionManager poolingHttpClientConnectionManager;
-    //请求配置
-    private static RequestConfig requestConfig;
-    //请求超时时间
+    // 请求超时时间
     private final static Integer TIME_OUT = 1000000;
+    // http连接池
+    private static volatile PoolingHttpClientConnectionManager poolingHttpClientConnectionManager;
+    // 请求配置
+    private static RequestConfig requestConfig;
 
     public static PoolingHttpClientConnectionManager getPoolingHttpClientConnectionManager() {
         if (poolingHttpClientConnectionManager == null) {
             synchronized (HttpUtils.class) {
                 if (poolingHttpClientConnectionManager == null) {
                     poolingHttpClientConnectionManager = new PoolingHttpClientConnectionManager();
-                    //连接池最大连接数
+                    // 连接池最大连接数
                     poolingHttpClientConnectionManager.setMaxTotal(1024);
-                    //每个路由最大连接数
+                    // 每个路由最大连接数
                     poolingHttpClientConnectionManager.setDefaultMaxPerRoute(32);
-                    //配置请求的超时设置
+                    // 配置请求的超时设置
                     requestConfig = RequestConfig.custom()
                             .setConnectionRequestTimeout(TIME_OUT)
                             .setConnectTimeout(TIME_OUT)

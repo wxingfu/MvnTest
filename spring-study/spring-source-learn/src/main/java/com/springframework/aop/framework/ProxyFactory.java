@@ -8,7 +8,7 @@ import com.springframework.aop.AdvisedSupport;
  * @date 2022-06-24
  */
 public class ProxyFactory {
-    private AdvisedSupport advisedSupport;
+    private final AdvisedSupport advisedSupport;
 
     public ProxyFactory(AdvisedSupport advisedSupport) {
         this.advisedSupport = advisedSupport;

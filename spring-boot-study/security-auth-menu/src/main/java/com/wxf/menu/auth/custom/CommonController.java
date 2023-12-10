@@ -18,20 +18,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @param <Form>
  */
 public class CommonController<T extends BaseEntity<ID>, ID, Form extends BaseForm<ID>> {
-    //通过反射工具类GenericsUtils，获得到实体类
+    // 通过反射工具类GenericsUtils，获得到实体类
     @SuppressWarnings("unchecked")
-    private Class<T> clazz = GenericsUtils.getSuperClassGenricType(getClass());
+    private final Class<T> clazz = GenericsUtils.getSuperClassGenricType(getClass());
 
     @Autowired
     private CommonService<T, ID> baseService;
 
-    //数据显示页面
+    // 数据显示页面
     @RequestMapping(value = "/manage")
     public void manage(ModelMap map) {
 
     }
 
-    //修改和新增页面，共用的一个页面
+    // 修改和新增页面，共用的一个页面
     @RequestMapping(value = "/edit")
     public void edit(Form form, ModelMap map) throws InstantiationException, IllegalAccessException {
         T model = clazz.newInstance();
@@ -42,7 +42,7 @@ public class CommonController<T extends BaseEntity<ID>, ID, Form extends BaseFor
         map.put("model", model);
     }
 
-    //数据保存方法
+    // 数据保存方法
     @RequestMapping(value = "/save")
     @ResponseBody
     public Object save(Form form) {
@@ -60,7 +60,7 @@ public class CommonController<T extends BaseEntity<ID>, ID, Form extends BaseFor
         }
     }
 
-    //删除方法
+    // 删除方法
     @RequestMapping(value = "/delete")
     @ResponseBody
     public Object delete(ID id) {
@@ -72,12 +72,12 @@ public class CommonController<T extends BaseEntity<ID>, ID, Form extends BaseFor
         }
     }
 
-    //动态查询方法
+    // 动态查询方法
     public Specification<T> buildSpec(Form form) {
         return null;
     }
 
-    //分页数据查询
+    // 分页数据查询
     @RequestMapping(value = "/page")
     @ResponseBody
     public Object page(TablePageable pageParam, Form form) {
@@ -87,7 +87,7 @@ public class CommonController<T extends BaseEntity<ID>, ID, Form extends BaseFor
         return AjaxResult.buildPageResult(page);
     }
 
-    //查询表中全部信息，用于树形数据表格
+    // 查询表中全部信息，用于树形数据表格
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(TablePageable pageParam, Form form) {

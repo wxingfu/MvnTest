@@ -9,5 +9,5 @@ public class MediatorPatternDemo {
         robert.sendMessage("Hi! John!");
         john.sendMessage("Hello! Robert!");
     }
-    
+
 }

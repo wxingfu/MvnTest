@@ -6,7 +6,7 @@ import com.wxf.sms.autoconfigure.SmsProperties.SmsMessage;
 
 public class TencentSmsSenderImpl implements SmsSender {
 
-    private SmsMessage smsMessage;
+    private final SmsMessage smsMessage;
 
     public TencentSmsSenderImpl(SmsMessage smsMessage) {
         this.smsMessage = smsMessage;

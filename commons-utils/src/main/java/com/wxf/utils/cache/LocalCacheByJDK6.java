@@ -74,7 +74,7 @@ public class LocalCacheByJDK6 {
      */
     public static void put(final String key, Object value, int timeout) {
         data.put(key, value);
-        //lambda 替换匿名内部类
+        // lambda 替换匿名内部类
         executorService.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -151,13 +151,6 @@ public class LocalCacheByJDK6 {
     }
 
     /**
-     * 判断缓存是否包含key
-     */
-    public boolean containKey(String key) {
-        return data.containsKey(key);
-    }
-
-    /**
      * 获取当前缓存大小
      */
     public static int size() {
@@ -178,5 +171,12 @@ public class LocalCacheByJDK6 {
         if (size() > 0) {
             data.clear();
         }
+    }
+
+    /**
+     * 判断缓存是否包含key
+     */
+    public boolean containKey(String key) {
+        return data.containsKey(key);
     }
 }

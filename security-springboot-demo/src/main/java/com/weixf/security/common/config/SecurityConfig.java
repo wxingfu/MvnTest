@@ -3,7 +3,11 @@ package com.weixf.security.common.config;
 
 import com.weixf.security.security.UserAuthenticationProvider;
 import com.weixf.security.security.UserPermissionEvaluator;
-import com.weixf.security.security.handler.*;
+import com.weixf.security.security.handler.UserAuthAccessDeniedHandler;
+import com.weixf.security.security.handler.UserAuthenticationEntryPointHandler;
+import com.weixf.security.security.handler.UserLoginFailureHandler;
+import com.weixf.security.security.handler.UserLoginSuccessHandler;
+import com.weixf.security.security.handler.UserLogoutSuccessHandler;
 import com.weixf.security.security.jwt.JWTAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +26,7 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true) //开启权限注解,默认是关闭的
+@EnableGlobalMethodSecurity(prePostEnabled = true) // 开启权限注解,默认是关闭的
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 自定义登录成功处理器
@@ -78,7 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
-        //这里可启用我们自己的登陆验证逻辑
+        // 这里可启用我们自己的登陆验证逻辑
         auth.authenticationProvider(userAuthenticationProvider);
     }
 

@@ -38,14 +38,14 @@ public class SysUserService
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        //调用持久层接口findByUsername方法查询用户。
+        // 调用持久层接口findByUsername方法查询用户。
         SysUser user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("用户名不存在");
         }
-        //创建List集合，用来保存用户菜单权限，GrantedAuthority对象代表赋予当前用户的权限
+        // 创建List集合，用来保存用户菜单权限，GrantedAuthority对象代表赋予当前用户的权限
         List<GrantedAuthority> authorities = new ArrayList<>();
-        //获得当前用户角色集合
+        // 获得当前用户角色集合
         List<SysRole> roles = user.getRoles();
         List<SysRole> haveRoles = new ArrayList<>();
         for (SysRole role : roles) {
@@ -55,11 +55,11 @@ public class SysUserService
             haveRoles.addAll(children);
         }
         for (SysRole role : haveRoles) {
-            //将关联对象role的name属性保存为用户的认证权限
+            // 将关联对象role的name属性保存为用户的认证权限
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
-        //此处返回的是org.springframework.security.core.userdetails.User类，该类是SpringSecurity内部的实现
-        //org.springframework.security.core.userdetails.User类实现了UserDetails接口
+        // 此处返回的是org.springframework.security.core.userdetails.User类，该类是SpringSecurity内部的实现
+        // org.springframework.security.core.userdetails.User类实现了UserDetails接口
         return new User(user.getUsername(), user.getPassword(), authorities);
     }
 

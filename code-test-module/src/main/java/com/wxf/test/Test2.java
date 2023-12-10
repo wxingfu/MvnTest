@@ -1,14 +1,8 @@
 package com.wxf.test;
 
-import org.jdom2.Document;
-import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.List;
 
 /**
  * @author wxf
@@ -56,13 +50,13 @@ public class Test2 {
         for (i = 0; i < str.length(); i++) {
             c = str.charAt(i);
             sb.append("\\u");
-            j = (c >>> 8); //取出高8位
+            j = (c >>> 8); // 取出高8位
             tmp = Integer.toHexString(j);
             if (tmp.length() == 1) {
                 sb.append("0");
             }
             sb.append(tmp);
-            j = (c & 0xFF); //取出低8位
+            j = (c & 0xFF); // 取出低8位
             tmp = Integer.toHexString(j);
             if (tmp.length() == 1) {
                 sb.append("0");

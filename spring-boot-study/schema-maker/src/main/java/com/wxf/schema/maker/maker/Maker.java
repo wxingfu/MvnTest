@@ -25,9 +25,6 @@ import java.util.regex.Pattern;
 @Slf4j
 @Component
 public class Maker {
-    @Autowired
-    private MyRepository myRepository;
-
     @Value("${schema.output-path}")
     public String schemaOutputPATH;
     // 单表操作输出路径
@@ -51,8 +48,46 @@ public class Maker {
     // 表名，如果指定了表名，则指生成指定表的相关文件
     @Value("${schema.table-name}")
     public String tableName;
+    @Autowired
+    private MyRepository myRepository;
 
     public Maker() {
+    }
+
+    private static void checkDBType(Schema schema) {
+        Pattern pc = Pattern.compile("\\s*(microsoft\\s+sql\\s+server|ibm\\s+db2\\s+udb|oracle)\\s+.*");
+        Matcher m = pc.matcher(schema.getDBMSName().toLowerCase());
+        if (!m.matches()) {
+            try {
+                throw new Exception("你正在处理的数据库为" + schema.getDBMSName() + "，为不支持的数据库类型，目前仅支持：Oracle,DB2 UDB,SQL Server");
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.exit(0);
+            }
+        }
+    }
+
+    /**
+     * 递归删除目录及下面的所有文件
+     */
+    private static void deleteDirectory(File dir) {
+        if (dir == null || !dir.isDirectory()) {
+            throw new IllegalArgumentException("Argument " + dir + " is not a directory. ");
+        } else {
+            File[] entries = dir.listFiles();
+            int sz = 0;
+            if (entries != null) {
+                sz = entries.length;
+            }
+            for (int i = 0; i < sz; i++) {
+                if (entries[i].isDirectory()) {
+                    deleteDirectory(entries[i]);
+                } else {
+                    log.debug("正在删除文件:" + entries[i].getPath());
+                    boolean delete = entries[i].delete();
+                }
+            }
+        }
     }
 
     public void createJavaFile() throws Exception {
@@ -142,19 +177,6 @@ public class Maker {
         }
     }
 
-    private static void checkDBType(Schema schema) {
-        Pattern pc = Pattern.compile("\\s*(microsoft\\s+sql\\s+server|ibm\\s+db2\\s+udb|oracle)\\s+.*");
-        Matcher m = pc.matcher(schema.getDBMSName().toLowerCase());
-        if (!m.matches()) {
-            try {
-                throw new Exception("你正在处理的数据库为" + schema.getDBMSName() + "，为不支持的数据库类型，目前仅支持：Oracle,DB2 UDB,SQL Server");
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.exit(0);
-            }
-        }
-    }
-
     private String getTimestamp() {
         String pattern = "yyyy-MM-dd HH:mm:ss SSS";
         SimpleDateFormat df = new SimpleDateFormat(pattern);
@@ -169,29 +191,6 @@ public class Maker {
             deleteDirectory(schemaOutputDir);
         } else if (!schemaOutputDir.mkdirs()) {
             throw new IllegalArgumentException("创建输出目录" + schemaOutputPATH + "失败。");
-        }
-    }
-
-    /**
-     * 递归删除目录及下面的所有文件
-     */
-    private static void deleteDirectory(File dir) {
-        if (dir == null || !dir.isDirectory()) {
-            throw new IllegalArgumentException("Argument " + dir + " is not a directory. ");
-        } else {
-            File[] entries = dir.listFiles();
-            int sz = 0;
-            if (entries != null) {
-                sz = entries.length;
-            }
-            for (int i = 0; i < sz; i++) {
-                if (entries[i].isDirectory()) {
-                    deleteDirectory(entries[i]);
-                } else {
-                    log.debug("正在删除文件:" + entries[i].getPath());
-                    boolean delete = entries[i].delete();
-                }
-            }
         }
     }
 }

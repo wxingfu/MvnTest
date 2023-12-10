@@ -46,7 +46,7 @@ public class LocalCache {
      */
     private static final ScheduledExecutorService executorService;
 
-    //初始化
+    // 初始化
     static {
         data = new ConcurrentHashMap<>(DEFAULT_SIZE);
         executorService = new ScheduledThreadPoolExecutor(2);
@@ -63,7 +63,7 @@ public class LocalCache {
      */
     public static void put(String key, Object value) {
         data.put(key, value);
-        //定时器 调度任务，用于根据 时间 定时清除 对应key 缓存
+        // 定时器 调度任务，用于根据 时间 定时清除 对应key 缓存
         executorService.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -79,7 +79,7 @@ public class LocalCache {
      */
     public static void put(String key, Object value, int timeout) {
         data.put(key, value);
-        //lambda 替换匿名内部类
+        // lambda 替换匿名内部类
         executorService.schedule(() -> remove(key), timeout, TimeUnit.SECONDS);
     }
 
@@ -92,7 +92,7 @@ public class LocalCache {
         data.put(key, value);
         LocalDateTime nowTime = LocalDateTime.now();
         if (nowTime.isAfter(expireTime)) {
-            //时间设置异常 待处理
+            // 时间设置异常 待处理
             return;
         }
         long seconds = Duration.between(nowTime, expireTime).getSeconds();
@@ -139,13 +139,6 @@ public class LocalCache {
     }
 
     /**
-     * 判断缓存是否包含key
-     */
-    public boolean containKey(String key) {
-        return data.containsKey(key);
-    }
-
-    /**
      * 获取当前缓存大小
      */
     public static int size() {
@@ -166,5 +159,12 @@ public class LocalCache {
         if (size() > 0) {
             data.clear();
         }
+    }
+
+    /**
+     * 判断缓存是否包含key
+     */
+    public boolean containKey(String key) {
+        return data.containsKey(key);
     }
 }

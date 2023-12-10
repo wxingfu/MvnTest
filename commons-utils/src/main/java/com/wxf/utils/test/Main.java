@@ -1,12 +1,6 @@
 package com.wxf.utils.test;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.wxf.utils.http.HttpUtils;
-
 import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
 
 /*
  *

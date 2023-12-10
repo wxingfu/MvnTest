@@ -19,8 +19,8 @@ public class CommonUtils {
         if (Value == null) {
             return null;
         }
-        //查询时对于没有数据的数字型数据Value传入的时null字符串，因此特殊处理一下
-        //朱向峰 2005-07-26 修改
+        // 查询时对于没有数据的数字型数据Value传入的时null字符串，因此特殊处理一下
+        // 朱向峰 2005-07-26 修改
         if (Value.equals("null")) {
             return "";
         }

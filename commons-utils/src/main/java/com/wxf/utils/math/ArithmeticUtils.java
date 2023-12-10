@@ -10,7 +10,7 @@ import java.math.RoundingMode;
  */
 
 public class ArithmeticUtils {
-    //默认除法运算精度
+    // 默认除法运算精度
     private static final int DEF_DIV_SCALE = 10;
 
     /**

@@ -1,6 +1,5 @@
 package com.wxf.freemarker.vo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /*

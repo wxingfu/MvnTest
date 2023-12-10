@@ -4,30 +4,29 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-//第一步 创建资源类，定义属性和操作方法
+// 第一步 创建资源类，定义属性和操作方法
 class Share {
-    private int number = 0;
-
-    //创建Lock
+    // 创建Lock
     private final Lock lock = new ReentrantLock();
     private final Condition condition = lock.newCondition();
+    private int number = 0;
 
     //+1
     public void incr() throws InterruptedException {
-        //上锁
+        // 上锁
         lock.lock();
         try {
-            //判断
+            // 判断
             while (number != 0) {
                 condition.await();
             }
-            //干活
+            // 干活
             number++;
             System.out.println(Thread.currentThread().getName() + " :: " + number);
-            //通知
+            // 通知
             condition.signalAll();
         } finally {
-            //解锁
+            // 解锁
             lock.unlock();
         }
     }

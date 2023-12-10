@@ -8,12 +8,7 @@ public class CallableTask implements Callable {
     static int count;
 
     public CallableTask(int count) {
-        this.count = count;
-    }
-
-    @Override
-    public Object call() {
-        return count;
+        CallableTask.count = count;
     }
 
     public static void main(String[] args) throws Exception {
@@ -29,5 +24,10 @@ public class CallableTask implements Callable {
 
         Integer total = task.get();
         System.out.println("total = " + total);
+    }
+
+    @Override
+    public Object call() {
+        return count;
     }
 }

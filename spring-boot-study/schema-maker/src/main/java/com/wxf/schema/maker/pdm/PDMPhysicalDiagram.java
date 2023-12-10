@@ -1,5 +1,7 @@
 package com.wxf.schema.maker.pdm;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,59 +13,29 @@ import java.util.ArrayList;
 @Component
 public class PDMPhysicalDiagram {
 
+    @Setter
+    @Getter
     private String Id;
+    @Setter
+    @Getter
     private String Name;
+    @Setter
+    @Getter
     private String Code;
-    private ArrayList<String> Tables = new ArrayList<>(20);
+    private final ArrayList<String> Tables = new ArrayList<>(20);
+    @Getter
     private int TabNum = 0;
 
     public PDMPhysicalDiagram() {
     }
 
-    public String getId()
-    {
-        return Id;
-    }
-
-    public void setId(String id)
-    {
-        Id = id;
-    }
-
-    public String getName()
-    {
-        return Name;
-    }
-
-    public void setName(String name)
-    {
-        Name = name;
-    }
-
-    public String getCode()
-    {
-        return Code;
-    }
-
-    public void setCode(String code)
-    {
-        Code = code;
-    }
-
-    public void addTable(String table)
-    {
+    public void addTable(String table) {
         Tables.add(table);
         TabNum++;
     }
 
-    public int getTabNum()
-    {
-        return TabNum;
-    }
-
-    public String getTable(int i)
-    {
-        return(String)Tables.get(i);
+    public String getTable(int i) {
+        return Tables.get(i);
     }
 
 }

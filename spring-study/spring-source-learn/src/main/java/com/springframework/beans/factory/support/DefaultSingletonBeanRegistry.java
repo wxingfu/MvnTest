@@ -5,7 +5,6 @@ import com.springframework.beans.factory.DisposableBean;
 import com.springframework.beans.factory.ObjectFactory;
 import com.springframework.beans.factory.config.SingletonBeanRegistry;
 
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -17,16 +16,13 @@ import java.util.Set;
  */
 public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
 
-    //一级缓存
-    private Map<String, Object> singletonObjects = new HashMap<>();
-
-    //二级缓存
-    private Map<String, Object> earlySingletonObjects = new HashMap<>();
-
-    //三级缓存
-    private Map<String, ObjectFactory<?>> singletonFactories = new HashMap<String, ObjectFactory<?>>();
-
     private final Map<String, DisposableBean> disposableBeans = new HashMap<>();
+    // 一级缓存
+    private final Map<String, Object> singletonObjects = new HashMap<>();
+    // 二级缓存
+    private final Map<String, Object> earlySingletonObjects = new HashMap<>();
+    // 三级缓存
+    private final Map<String, ObjectFactory<?>> singletonFactories = new HashMap<String, ObjectFactory<?>>();
 
     @Override
     public Object getSingleton(String beanName) {
@@ -37,7 +33,7 @@ public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
                 ObjectFactory<?> singletonFactory = singletonFactories.get(beanName);
                 if (singletonFactory != null) {
                     singletonObject = singletonFactory.getObject();
-                    //从三级缓存放进二级缓存
+                    // 从三级缓存放进二级缓存
                     earlySingletonObjects.put(beanName, singletonObject);
                     singletonFactories.remove(beanName);
                 }

@@ -9,7 +9,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class MVConfig extends WebMvcConfigurerAdapter {
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         FastJsonHttpMessageConverter messageConverter = new FastJsonHttpMessageConverter();
         FastJsonConfig jsonConfig = new FastJsonConfig();
-        jsonConfig.setCharset(Charset.forName("UTF-8"));
+        jsonConfig.setCharset(StandardCharsets.UTF_8);
         jsonConfig.setSerializerFeatures(SerializerFeature.DisableCircularReferenceDetect);
         messageConverter.setFastJsonConfig(jsonConfig);
         List<MediaType> mediaTypes = new ArrayList<>();

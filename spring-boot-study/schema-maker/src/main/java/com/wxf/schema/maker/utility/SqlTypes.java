@@ -11,30 +11,29 @@ import java.sql.Types;
 @Component
 public class SqlTypes {
 
-    private SqlTypes() {
-    }
-
-    //下面类型作为String处理
+    // 下面类型作为String处理
     public final static int CHAR = Types.CHAR;
     public final static int VARCHAR = Types.VARCHAR;
     public final static int TIMESTAMP = Types.TIMESTAMP;
-    //下面类型默认作为String处理，但是也可以作为流处理
+    // 下面类型默认作为String处理，但是也可以作为流处理
     public final static int LONGVARCHAR = Types.LONGVARCHAR;
     public final static int CLOB = Types.CLOB;
-    //下面类型作为Date处理
+    // 下面类型作为Date处理
     public final static int DATE = Types.DATE;
-    //下面类型作为int处理
+    // 下面类型作为int处理
     public final static int INTEGER = Types.INTEGER;
     public final static int SMALLINT = Types.SMALLINT;
     public final static int TINYINT = Types.TINYINT;
-    //下面类型作为double处理
+    // 下面类型作为double处理
     public final static int NUMERIC = Types.NUMERIC;
     public final static int DECIMAL = Types.DECIMAL;
     public final static int DOUBLE = Types.DOUBLE;
     public final static int REAL = Types.REAL;
-    //下面类型作为InputStream处理
+    // 下面类型作为InputStream处理
     public final static int BLOB = Types.BLOB;
     public final static int LONGVARBINARY = Types.LONGVARBINARY;
+    private SqlTypes() {
+    }
 
     public static String getSQLTypeStr(int sqlType) {
         switch (sqlType) {

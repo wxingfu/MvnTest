@@ -59,7 +59,6 @@ public class PreventAop {
         String methodFullName = method.getDeclaringClass().getName() + method.getName();
 
         entrance(preventAnnotation, requestStr, methodFullName);
-        return;
     }
 
 

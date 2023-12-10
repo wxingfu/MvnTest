@@ -13,11 +13,6 @@ public class SpringContextJobUtil implements ApplicationContextAware {
 
     private static ApplicationContext context;
 
-    @Override
-    public void setApplicationContext(ApplicationContext context) throws BeansException {
-        this.context = context;
-    }
-
     /**
      * 根据name获取bean
      *
@@ -30,5 +25,10 @@ public class SpringContextJobUtil implements ApplicationContextAware {
 
     public static String getMessage(String key) {
         return context.getMessage(key, null, Locale.getDefault());
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext context) throws BeansException {
+        SpringContextJobUtil.context = context;
     }
 }

@@ -18,5 +18,5 @@ public class MementoPatternDemo {
         originator.getStateFromMemento(careTaker.get(1));
         System.out.println("Second saved State: " + originator.getState());
     }
-    
+
 }

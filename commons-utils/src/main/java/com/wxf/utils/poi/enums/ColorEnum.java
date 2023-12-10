@@ -11,7 +11,7 @@ public enum ColorEnum {
     private String name;
     private short index;
 
-    private ColorEnum(String name, short index) {
+    ColorEnum(String name, short index) {
         this.name = name;
         this.index = index;
     }

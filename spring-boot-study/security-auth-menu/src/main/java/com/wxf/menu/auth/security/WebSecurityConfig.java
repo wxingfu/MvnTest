@@ -19,9 +19,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //添加用户，并给予权限
+        // 添加用户，并给予权限
         auth.inMemoryAuthentication().withUser("aaa").password("{noop}1234").roles("DIY");
-        //设置认证方式
+        // 设置认证方式
         auth.userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());
     }
 

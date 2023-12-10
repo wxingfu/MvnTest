@@ -11,7 +11,7 @@ import java.util.Enumeration;
 public class IntHashtable extends Dictionary implements Cloneable {
 
     // / The hash table data.
-    private IntHashtableEntry table[];
+    private IntHashtableEntry[] table;
 
     // / The total number of entries in the hash table.
     private int count;
@@ -20,7 +20,7 @@ public class IntHashtable extends Dictionary implements Cloneable {
     private int threshold;
 
     // / The load factor for the hashtable.
-    private float loadFactor;
+    private final float loadFactor;
 
     // / Constructs a new, empty hashtable with the specified initial
     // capacity and the specified load factor.
@@ -88,7 +88,7 @@ public class IntHashtable extends Dictionary implements Cloneable {
         if (value == null) {
             throw new NullPointerException();
         }
-        IntHashtableEntry tab[] = table;
+        IntHashtableEntry[] tab = table;
         for (int i = tab.length; i-- > 0; ) {
             for (IntHashtableEntry e = tab[i]; e != null; e = e.next) {
                 if (e.value.equals(value)) {
@@ -103,7 +103,7 @@ public class IntHashtable extends Dictionary implements Cloneable {
     // @param key the key that we are looking for
     // @see IntHashtable#contains
     public synchronized boolean containsKey(int key) {
-        IntHashtableEntry tab[] = table;
+        IntHashtableEntry[] tab = table;
         int hash = key;
         int index = (hash & 0x7FFFFFFF) % tab.length;
         for (IntHashtableEntry e = tab[index]; e != null; e = e.next) {
@@ -121,7 +121,7 @@ public class IntHashtable extends Dictionary implements Cloneable {
     // is not defined in the hash table.
     // @see IntHashtable#put
     public synchronized Object get(int key) {
-        IntHashtableEntry tab[] = table;
+        IntHashtableEntry[] tab = table;
         int hash = key;
         int index = (hash & 0x7FFFFFFF) % tab.length;
         for (IntHashtableEntry e = tab[index]; e != null; e = e.next) {
@@ -148,10 +148,10 @@ public class IntHashtable extends Dictionary implements Cloneable {
     // size exceeds the threshold.
     protected void rehash() {
         int oldCapacity = table.length;
-        IntHashtableEntry oldTable[] = table;
+        IntHashtableEntry[] oldTable = table;
 
         int newCapacity = oldCapacity * 2 + 1;
-        IntHashtableEntry newTable[] = new IntHashtableEntry[newCapacity];
+        IntHashtableEntry[] newTable = new IntHashtableEntry[newCapacity];
 
         threshold = (int) (newCapacity * loadFactor);
         table = newTable;
@@ -184,7 +184,7 @@ public class IntHashtable extends Dictionary implements Cloneable {
         }
 
         // Makes sure the key is not already in the hashtable.
-        IntHashtableEntry tab[] = table;
+        IntHashtableEntry[] tab = table;
         int hash = key;
         int index = (hash & 0x7FFFFFFF) % tab.length;
         for (IntHashtableEntry e = tab[index]; e != null; e = e.next) {
@@ -228,7 +228,7 @@ public class IntHashtable extends Dictionary implements Cloneable {
     // @param key the key that needs to be removed
     // @return the value of key, or null if the key was not found.
     public synchronized Object remove(int key) {
-        IntHashtableEntry tab[] = table;
+        IntHashtableEntry[] tab = table;
         int hash = key;
         int index = (hash & 0x7FFFFFFF) % tab.length;
         for (IntHashtableEntry e = tab[index], prev = null; e != null; prev = e, e = e.next) {
@@ -258,7 +258,7 @@ public class IntHashtable extends Dictionary implements Cloneable {
 
     // / Clears the hash table so that it has no more elements in it.
     public synchronized void clear() {
-        IntHashtableEntry tab[] = table;
+        IntHashtableEntry[] tab = table;
         for (int index = tab.length; --index >= 0; ) {
             tab[index] = null;
         }

@@ -4,14 +4,13 @@ import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
-import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -43,8 +42,8 @@ public class HttpClientCallSoapUtil {
         httpPost.setConfig(requestConfig);
         try {
             httpPost.setHeader("Content-Type", "text/xml;charset=UTF-8");
-			// httpPost.setHeader("SOAPAction", soapAction);
-            StringEntity data = new StringEntity(soapXml, Charset.forName("UTF-8"));
+            // httpPost.setHeader("SOAPAction", soapAction);
+            StringEntity data = new StringEntity(soapXml, StandardCharsets.UTF_8);
             httpPost.setEntity(data);
             Date date = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -80,22 +79,18 @@ public class HttpClientCallSoapUtil {
         return responseXml;
     }
 
-	public static void main(String[] args) {
-		String s = HttpClientCallSoapUtil.sendXml("http://10.2.0.88:8001/ui/services/Online?wsdl",
-				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-						"<TranData><Head><TranDate>20230808</TranDate>" +
+    public static void main(String[] args) {
+        String s = HttpClientCallSoapUtil.sendXml("http://10.2.0.88:8001/ui/services/Online?wsdl",
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                        "<TranData><Head><TranDate>20230808</TranDate>" +
                         "<FuncFlag>7</FuncFlag><TranNo>20230808kui4zu53</TranNo>" +
                         "<TranCom>86520101</TranCom><TranTime>003009</TranTime>" +
                         "<TranOperator>xrikhlw</TranOperator></Head>" +
                         "<Body>" +
                         "<ContNo></ContNo></Body></TranData>");
 
-		System.out.println(s);
-	}
-
-
-
-
+        System.out.println(s);
+    }
 
 
 }

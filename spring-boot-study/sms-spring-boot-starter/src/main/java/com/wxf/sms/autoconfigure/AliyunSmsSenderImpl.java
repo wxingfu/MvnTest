@@ -3,7 +3,7 @@ package com.wxf.sms.autoconfigure;
 
 public class AliyunSmsSenderImpl implements SmsSender {
 
-    private SmsProperties.SmsMessage smsMessage;
+    private final SmsProperties.SmsMessage smsMessage;
 
     public AliyunSmsSenderImpl(SmsProperties.SmsMessage smsProperties) {
         this.smsMessage = smsProperties;

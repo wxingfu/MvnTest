@@ -37,7 +37,7 @@ public class MenuController extends CommonController<TbMenu, Integer, TbMenuForm
             if (id != null) {
                 model = menuService.findById(id);
             }
-            //父级菜单id
+            // 父级菜单id
             Integer parentId = form.getParentId();
             if (parentId == null) {
                 model.setParent(null);

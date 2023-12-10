@@ -15,17 +15,20 @@ import java.util.Hashtable;
  */
 public abstract class ImageEncoder implements ImageConsumer {
 
+    private static final ColorModel rgbModel = ColorModel.getRGBdefault();
     protected OutputStream out;
-
-    private ImageProducer producer;
+    private final ImageProducer producer;
     private int width = -1;
     private int height = -1;
     private int hintflags = 0;
     private boolean started = false;
     private boolean encoding;
     private IOException iox;
-    private static final ColorModel rgbModel = ColorModel.getRGBdefault();
     private Hashtable props = null;
+    private boolean accumulate = false;
+    private int[] accumulator;
+
+    // Methods that subclasses implement.
 
     // / Constructor.
     // @param img The image to encode.
@@ -43,10 +46,10 @@ public abstract class ImageEncoder implements ImageConsumer {
         this.out = out;
     }
 
-    // Methods that subclasses implement.
-
     // / Subclasses implement this to initialize an encoding.
     abstract void encodeStart(int w, int h) throws IOException;
+
+    // Our own methods.
 
     // / Subclasses implement this to actually write out some bits. They
     // are guaranteed to be delivered in top-down-left-right order.
@@ -57,8 +60,6 @@ public abstract class ImageEncoder implements ImageConsumer {
 
     // / Subclasses implement this to finish an encoding.
     abstract void encodeDone() throws IOException;
-
-    // Our own methods.
 
     // / Call this after initialization to get things going.
     public synchronized void encode() throws IOException {
@@ -75,9 +76,6 @@ public abstract class ImageEncoder implements ImageConsumer {
             throw iox;
         }
     }
-
-    private boolean accumulate = false;
-    private int[] accumulator;
 
     private void encodePixelsWrapper(int x, int y, int w, int h,
                                      int[] rgbPixels, int off, int scansize) throws IOException {
@@ -157,7 +155,6 @@ public abstract class ImageEncoder implements ImageConsumer {
             } catch (IOException e) {
                 iox = e;
                 stop();
-                return;
             }
         } else {
             int[] rgbPixels = new int[w];

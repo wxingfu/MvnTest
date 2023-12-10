@@ -4,7 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.crazycake.shiro.AuthCachePrincipal;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,7 +38,7 @@ public class User implements Serializable, AuthCachePrincipal {
     @JoinTable(name = "pe_user_role", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
-    private Set<Role> roles = new HashSet<Role>();//用户与角色   多对多
+    private Set<Role> roles = new HashSet<Role>();// 用户与角色   多对多
 
     @Override
     public String getAuthCacheKey() {

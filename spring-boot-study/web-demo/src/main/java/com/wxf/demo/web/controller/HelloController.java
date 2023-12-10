@@ -31,6 +31,30 @@ import java.util.Base64;
 @RequestMapping("/hello")
 public class HelloController {
 
+    public static String aesEncrypt(String content, String encryptKey) throws Exception {
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE,
+                new SecretKeySpec(encryptKey.getBytes(), "AES"),
+                new IvParameterSpec(new byte[16])
+        );
+        byte[] bytes = cipher.doFinal(content.getBytes(StandardCharsets.UTF_8));
+        return org.apache.commons.codec.binary.Base64.encodeBase64String(bytes);
+    }
+
+    public static String aesDecrypt(String encryptStr, String decryptKey) throws Exception {
+        if (ObjectUtils.isEmpty(encryptStr)) {
+            return null;
+        }
+        byte[] encryptBytes = org.apache.commons.codec.binary.Base64.decodeBase64(encryptStr);
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.DECRYPT_MODE,
+                new SecretKeySpec(decryptKey.getBytes(), "AES"),
+                new IvParameterSpec(new byte[16])
+        );
+        byte[] decryptBytes = cipher.doFinal(encryptBytes);
+        return new String(decryptBytes, StandardCharsets.UTF_8);
+    }
+
     @PostMapping(value = "/test")
     public String test(@RequestBody String param) {
 
@@ -101,31 +125,5 @@ public class HelloController {
         }
         System.out.println("加密后：" + encrypt);
         return encrypt;
-    }
-
-
-    public static String aesEncrypt(String content, String encryptKey) throws Exception {
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.ENCRYPT_MODE,
-                new SecretKeySpec(encryptKey.getBytes(), "AES"),
-                new IvParameterSpec(new byte[16])
-        );
-        byte[] bytes = cipher.doFinal(content.getBytes(StandardCharsets.UTF_8));
-        return org.apache.commons.codec.binary.Base64.encodeBase64String(bytes);
-    }
-
-
-    public static String aesDecrypt(String encryptStr, String decryptKey) throws Exception {
-        if (ObjectUtils.isEmpty(encryptStr)) {
-            return null;
-        }
-        byte[] encryptBytes = org.apache.commons.codec.binary.Base64.decodeBase64(encryptStr);
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.DECRYPT_MODE,
-                new SecretKeySpec(decryptKey.getBytes(), "AES"),
-                new IvParameterSpec(new byte[16])
-        );
-        byte[] decryptBytes = cipher.doFinal(encryptBytes);
-        return new String(decryptBytes, StandardCharsets.UTF_8);
     }
 }

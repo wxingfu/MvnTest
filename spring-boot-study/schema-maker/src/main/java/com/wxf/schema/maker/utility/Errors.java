@@ -1,5 +1,7 @@
 package com.wxf.schema.maker.utility;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.util.Vector;
@@ -11,47 +13,36 @@ import java.util.Vector;
 @Component
 public class Errors implements Cloneable {
 
-    private Vector<Error> vErrors = new Vector<>();
+    private final Vector<Error> vErrors = new Vector<>();
 
+    /**
+     * -- GETTER --
+     *  得到容器中的错误的个数
+     *
+     * @return int
+     */
+    @Getter
     private int errorCount = 0;
 
+    @Setter
+    @Getter
     private String flag = "";
 
+    @Setter
+    @Getter
     private String content = "";
 
+    @Setter
+    @Getter
     private String result = "";
 
+
+    public Errors() {
+    }
 
     public Object clone() throws CloneNotSupportedException {
         // clone the mutable fields of this class
         return super.clone();
-    }
-
-    public String getFlag() {
-        return flag;
-    }
-
-    public void setFlag(String f) {
-        flag = f;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String c) {
-        content = c;
-    }
-
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String c) {
-        result = c;
-    }
-
-    public Errors() {
     }
 
     /**
@@ -103,15 +94,6 @@ public class Errors implements Cloneable {
     public void clearErrors() {
         this.vErrors.clear();
         this.errorCount = 0;
-    }
-
-    /**
-     * 得到容器中的错误的个数
-     *
-     * @return int
-     */
-    public int getErrorCount() {
-        return this.errorCount;
     }
 
     /**
@@ -269,19 +251,19 @@ public class Errors implements Cloneable {
             }
         }
 
-        if (!forbitContent.toString().equals("")) {
+        if (!"".contentEquals(forbitContent)) {
             content = content + "严重错误如下:\n" + forbitContent;
         }
 
-        if (!needSelectContent.toString().equals("")) {
+        if (!"".contentEquals(needSelectContent)) {
             content = content + "需要选择的错误如下:\n" + needSelectContent;
         }
 
-        if (!allowContent.toString().equals("")) {
+        if (!"".contentEquals(allowContent)) {
             content = content + "允许出现的错误如下:\n" + allowContent;
         }
 
-        if (!unknowContent.toString().equals("")) {
+        if (!"".contentEquals(unknowContent)) {
             content = content + "意外错误如下:\n" + unknowContent;
         }
         return content;

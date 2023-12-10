@@ -9,23 +9,7 @@ import java.util.HashMap;
  */
 public class AjaxResult {
     private Boolean success;
-    private String msg;        //提示信息
-
-    public Boolean getSuccess() {
-        return success;
-    }
-
-    public void setSuccess(Boolean success) {
-        this.success = success;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
+    private String msg;        // 提示信息
 
     public AjaxResult(String msg) {
         super();
@@ -45,5 +29,21 @@ public class AjaxResult {
         result.put("total", page.getTotalElements());
         result.put("rows", page.getContent());
         return result;
+    }
+
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Boolean success) {
+        this.success = success;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

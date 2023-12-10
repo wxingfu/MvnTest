@@ -2,7 +2,7 @@ package com.wxf.j2ee.composite_entity;
 
 public class Client {
 
-    private CompositeEntity compositeEntity = new CompositeEntity();
+    private final CompositeEntity compositeEntity = new CompositeEntity();
 
     public void printData() {
         for (int i = 0; i < compositeEntity.getData().length; i++) {

@@ -1,5 +1,7 @@
 package com.wxf.schema.maker.pdm;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,19 +11,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class PDMReferenceJoin {
 
+    @Setter
+    @Getter
     private String Id;
-    private String ParentTable_Col_Ref; //Object1
-    private String ChildTable_Col_Ref; //Object2
+    private String ParentTable_Col_Ref; // Object1
+    private String ChildTable_Col_Ref; // Object2
 
     public PDMReferenceJoin() {
-    }
-
-    public String getId() {
-        return Id;
-    }
-
-    public void setId(String id) {
-        Id = id;
     }
 
     public String getParentTableCol() {

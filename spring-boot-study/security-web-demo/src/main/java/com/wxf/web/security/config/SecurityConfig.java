@@ -25,16 +25,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    //注入数据源
+    // 注入数据源
     @Autowired
     private DataSource dataSource;
 
-    //配置对象
+    // 配置对象
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
         jdbcTokenRepository.setDataSource(dataSource);
-        //jdbcTokenRepository.setCreateTableOnStartup(true);
+        // jdbcTokenRepository.setCreateTableOnStartup(true);
         return jdbcTokenRepository;
     }
 
@@ -64,10 +64,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 自定义自己编写的登录页面
         http.formLogin()
-                .loginPage("/login.html")  //登录页面设置
-                .loginProcessingUrl("/user/login")   //登录访问路径
+                .loginPage("/login.html")  // 登录页面设置
+                .loginProcessingUrl("/user/login")   // 登录访问路径
                 // .defaultSuccessUrl("/test/index").permitAll()  //登录成功之后，跳转路径
-                .defaultSuccessUrl("/success.html").permitAll()  //登录成功之后，跳转路径
+                .defaultSuccessUrl("/success.html").permitAll()  // 登录成功之后，跳转路径
                 .failureUrl("/unauth.html"); // 登录失败跳转路径
 
         // 设置哪些路径可以直接访问，不需要认证

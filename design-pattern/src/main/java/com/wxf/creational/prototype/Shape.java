@@ -7,8 +7,8 @@ package com.wxf.creational.prototype;
  */
 public abstract class Shape implements Cloneable {
 
-    private String id;
     protected String type;
+    private String id;
 
     abstract void draw();
 

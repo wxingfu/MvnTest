@@ -11,10 +11,10 @@ package com.wxf.creational.singleton;
  */
 public class Singleton6 {
 
+    private static volatile Singleton6 instance;
+
     private Singleton6() {
     }
-
-    private static volatile Singleton6 instance;
 
     public static Singleton6 getInstance() {
         if (instance == null) {

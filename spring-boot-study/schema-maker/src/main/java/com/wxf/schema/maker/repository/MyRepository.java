@@ -1,6 +1,9 @@
 package com.wxf.schema.maker.repository;
 
-import com.wxf.schema.maker.utility.*;
+import com.wxf.schema.maker.utility.CommonUtils;
+import com.wxf.schema.maker.utility.DataCollection;
+import com.wxf.schema.maker.utility.FDate;
+import com.wxf.schema.maker.utility.StringUtil;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.jdbc.support.rowset.SqlRowSetMetaData;
@@ -8,7 +11,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +31,7 @@ public class MyRepository {
     @Resource
     private FDate fDate;
 
-    public Connection getConnection(){
+    public Connection getConnection() {
         DataSource dataSource = jdbcTemplate.getDataSource();
         try {
             if (dataSource != null) {

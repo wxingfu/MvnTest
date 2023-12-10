@@ -1,5 +1,7 @@
 package com.wxf.schema.maker.pdm;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,55 +13,28 @@ import java.util.ArrayList;
 @Component
 public class PDMKey {
 
+    @Setter
+    @Getter
     private String Id;
+    @Setter
+    @Getter
     private String Name;
+    @Setter
+    @Getter
     private String Code;
+    @Setter
+    @Getter
     private String ConstraintName;
-    private ArrayList Columns_Ref = new ArrayList(5); //使用Column中的ID
+    private final ArrayList<String> Columns_Ref = new ArrayList<>(5); // 使用Column中的ID
+    @Getter
     private int ColNum = 0;
 
     public PDMKey() {
     }
 
-    public String getId() {
-        return Id;
-    }
-
-    public void setId(String id) {
-        Id = id;
-    }
-
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public String getCode() {
-        return Code;
-    }
-
-    public void setCode(String code) {
-        Code = code;
-    }
-
-    public String getConstraintName() {
-        return ConstraintName;
-    }
-
-    public void setConstraintName(String constraint) {
-        ConstraintName = constraint;
-    }
-
     public void addColumn(String col) {
         Columns_Ref.add(col);
         ColNum++;
-    }
-
-    public int getColNum() {
-        return ColNum;
     }
 
     public String getColumn(int i) {

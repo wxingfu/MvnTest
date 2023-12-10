@@ -45,7 +45,7 @@ public class MyList {
         System.out.println(list1);
     }
 
-    //3.求交集 求List1和List2中都有的元素。
+    // 3.求交集 求List1和List2中都有的元素。
     public static void test4(List<String> list1, List<String> list2) {
         list1.retainAll(list2);
         System.out.println(list1);

@@ -1,6 +1,10 @@
 package com.springframework.stereotype;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @author derekyi
@@ -11,5 +15,5 @@ import java.lang.annotation.*;
 @Documented
 public @interface Component {
 
-	String value() default "";
+    String value() default "";
 }

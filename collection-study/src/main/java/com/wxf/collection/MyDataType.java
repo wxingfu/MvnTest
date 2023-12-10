@@ -6,7 +6,7 @@ public class MyDataType {
     public static void main(String[] args) {
 
         // 默认是double型，会丢失精度
-        BigDecimal decimal = new BigDecimal(0.01D);
+        BigDecimal decimal = new BigDecimal("0.01");
 
         BigDecimal decimal1 = new BigDecimal("0.01");
         BigDecimal decimal2 = BigDecimal.valueOf(0.01D);

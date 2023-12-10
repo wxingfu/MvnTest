@@ -2,7 +2,7 @@ package com.wxf.j2ee.business_delegate;
 
 public class BusinessDelegate {
 
-    private BusinessLookUp lookupService = new BusinessLookUp();
+    private final BusinessLookUp lookupService = new BusinessLookUp();
     private BusinessService businessService;
     private String serviceType;
 

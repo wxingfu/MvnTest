@@ -3,12 +3,8 @@ package com.wxf.thread.thread.sync;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-//可重入锁
+// 可重入锁
 public class SyncLockDemo {
-
-    public synchronized void add() {
-        add();
-    }
 
     public static void main(String[] args) {
 
@@ -29,12 +25,12 @@ public class SyncLockDemo {
                     lock.unlock();
                 }
             } finally {
-                //释放做
+                // 释放做
                 lock.unlock();
             }
         }, "t1").start();
 
-        //创建新线程
+        // 创建新线程
         new Thread(() -> {
             lock.lock();
             System.out.println("aaaa");
@@ -59,6 +55,10 @@ public class SyncLockDemo {
             }
 
         }, "t1").start();*/
+    }
+
+    public synchronized void add() {
+        add();
     }
 
 }

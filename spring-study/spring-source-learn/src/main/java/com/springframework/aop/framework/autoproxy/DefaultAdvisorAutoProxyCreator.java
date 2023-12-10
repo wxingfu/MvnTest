@@ -1,6 +1,10 @@
 package com.springframework.aop.framework.autoproxy;
 
-import com.springframework.aop.*;
+import com.springframework.aop.AdvisedSupport;
+import com.springframework.aop.Advisor;
+import com.springframework.aop.ClassFilter;
+import com.springframework.aop.Pointcut;
+import com.springframework.aop.TargetSource;
 import com.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor;
 import com.springframework.aop.framework.ProxyFactory;
 import com.springframework.beans.BeansException;
@@ -25,7 +29,7 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
 
     private DefaultListableBeanFactory beanFactory;
 
-    private Set<Object> earlyProxyReferences = new HashSet<>();
+    private final Set<Object> earlyProxyReferences = new HashSet<>();
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
@@ -43,7 +47,7 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
     }
 
     protected Object wrapIfNecessary(Object bean, String beanName) {
-        //避免死循环
+        // 避免死循环
         if (isInfrastructureClass(bean.getClass())) {
             return bean;
         }
@@ -60,7 +64,7 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
                     advisedSupport.setMethodInterceptor((MethodInterceptor) advisor.getAdvice());
                     advisedSupport.setMethodMatcher(advisor.getPointcut().getMethodMatcher());
 
-                    //返回代理对象
+                    // 返回代理对象
                     return new ProxyFactory(advisedSupport).getProxy();
                 }
             }

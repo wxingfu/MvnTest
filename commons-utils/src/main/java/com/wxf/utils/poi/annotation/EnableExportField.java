@@ -16,15 +16,15 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EnableExportField {
-    //宽度
+    // 宽度
     int colWidth() default 100;
 
-    //标题名称
+    // 标题名称
     String colName();
 
-    //设置get方法
+    // 设置get方法
     String useGetMethod() default "";
 
-    //设置背景颜色
+    // 设置背景颜色
     ColorEnum cellColor() default ColorEnum.BLUE;
 }

@@ -13,10 +13,10 @@ package com.wxf.creational.singleton;
  */
 public class Singleton4 {
 
+    private static Singleton4 instance;
+
     private Singleton4() {
     }
-
-    private static Singleton4 instance;
 
     public static synchronized Singleton4 getInstance() {
         if (instance == null) {

@@ -1,7 +1,6 @@
 package com.springframework.beans.factory.support;
 
 import com.springframework.beans.BeansException;
-import com.springframework.beans.factory.BeanFactory;
 import com.springframework.beans.factory.FactoryBean;
 import com.springframework.beans.factory.config.BeanDefinition;
 import com.springframework.beans.factory.config.BeanPostProcessor;
@@ -34,7 +33,7 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
     public Object getBean(String name) throws BeansException {
         Object sharedInstance = getSingleton(name);
         if (sharedInstance != null) {
-            //如果是FactoryBean，从FactoryBean#getObject中创建bean
+            // 如果是FactoryBean，从FactoryBean#getObject中创建bean
             return getObjectForBeanInstance(sharedInstance, name);
         }
 
@@ -56,14 +55,14 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
             FactoryBean factoryBean = (FactoryBean) beanInstance;
             try {
                 if (factoryBean.isSingleton()) {
-                    //singleton作用域bean，从缓存中获取
+                    // singleton作用域bean，从缓存中获取
                     object = this.factoryBeanObjectCache.get(beanName);
                     if (object == null) {
                         object = factoryBean.getObject();
                         this.factoryBeanObjectCache.put(beanName, object);
                     }
                 } else {
-                    //prototype作用域bean，新创建bean
+                    // prototype作用域bean，新创建bean
                     object = factoryBean.getObject();
                 }
             } catch (Exception ex) {
@@ -92,7 +91,7 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
 
     @Override
     public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
-        //有则覆盖
+        // 有则覆盖
         this.beanPostProcessors.remove(beanPostProcessor);
         this.beanPostProcessors.add(beanPostProcessor);
     }

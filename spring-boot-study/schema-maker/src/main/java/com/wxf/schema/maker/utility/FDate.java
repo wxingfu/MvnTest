@@ -12,13 +12,13 @@ import java.util.Date;
 @Component
 public class FDate implements Cloneable {
     public Errors mErrors = new Errors(); // 错误信息
-    private final String pattern = "yyyy-MM-dd";
-    private final String pattern1 = "yyyyMMdd";
-    private SimpleDateFormat df;
-    private SimpleDateFormat df1;
+    private final SimpleDateFormat df;
+    private final SimpleDateFormat df1;
 
     public FDate() {
+        String pattern = "yyyy-MM-dd";
         df = new SimpleDateFormat(pattern);
+        String pattern1 = "yyyyMMdd";
         df1 = new SimpleDateFormat(pattern1);
     }
 

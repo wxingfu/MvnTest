@@ -9,10 +9,10 @@ public interface SysUserService {
 
     SysUser getSysUserByName(String username);
 
-    //根据用户查询角色信息
+    // 根据用户查询角色信息
     List<String> getUserRoleInfo(String principal);
 
-    //获取用户角色权限信息
+    // 获取用户角色权限信息
     List<String> getUserPermissionInfo(List<String> roles);
 
 }

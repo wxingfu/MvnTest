@@ -10,8 +10,14 @@ import com.itextpdf.tool.xml.XMLWorkerHelper;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,7 +69,7 @@ public class FreemarkerUtil {
         XMLWorkerHelper instance = XMLWorkerHelper.getInstance();
         instance.parseXHtml(writer,
                 document,
-                new ByteArrayInputStream(content.getBytes("UTF-8")),
+                new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)),
                 null,
                 Charset.defaultCharset(),
                 fontImp);

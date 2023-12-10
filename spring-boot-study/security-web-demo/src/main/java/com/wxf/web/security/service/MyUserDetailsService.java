@@ -30,13 +30,13 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        //调用usersMapper方法，根据用户名查询数据库
+        // 调用usersMapper方法，根据用户名查询数据库
         QueryWrapper<Users> wrapper = new QueryWrapper<>();
         // where username=?
         wrapper.eq("username", username);
         Users users = usersMapper.selectOne(wrapper);
-        //判断
-        if (users == null) {//数据库没有用户名，认证失败
+        // 判断
+        if (users == null) {// 数据库没有用户名，认证失败
             throw new UsernameNotFoundException("用户名不存在！");
         }
 

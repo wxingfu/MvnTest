@@ -12,10 +12,10 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ImportIndex {
-    //索引
+    // 索引
     int index();
 
-    //设置set方法
+    // 设置set方法
     String useSetMethodName() default "";
 
 }

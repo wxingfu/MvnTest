@@ -23,6 +23,7 @@ public class ResumeDataIterable {
     private String profession;
     private NumberingRenderData stack;
     private String hobbies;
+    private List<ExperienceData> experiences;
 
     public List<ExperienceData> getExperiences() {
         return experiences;
@@ -31,8 +32,6 @@ public class ResumeDataIterable {
     public void setExperiences(List<ExperienceData> experiences) {
         this.experiences = experiences;
     }
-
-    private List<ExperienceData> experiences;
 
     public PictureRenderData getPortrait() {
         return portrait;

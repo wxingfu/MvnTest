@@ -1,6 +1,6 @@
 package com.wxf.behavioral.visitor;
 
-public class Monitor  implements ComputerPart {
+public class Monitor implements ComputerPart {
 
     @Override
     public void accept(ComputerPartVisitor computerPartVisitor) {

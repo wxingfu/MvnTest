@@ -110,11 +110,11 @@ public class StringUtil {
         t_Str2 = c_Split;
         try {
             while (i < c_i) {
-                i_Start = t_Str1.indexOf(t_Str2, 0);
+                i_Start = t_Str1.indexOf(t_Str2);
                 if (i_Start >= 0) {
                     i += 1;
                     t_strOld = t_Str1;
-                    t_Str1 = t_Str1.substring(i_Start + t_Str2.length(), t_Str1.length());
+                    t_Str1 = t_Str1.substring(i_Start + t_Str2.length());
                 } else {
                     if (i != c_i - 1) {
                         t_Str1 = "";
@@ -143,15 +143,15 @@ public class StringUtil {
         StringBuilder tSBql = new StringBuilder();
         int intStartIndex = 0;
         int intEndIndex = 0;
-        if (strMain == null || strMain.equals("")) {
+        if (strMain == null || "".equals(strMain)) {
             return "";
         }
         while ((intEndIndex = strMain.indexOf(strFind, intStartIndex)) > -1) {
-            tSBql.append(strMain.substring(intStartIndex, intEndIndex));
+            tSBql.append(strMain, intStartIndex, intEndIndex);
             tSBql.append(strReplaceWith);
             intStartIndex = intEndIndex + strFind.length();
         }
-        tSBql.append(strMain.substring(intStartIndex, strMain.length()));
+        tSBql.append(strMain.substring(intStartIndex));
         return tSBql.toString();
     }
 

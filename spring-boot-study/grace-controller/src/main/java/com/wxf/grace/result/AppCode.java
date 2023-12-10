@@ -8,7 +8,7 @@ import lombok.Getter;
  * @date 2022-06-07
  */
 @Getter
-public enum  AppCode implements StatusCode {
+public enum AppCode implements StatusCode {
 
     APP_ERROR(2000, "业务异常"),
     PRICE_ERROR(2001, "价格异常");

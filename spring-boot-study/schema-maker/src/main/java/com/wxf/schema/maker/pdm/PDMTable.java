@@ -1,5 +1,7 @@
 package com.wxf.schema.maker.pdm;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,41 +13,27 @@ import java.util.ArrayList;
 @Component
 public class PDMTable {
 
+    @Setter
+    @Getter
     public String Id;
+    @Setter
+    @Getter
     private String Name;
+    @Setter
+    @Getter
     private String Code;
-    private ArrayList<PDMColumn> Columns = new ArrayList<>(20);
+    private final ArrayList<PDMColumn> Columns = new ArrayList<>(20);
+    @Getter
     private int ColNum = 0;
-    private ArrayList<PDMKey> Keys = new ArrayList<>(3);
+    private final ArrayList<PDMKey> Keys = new ArrayList<>(3);
+    @Getter
     private int KeyNum = 0;
-    private String PrimaryKey_Ref; //Keys中的Key的Id
+    private String PrimaryKey_Ref; // Keys中的Key的Id
+    @Setter
+    @Getter
     private String User;
 
     public PDMTable() {
-    }
-
-    public String getId() {
-        return Id;
-    }
-
-    public void setId(String id) {
-        Id = id;
-    }
-
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public String getCode() {
-        return Code;
-    }
-
-    public void setCode(String code) {
-        Code = code;
     }
 
     public String getPrimaryKey() {
@@ -62,11 +50,7 @@ public class PDMTable {
     }
 
     public PDMColumn getColumn(int i) {
-        return (PDMColumn) Columns.get(i);
-    }
-
-    public int getColNum() {
-        return ColNum;
+        return Columns.get(i);
     }
 
     public void addKey(PDMKey key) {
@@ -75,18 +59,7 @@ public class PDMTable {
     }
 
     public PDMKey getKey(int i) {
-        return (PDMKey) Keys.get(i);
+        return Keys.get(i);
     }
 
-    public int getKeyNum() {
-        return KeyNum;
-    }
-
-    public String getUser() {
-        return User;
-    }
-
-    public void setUser(String User) {
-        this.User = User;
-    }
 }

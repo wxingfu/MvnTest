@@ -3,7 +3,7 @@ package com.wxf.thread.thread.pool;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-//演示线程池三种常用分类
+// 演示线程池三种常用分类
 public class ThreadPoolDemo1 {
     public static void main(String[] args) {
         // 一池五线程
@@ -16,7 +16,7 @@ public class ThreadPoolDemo1 {
         // 10个顾客请求
         try {
             for (int i = 1; i <= 10; i++) {
-                //执行
+                // 执行
                 threadPool.execute(() -> {
                     System.out.println(Thread.currentThread().getName() + " 办理业务");
                 });
@@ -24,7 +24,7 @@ public class ThreadPoolDemo1 {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //关闭
+            // 关闭
             threadPool.shutdown();
         }
 

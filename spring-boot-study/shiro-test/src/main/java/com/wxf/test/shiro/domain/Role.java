@@ -3,7 +3,13 @@ package com.wxf.test.shiro.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,11 +25,11 @@ public class Role implements Serializable {
     private String name;
     private String description;
 
-    //角色与用户   多对多
+    // 角色与用户   多对多
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<User>(0);
 
-    //角色与权限  多对多
+    // 角色与权限  多对多
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "pe_role_permission",
             joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},

@@ -1,9 +1,9 @@
 package com.wxf.behavioral.command;
 
 public class SellStock implements Order {
-    private Stock abcStock;
+    private final Stock abcStock;
 
-    public SellStock(Stock abcStock){
+    public SellStock(Stock abcStock) {
         this.abcStock = abcStock;
     }
 

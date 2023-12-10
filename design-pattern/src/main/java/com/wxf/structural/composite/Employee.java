@@ -5,12 +5,12 @@ import java.util.List;
 
 public class Employee {
 
-    private String name;
-    private String dept;
-    private int salary;
-    private List<Employee> subordinates;
+    private final String name;
+    private final String dept;
+    private final int salary;
+    private final List<Employee> subordinates;
 
-    //构造函数
+    // 构造函数
     public Employee(String name, String dept, int sal) {
         this.name = name;
         this.dept = dept;

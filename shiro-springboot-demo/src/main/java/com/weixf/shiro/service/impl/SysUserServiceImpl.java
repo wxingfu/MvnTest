@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.weixf.shiro.entity.SysUser;
 import com.weixf.shiro.mapper.SysUserMapper;
 import com.weixf.shiro.service.SysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,13 +24,13 @@ public class SysUserServiceImpl implements SysUserService {
         return sysUserMapper.selectOne(wrapper);
     }
 
-    //根据用户查询角色信息
+    // 根据用户查询角色信息
     @Override
     public List<String> getUserRoleInfo(String principal) {
         return sysUserMapper.getUserRoleInfoMapper(principal);
     }
 
-    //获取用户角色权限信息
+    // 获取用户角色权限信息
     @Override
     public List<String> getUserPermissionInfo(List<String> roles) {
         return sysUserMapper.getUserPermissionInfoMapper(roles);

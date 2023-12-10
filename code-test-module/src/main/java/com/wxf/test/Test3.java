@@ -1,8 +1,5 @@
 package com.wxf.test;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.JSONPath;
-
 /**
  * @author wxf
  */

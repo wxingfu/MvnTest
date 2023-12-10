@@ -2,9 +2,6 @@ package com.springframework.beans.factory;
 
 import com.springframework.beans.BeansException;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /*
  *
  * @author weixf

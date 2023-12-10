@@ -8,13 +8,13 @@ package com.wxf.creational.singleton;
  */
 public class Singleton2 {
 
-    private Singleton2() {
-    }
-
-    private static Singleton2 instance;
+    private static final Singleton2 instance;
 
     static {
         instance = new Singleton2();
+    }
+
+    private Singleton2() {
     }
 
     public static Singleton2 getInstance() {

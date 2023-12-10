@@ -36,13 +36,13 @@ public abstract class AbstractBeanDefinitionReader implements BeanDefinitionRead
         }
     }
 
-    public void setResourceLoader(ResourceLoader resourceLoader) {
-        this.resourceLoader = resourceLoader;
-    }
-
     @Override
     public ResourceLoader getResourceLoader() {
         return resourceLoader;
+    }
+
+    public void setResourceLoader(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
     }
 }
 

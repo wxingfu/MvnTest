@@ -27,22 +27,22 @@ public class AESTest {
      */
     public static String encrypt(String content, String password) {
         try {
-            //创建AES的Key生产者
+            // 创建AES的Key生产者
             KeyGenerator kgen = KeyGenerator.getInstance("AES");
             SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
             random.setSeed(password.getBytes());
             kgen.init(128, random);
-            //生成密钥
+            // 生成密钥
             SecretKey secretKey = kgen.generateKey();
-            //返回基本编码格式的密钥，如果此密钥不支持编码，则返回
+            // 返回基本编码格式的密钥，如果此密钥不支持编码，则返回
             byte[] enCodeFormat = secretKey.getEncoded();
-            //转换为AES专用密钥
+            // 转换为AES专用密钥
             SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
-            //创建密码器
+            // 创建密码器
             Cipher cipher = Cipher.getInstance("AES");
             byte[] byteContent = content.getBytes(StandardCharsets.UTF_8);
             cipher.init(Cipher.ENCRYPT_MODE, key);
-            //加密
+            // 加密
             byte[] result = cipher.doFinal(byteContent);
             return Base64.encodeBase64String(result);
         } catch (Exception e) {
@@ -93,7 +93,7 @@ public class AESTest {
             Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding");//"算法/模式/补码方式"
             int blockSize = cipher.getBlockSize();
 
-            byte[] dataBytes = data.getBytes(StandardCharsets.UTF_8);//如果有中文，记得加密前的字符集
+            byte[] dataBytes = data.getBytes(StandardCharsets.UTF_8);// 如果有中文，记得加密前的字符集
             int plaintextLength = dataBytes.length;
             if (plaintextLength % blockSize != 0) {
                 plaintextLength = plaintextLength + (blockSize - (plaintextLength % blockSize));

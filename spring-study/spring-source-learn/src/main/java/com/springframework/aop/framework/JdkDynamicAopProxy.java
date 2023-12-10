@@ -33,7 +33,7 @@ public class JdkDynamicAopProxy implements AopProxy, InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         if (advised.getMethodMatcher().matches(method, advised.getTargetSource().getTarget().getClass())) {
-            //代理方法
+            // 代理方法
             MethodInterceptor methodInterceptor = advised.getMethodInterceptor();
             return methodInterceptor.invoke(new ReflectiveMethodInvocation(advised.getTargetSource().getTarget(), method, args));
         }

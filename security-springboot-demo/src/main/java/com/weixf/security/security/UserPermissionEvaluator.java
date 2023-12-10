@@ -44,10 +44,7 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
             permissions.add(sysMenuEntity.getPermission());
         }
         // 权限对比
-        if (permissions.contains(permission.toString())) {
-            return true;
-        }
-        return false;
+        return permissions.contains(permission.toString());
     }
 
     @Override

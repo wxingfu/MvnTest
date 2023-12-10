@@ -11,6 +11,15 @@ public class RespBean {
     private String msg;
     private Object obj;
 
+    private RespBean() {
+    }
+
+    private RespBean(Integer status, String msg, Object obj) {
+        this.status = status;
+        this.msg = msg;
+        this.obj = obj;
+    }
+
     public static RespBean build() {
         return new RespBean();
     }
@@ -29,15 +38,6 @@ public class RespBean {
 
     public static RespBean error(String msg, Object obj) {
         return new RespBean(500, msg, obj);
-    }
-
-    private RespBean() {
-    }
-
-    private RespBean(Integer status, String msg, Object obj) {
-        this.status = status;
-        this.msg = msg;
-        this.obj = obj;
     }
 
     public Integer getStatus() {

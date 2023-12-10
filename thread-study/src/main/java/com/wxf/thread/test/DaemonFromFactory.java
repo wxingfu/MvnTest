@@ -6,6 +6,15 @@ import java.util.concurrent.TimeUnit;
 
 public class DaemonFromFactory implements Runnable {
 
+    public static void main(String[] args) throws InterruptedException {
+        ExecutorService service = Executors.newCachedThreadPool(new DaemonThreadFactory());
+        for (int i = 0; i < 10; i++) {
+            service.execute(new DaemonFromFactory());
+        }
+        System.out.println("All daemons started");
+        TimeUnit.MILLISECONDS.sleep(500);
+    }
+
     @Override
     public void run() {
         while (true) {
@@ -16,15 +25,6 @@ public class DaemonFromFactory implements Runnable {
                 System.out.println("Interrupted");
             }
         }
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        ExecutorService service = Executors.newCachedThreadPool(new DaemonThreadFactory());
-        for (int i = 0; i < 10; i++) {
-            service.execute(new DaemonFromFactory());
-        }
-        System.out.println("All daemons started");
-        TimeUnit.MILLISECONDS.sleep(500);
     }
 }
 

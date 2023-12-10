@@ -3,7 +3,14 @@ package com.wxf.menu.auth.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wxf.menu.auth.custom.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +19,13 @@ import java.util.List;
  */
 @Entity
 public class SysUser extends BaseEntity<Integer> {
-    private String username;    //账号
-    private String password;    //密码
-    private String name;        //姓名
-    private String address;        //地址
+    private String username;    // 账号
+    private String password;    // 密码
+    private String name;        // 姓名
+    private String address;        // 地址
 
     @JsonIgnore
-    private List<SysRole> roles = new ArrayList<>();    //角色
+    private List<SysRole> roles = new ArrayList<>();    // 角色
 
     @Column(length = 20, unique = true)
     public String getUsername() {
@@ -68,7 +75,7 @@ public class SysUser extends BaseEntity<Integer> {
         this.address = address;
     }
 
-    //角色名称
+    // 角色名称
     @Transient
     public String getRoleNames() {
         StringBuilder str = new StringBuilder();
@@ -81,7 +88,7 @@ public class SysUser extends BaseEntity<Integer> {
         return str.toString();
     }
 
-    //角色代码
+    // 角色代码
     @Transient
     public String getRoleCodes() {
         StringBuilder str = new StringBuilder();

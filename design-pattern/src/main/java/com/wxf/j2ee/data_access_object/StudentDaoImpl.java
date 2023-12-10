@@ -5,7 +5,7 @@ import java.util.List;
 
 public class StudentDaoImpl implements StudentDao {
 
-    //列表是当作一个数据库
+    // 列表是当作一个数据库
     List<Student> students;
 
     public StudentDaoImpl() {
@@ -22,7 +22,7 @@ public class StudentDaoImpl implements StudentDao {
         System.out.println("Student: Roll No " + student.getRollNo() + ", deleted from database");
     }
 
-    //从数据库中检索学生名单
+    // 从数据库中检索学生名单
     @Override
     public List<Student> getAllStudents() {
         return students;

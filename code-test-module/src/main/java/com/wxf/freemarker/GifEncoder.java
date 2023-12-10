@@ -13,8 +13,63 @@ import java.util.Enumeration;
  */
 public class GifEncoder extends ImageEncoder {
 
-    private boolean interlace = false;
+    static final int EOF = -1;
+    static final int BITS = 12;
+    static final int HSIZE = 5003; // 80% occupancy
+    int width, height;
+    int[][] rgbPixels;
+    IntHashtable colorHash;
+    int Width, Height;
+    boolean Interlace;
+    int curx, cury;
+    int CountDown;
+    int Pass = 0;
+    int n_bits; // number of bits/code
+    int maxbits = BITS; // user settable max # bits/code
 
+    // Adapted from ppmtogif, which is based on GIFENCOD by David
+    // Rowley <mgardi@watdscu.waterloo.edu>. Lempel-Zim compression
+    // based on "compress".
+    int maxcode; // maximum code, given n_bits
+    int maxmaxcode = 1 << BITS; // should NEVER generate this code
+    int[] htab = new int[HSIZE];
+    int[] codetab = new int[HSIZE];
+    int hsize = HSIZE; // for dynamic table sizing
+    int free_ent = 0; // first unused entry
+    // block compression parameters -- after all codes are used up,
+    // and compression rate changes, start over.
+    boolean clear_flg = false;
+    int g_init_bits;
+    int ClearCode;
+    int EOFCode;
+    int cur_accum = 0;
+
+    // GIFCOMPR.C - GIF Image compression routines
+    //
+    // Lempel-Ziv compression based on 'compress'. GIF modifications by
+    // David Rowley (mgardi@watdcsu.waterloo.edu)
+
+    // General DEFINEs
+    int cur_bits = 0;
+    int[] masks = {0x0000, 0x0001, 0x0003, 0x0007, 0x000F, 0x001F, 0x003F,
+            0x007F, 0x00FF, 0x01FF, 0x03FF, 0x07FF, 0x0FFF, 0x1FFF, 0x3FFF,
+            0x7FFF, 0xFFFF};
+
+    // GIF Image compression - modified 'compress'
+    //
+    // Based on: compress.c - File compression ala IEEE Computer, June 1984.
+    //
+    // By Authors: Spencer W. Thomas (decvax!harpo!utah-cs!utah-gr!thomas)
+    // Jim McKie (decvax!mcvax!jim)
+    // Steve Davies (decvax!vax135!petsd!peora!srd)
+    // Ken Turkowski (decvax!decwrl!turtlevax!ken)
+    // James A. Woods (decvax!ihnp4!ames!jaw)
+    // Joe Orost (decvax!vax135!petsd!joe)
+    // Number of characters so far in this 'packet'
+    int a_count;
+    // Define the storage for the packet accumulator
+    byte[] accum = new byte[256];
+    private boolean interlace = false;
     // / Constructor from Image.
     // @param img The image to encode.
     // @param out The stream to write the GIF to.
@@ -38,7 +93,6 @@ public class GifEncoder extends ImageEncoder {
     public GifEncoder(ImageProducer prod, OutputStream out) throws IOException {
         super(prod, out);
     }
-
     // / Constructor from ImageProducer with interlace setting.
     // @param prod The ImageProducer to encode.
     // @param out The stream to write the GIF to.
@@ -48,8 +102,10 @@ public class GifEncoder extends ImageEncoder {
         this.interlace = interlace;
     }
 
-    int width, height;
-    int[][] rgbPixels;
+    static void writeString(OutputStream out, String str) throws IOException {
+        byte[] buf = str.getBytes();
+        out.write(buf);
+    }
 
     void encodeStart(int width, int height) throws IOException {
         this.width = width;
@@ -67,7 +123,17 @@ public class GifEncoder extends ImageEncoder {
 
     }
 
-    IntHashtable colorHash;
+    // Algorithm: use open addressing double hashing (no chaining) on the
+    // prefix code / next character combination. We do a variant of Knuth's
+    // algorithm D (vol. 3, sec. 6.4) along with G. Knott's relatively-prime
+    // secondary probe. Here, the modular division first probe is gives way
+    // to a faster exclusive-or manipulation. Also do block compression with
+    // an adaptive reset, whereby the code table is cleared when the compression
+    // ratio decreases, but after the table fills. The variable-length output
+    // codes are re-sized at this point, and a special CLEAR code is generated
+    // for the decompressor. Late addition: construct the table according to
+    // file size for noticeable speed improvement on small files. Please direct
+    // questions about this implementation to ames!jaw.
 
     void encodeDone() throws IOException {
         int transparentIndex = -1;
@@ -142,21 +208,6 @@ public class GifEncoder extends ImageEncoder {
         }
         return (byte) item.index;
     }
-
-    static void writeString(OutputStream out, String str) throws IOException {
-        byte[] buf = str.getBytes();
-        out.write(buf);
-    }
-
-    // Adapted from ppmtogif, which is based on GIFENCOD by David
-    // Rowley <mgardi@watdscu.waterloo.edu>. Lempel-Zim compression
-    // based on "compress".
-
-    int Width, Height;
-    boolean Interlace;
-    int curx, cury;
-    int CountDown;
-    int Pass = 0;
 
     void GIFEncode(OutputStream outs, int Width, int Height, boolean Interlace,
                    byte Background, int Transparent, int BitsPerPixel, byte[] Red,
@@ -314,7 +365,20 @@ public class GifEncoder extends ImageEncoder {
         }
     }
 
-    static final int EOF = -1;
+    // output
+    //
+    // Output the given code.
+    // Inputs:
+    // code: A n_bits-bit integer. If == -1, then EOF. This assumes
+    // that n_bits =< wordsize - 1.
+    // Outputs:
+    // Outputs code to the file.
+    // Assumptions:
+    // Chars are 8 bits long.
+    // Algorithm:
+    // Maintain a BITS character long buffer (so that 8 codes will
+    // fit in it exactly). Use the VAX insv instruction to insert each
+    // code in turn. When the buffer fills up empty it and start over.
 
     // Return the next pixel from the image
     int GIFNextPixel() throws IOException {
@@ -344,64 +408,11 @@ public class GifEncoder extends ImageEncoder {
         outs.write(b);
     }
 
-    // GIFCOMPR.C - GIF Image compression routines
-    //
-    // Lempel-Ziv compression based on 'compress'. GIF modifications by
-    // David Rowley (mgardi@watdcsu.waterloo.edu)
-
-    // General DEFINEs
-
-    static final int BITS = 12;
-
-    static final int HSIZE = 5003; // 80% occupancy
-
-    // GIF Image compression - modified 'compress'
-    //
-    // Based on: compress.c - File compression ala IEEE Computer, June 1984.
-    //
-    // By Authors: Spencer W. Thomas (decvax!harpo!utah-cs!utah-gr!thomas)
-    // Jim McKie (decvax!mcvax!jim)
-    // Steve Davies (decvax!vax135!petsd!peora!srd)
-    // Ken Turkowski (decvax!decwrl!turtlevax!ken)
-    // James A. Woods (decvax!ihnp4!ames!jaw)
-    // Joe Orost (decvax!vax135!petsd!joe)
-
-    int n_bits; // number of bits/code
-    int maxbits = BITS; // user settable max # bits/code
-    int maxcode; // maximum code, given n_bits
-    int maxmaxcode = 1 << BITS; // should NEVER generate this code
-
     final int MAXCODE(int n_bits) {
         return (1 << n_bits) - 1;
     }
 
-    int[] htab = new int[HSIZE];
-    int[] codetab = new int[HSIZE];
-
-    int hsize = HSIZE; // for dynamic table sizing
-
-    int free_ent = 0; // first unused entry
-
-    // block compression parameters -- after all codes are used up,
-    // and compression rate changes, start over.
-    boolean clear_flg = false;
-
-    // Algorithm: use open addressing double hashing (no chaining) on the
-    // prefix code / next character combination. We do a variant of Knuth's
-    // algorithm D (vol. 3, sec. 6.4) along with G. Knott's relatively-prime
-    // secondary probe. Here, the modular division first probe is gives way
-    // to a faster exclusive-or manipulation. Also do block compression with
-    // an adaptive reset, whereby the code table is cleared when the compression
-    // ratio decreases, but after the table fills. The variable-length output
-    // codes are re-sized at this point, and a special CLEAR code is generated
-    // for the decompressor. Late addition: construct the table according to
-    // file size for noticeable speed improvement on small files. Please direct
-    // questions about this implementation to ames!jaw.
-
-    int g_init_bits;
-
-    int ClearCode;
-    int EOFCode;
+    // Clear out the hash table
 
     void compress(int init_bits, OutputStream outs) throws IOException {
         int fcode;
@@ -478,28 +489,6 @@ public class GifEncoder extends ImageEncoder {
         output(EOFCode, outs);
     }
 
-    // output
-    //
-    // Output the given code.
-    // Inputs:
-    // code: A n_bits-bit integer. If == -1, then EOF. This assumes
-    // that n_bits =< wordsize - 1.
-    // Outputs:
-    // Outputs code to the file.
-    // Assumptions:
-    // Chars are 8 bits long.
-    // Algorithm:
-    // Maintain a BITS character long buffer (so that 8 codes will
-    // fit in it exactly). Use the VAX insv instruction to insert each
-    // code in turn. When the buffer fills up empty it and start over.
-
-    int cur_accum = 0;
-    int cur_bits = 0;
-
-    int masks[] = {0x0000, 0x0001, 0x0003, 0x0007, 0x000F, 0x001F, 0x003F,
-            0x007F, 0x00FF, 0x01FF, 0x03FF, 0x07FF, 0x0FFF, 0x1FFF, 0x3FFF,
-            0x7FFF, 0xFFFF};
-
     void output(int code, OutputStream outs) throws IOException {
         cur_accum &= masks[cur_bits];
 
@@ -545,7 +534,7 @@ public class GifEncoder extends ImageEncoder {
         }
     }
 
-    // Clear out the hash table
+    // GIF Specific routines
 
     // table clear for block compress
     void cl_block(OutputStream outs) throws IOException {
@@ -563,18 +552,10 @@ public class GifEncoder extends ImageEncoder {
         }
     }
 
-    // GIF Specific routines
-
-    // Number of characters so far in this 'packet'
-    int a_count;
-
     // Set up the 'byte output' routine
     void char_init() {
         a_count = 0;
     }
-
-    // Define the storage for the packet accumulator
-    byte[] accum = new byte[256];
 
     // Add a character to the end of the current packet, and if it is 254
     // characters, flush the packet to disk.

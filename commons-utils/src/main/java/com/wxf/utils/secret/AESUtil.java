@@ -22,7 +22,7 @@ public class AESUtil {
      * 加密
      *
      * @param data 需要加密的内容
-     * @param key 加密密码
+     * @param key  加密密码
      * @return
      */
     public static String encryptForOpen(String data, String key) {
@@ -34,7 +34,7 @@ public class AESUtil {
      * 解密
      *
      * @param data 待解密内容
-     * @param key 解密密钥
+     * @param key  解密密钥
      * @return
      */
     public static String decryptForOpen(String data, String key) {

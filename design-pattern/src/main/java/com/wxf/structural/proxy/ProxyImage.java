@@ -1,8 +1,8 @@
 package com.wxf.structural.proxy;
 
 public class ProxyImage implements Image {
-    private RealImage realImage;
     private final String fileName;
+    private RealImage realImage;
 
     public ProxyImage(String fileName) {
         this.fileName = fileName;

@@ -3,7 +3,28 @@ package com.wxf.wordexport;
 import com.deepoove.poi.XWPFTemplate;
 import com.deepoove.poi.config.Configure;
 import com.deepoove.poi.config.ConfigureBuilder;
-import com.deepoove.poi.data.*;
+import com.deepoove.poi.data.CellRenderData;
+import com.deepoove.poi.data.Cells;
+import com.deepoove.poi.data.ChartMultiSeriesRenderData;
+import com.deepoove.poi.data.ChartSingleSeriesRenderData;
+import com.deepoove.poi.data.Charts;
+import com.deepoove.poi.data.DocumentRenderData;
+import com.deepoove.poi.data.Documents;
+import com.deepoove.poi.data.Includes;
+import com.deepoove.poi.data.MergeCellRule;
+import com.deepoove.poi.data.NumberingFormat;
+import com.deepoove.poi.data.NumberingRenderData;
+import com.deepoove.poi.data.Numberings;
+import com.deepoove.poi.data.Paragraphs;
+import com.deepoove.poi.data.PictureRenderData;
+import com.deepoove.poi.data.PictureType;
+import com.deepoove.poi.data.Pictures;
+import com.deepoove.poi.data.RowRenderData;
+import com.deepoove.poi.data.Rows;
+import com.deepoove.poi.data.TableRenderData;
+import com.deepoove.poi.data.Tables;
+import com.deepoove.poi.data.TextRenderData;
+import com.deepoove.poi.data.Texts;
 import com.deepoove.poi.data.style.BorderStyle;
 import com.deepoove.poi.data.style.Style;
 import com.deepoove.poi.plugin.comment.CommentRenderData;
@@ -18,8 +39,20 @@ import com.deepoove.poi.policy.AbstractRenderPolicy;
 import com.deepoove.poi.policy.DocumentRenderPolicy;
 import com.deepoove.poi.render.RenderContext;
 import com.deepoove.poi.render.WhereDelegate;
-import com.wxf.wordexport.entity.*;
-import com.wxf.wordexport.entity.okr.*;
+import com.wxf.wordexport.entity.AddrModel;
+import com.wxf.wordexport.entity.Author;
+import com.wxf.wordexport.entity.Data;
+import com.wxf.wordexport.entity.DetailData;
+import com.wxf.wordexport.entity.DetailDataTable;
+import com.wxf.wordexport.entity.Dog;
+import com.wxf.wordexport.entity.Goods;
+import com.wxf.wordexport.entity.Labor;
+import com.wxf.wordexport.entity.LoopData;
+import com.wxf.wordexport.entity.okr.KeyResult;
+import com.wxf.wordexport.entity.okr.OKRData;
+import com.wxf.wordexport.entity.okr.OKRItem;
+import com.wxf.wordexport.entity.okr.Objective;
+import com.wxf.wordexport.entity.okr.User;
 import com.wxf.wordexport.entity.payment.PaymentData;
 import com.wxf.wordexport.entity.resume.ExperienceData;
 import com.wxf.wordexport.entity.resume.ResumeData;
@@ -38,7 +71,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Random;
 
 public class WordExportTest {
 
@@ -201,7 +241,7 @@ public class WordExportTest {
         // 合并第1行所有单元格的表格
         RowRenderData row0 = Rows.of("列0", "列1", "列2").center().bgColor("4472C4").create();
         RowRenderData row1 = Rows.create("没有数据", null, null);
-        //合并坐标： 起始单元格，截止单元格
+        // 合并坐标： 起始单元格，截止单元格
         MergeCellRule rule = MergeCellRule.builder().map(MergeCellRule.Grid.of(1, 0), MergeCellRule.Grid.of(1, 2)).build();
         map.put("table2", Tables.of(row0, row1).mergeRule(rule).create());
 

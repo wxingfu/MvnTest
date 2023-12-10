@@ -14,25 +14,16 @@ import java.util.concurrent.FutureTask;
  */
 public class Test13 {
 
-    static final class CustomCallable implements Callable<String> {
-        public String call() throws Exception {
-            System.out.println(Thread.currentThread().getName() + ":执行 start");
-            Thread.sleep(10000); //子线程停留2秒
-            System.out.println(Thread.currentThread().getName() + ":执行 end");
-            return "Hello world";
-        }
-    }
-
     public static void main(String[] args) throws Exception {
 
 
         CustomCallable cRunnacle = new CustomCallable();
         FutureTask<String> futureTask = new FutureTask<String>(cRunnacle);
         Thread thread = new Thread(futureTask, "子线程");
-        thread.start(); //子线程执行
+        thread.start(); // 子线程执行
 
         System.out.println("主线程做自己的事情--start");
-        System.out.println("获取子线程返回结果：" + futureTask.get());//获取返回结果是会阻塞
+        System.out.println("获取子线程返回结果：" + futureTask.get());// 获取返回结果是会阻塞
         System.out.println("主线程做自己的事情--end");
     }
 
@@ -77,6 +68,15 @@ public class Test13 {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    static final class CustomCallable implements Callable<String> {
+        public String call() throws Exception {
+            System.out.println(Thread.currentThread().getName() + ":执行 start");
+            Thread.sleep(10000); // 子线程停留2秒
+            System.out.println(Thread.currentThread().getName() + ":执行 end");
+            return "Hello world";
         }
     }
 }

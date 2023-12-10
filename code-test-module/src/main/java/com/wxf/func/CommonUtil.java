@@ -77,7 +77,7 @@ public class CommonUtil {
         try {
             date = sdf.parse(baseDate);// 初始日期
         } catch (Exception e) {
-            System.out.println("得到指定日期后推多少天出现异常,异常信息:" + e.toString());
+            System.out.println("得到指定日期后推多少天出现异常,异常信息:" + e);
         }
         c.setTime(date);// 设置日历时间
         // 在日历的日期按照给定的日期单位增加一个间隔;
@@ -105,7 +105,7 @@ public class CommonUtil {
         int sYears = tGCalendar.get(Calendar.YEAR);
         int sMonths = tGCalendar.get(Calendar.MONTH) + 1;
         int sDays = tGCalendar.get(Calendar.DAY_OF_MONTH);
-        if ("yyyy-mm-dd".equals(format.toLowerCase())) {
+        if ("yyyy-mm-dd".equalsIgnoreCase(format)) {
             tStringBuffer.append(sYears);
             tStringBuffer.append('-');
             if (sMonths < 10) {
@@ -118,7 +118,7 @@ public class CommonUtil {
             }
             tStringBuffer.append(sDays);
             return tStringBuffer.toString();
-        } else if ("mm-dd-yyyy".equals(format.toLowerCase())) {
+        } else if ("mm-dd-yyyy".equalsIgnoreCase(format)) {
             if (sMonths < 10) {
                 tStringBuffer.append('0');
             }
@@ -131,7 +131,7 @@ public class CommonUtil {
             tStringBuffer.append('-');
             tStringBuffer.append(sYears);
             return tStringBuffer.toString();
-        } else if ("yyyy/mm/dd".equals(format.toLowerCase())) {
+        } else if ("yyyy/mm/dd".equalsIgnoreCase(format)) {
             tStringBuffer.append(sYears);
             tStringBuffer.append('/');
             if (sMonths < 10) {
@@ -144,7 +144,7 @@ public class CommonUtil {
             }
             tStringBuffer.append(sDays);
             return tStringBuffer.toString();
-        } else if ("mm/dd/yyyy".equals(format.toLowerCase())) {
+        } else if ("mm/dd/yyyy".equalsIgnoreCase(format)) {
             if (sMonths < 10) {
                 tStringBuffer.append('0');
             }
@@ -157,7 +157,7 @@ public class CommonUtil {
             tStringBuffer.append('/');
             tStringBuffer.append(sYears);
             return tStringBuffer.toString();
-        } else if ("yyyymmdd".equals(format.toLowerCase())) {
+        } else if ("yyyymmdd".equalsIgnoreCase(format)) {
             tStringBuffer.append(sYears);
             if (sMonths < 10) {
                 tStringBuffer.append('0');
@@ -168,8 +168,7 @@ public class CommonUtil {
             }
             tStringBuffer.append(sDays);
             return tStringBuffer.toString();
-        }
-        else if ("yyyy年mm月dd日".equals(format.toLowerCase())) {
+        } else if ("yyyy年mm月dd日".equalsIgnoreCase(format)) {
             tStringBuffer.append(sYears);
             tStringBuffer.append('年');
             if (sMonths < 10) {
@@ -183,8 +182,7 @@ public class CommonUtil {
             tStringBuffer.append(sDays);
             tStringBuffer.append('日');
             return tStringBuffer.toString();
-        }
-        else {
+        } else {
             return null;
         }
     }

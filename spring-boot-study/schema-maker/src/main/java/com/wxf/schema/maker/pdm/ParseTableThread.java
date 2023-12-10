@@ -15,18 +15,20 @@ import org.w3c.dom.Text;
 @Component
 public class ParseTableThread implements Runnable {
 
-    public ParseTableThread() {
-    }
-
-    // NameSpace
-    private final String a = new String("attribute");
-    private final String c = new String("collection");
-    private final String o = new String("object");
     private static final String space4 = "    ";
-
+    // NameSpace
+    private final String a = "attribute";
     private final boolean AllowErrorInPDM = true; // 是否允许PDM上有错误信息
     private final boolean PrimaryKeyIsNull = true; // 是否允许PK为空
     private final boolean ParserForeignKey = true; // 是否允许解析FK
+    public PDM tPDM;
+    public NodeList oTable;
+    public int startPosition;
+    public int size;
+    protected Parser tParser;
+
+    public ParseTableThread() {
+    }
 
     private Element get1stChildElement(Element element, String ns, String localName) {
         NodeList nodeList = element.getElementsByTagNameNS(ns, localName);
@@ -64,13 +66,8 @@ public class ParseTableThread implements Runnable {
         }
     }
 
-    public PDM tPDM;
-    public NodeList oTable;
-    public int startPosition;
-    public int size;
-
     private void ParserTables(PDM tPDM, NodeList oTable, int startPosition, int size) throws Exception {
-        //NodeList oTable = eTables.getElementsByTagNameNS(o, "Table");
+        // NodeList oTable = eTables.getElementsByTagNameNS(o, "Table");
         for (int i = startPosition; i < oTable.getLength() && i < startPosition + size; i++) {
             Element eTable = (Element) oTable.item(i);
             PDMTable tPDMTable = new PDMTable();
@@ -78,6 +75,7 @@ public class ParseTableThread implements Runnable {
             tPDMTable.setName(getNodeValue(eTable, "Name"));
             tPDMTable.setCode(getNodeValue(eTable, "Code"));
             log.debug("  开始解析第" + (i + 1) + "个表:" + tPDMTable.getCode() + "(" + tPDMTable.getName() + ")");
+            String c = "collection";
             Element eColumns = get1stChildElement(eTable, c, "Columns");
             if (eColumns == null) {
                 if (AllowErrorInPDM) {
@@ -88,6 +86,7 @@ public class ParseTableThread implements Runnable {
                 }
             } else {
                 boolean errorInColumn = false;
+                String o = "object";
                 NodeList oColumn = eColumns.getElementsByTagNameNS(o, "Column");
                 for (int j = 0; j < oColumn.getLength(); j++) {
                     Element eColumn = (Element) oColumn.item(j);
@@ -175,8 +174,6 @@ public class ParseTableThread implements Runnable {
             tPDM.addTable(tPDMTable);
         }
     }
-
-    protected Parser tParser;
 
     public void run() {
         try {

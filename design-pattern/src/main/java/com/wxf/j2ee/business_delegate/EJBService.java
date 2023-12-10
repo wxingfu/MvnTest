@@ -1,6 +1,6 @@
 package com.wxf.j2ee.business_delegate;
 
-public class EJBService implements BusinessService{
+public class EJBService implements BusinessService {
 
     @Override
     public void doProcessing() {

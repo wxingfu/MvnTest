@@ -1,7 +1,7 @@
 package com.wxf.behavioral.responsibility_chain;
 
-public class ErrorLogger extends AbstractLogger{
-    public ErrorLogger(int level){
+public class ErrorLogger extends AbstractLogger {
+    public ErrorLogger(int level) {
         this.level = level;
     }
 

@@ -9,10 +9,10 @@ package com.wxf.creational.singleton;
  */
 public class Singleton5 {
 
+    private static Singleton5 instance;
+
     private Singleton5() {
     }
-
-    private static Singleton5 instance;
 
     public static Singleton5 getInstance() {
         if (instance == null) {

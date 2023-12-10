@@ -10,7 +10,12 @@ import com.springframework.core.convert.converter.GenericConverter.ConvertiblePa
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 /*
@@ -20,7 +25,7 @@ import java.util.*;
  */
 public class GenericConversionService implements ConversionService, ConverterRegistry {
 
-    private Map<ConvertiblePair, GenericConverter> converters = new HashMap<>();
+    private final Map<ConvertiblePair, GenericConverter> converters = new HashMap<>();
 
     @Override
     public boolean canConvert(Class<?> sourceType, Class<?> targetType) {
@@ -87,7 +92,7 @@ public class GenericConversionService implements ConversionService, ConverterReg
 
     private List<Class<?>> getClassHierarchy(Class<?> clazz) {
         List<Class<?>> hierarchy = new ArrayList<>();
-        //原始类转为包装类
+        // 原始类转为包装类
         clazz = BasicType.wrap(clazz);
         while (clazz != null) {
             hierarchy.add(clazz);

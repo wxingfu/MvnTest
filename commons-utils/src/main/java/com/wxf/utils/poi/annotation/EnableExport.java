@@ -14,9 +14,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EnableExport {
-    //设置文件名/标题
+    // 设置文件名/标题
     String fileName();
 
-    //设置背景颜色
+    // 设置背景颜色
     ColorEnum cellColor() default ColorEnum.BLUE;
 }

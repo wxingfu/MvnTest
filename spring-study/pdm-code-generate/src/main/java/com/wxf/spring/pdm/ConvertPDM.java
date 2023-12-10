@@ -9,9 +9,24 @@ import java.util.ArrayList;
 public class ConvertPDM {
 
     private int DBMSType = DBConst.DB_UnSupported;
-    private boolean AllowErrorInPDM = false; //是否允许PDM上有错误信息是继续转换
-    private boolean AllowJavaType = false; //是否允许Integer或Double等Java类型
-    private boolean AllowJavaMath = false; //是否允许使用BigDecimal代替Double类型
+    private boolean AllowErrorInPDM = false; // 是否允许PDM上有错误信息是继续转换
+    private boolean AllowJavaType = false; // 是否允许Integer或Double等Java类型
+    private boolean AllowJavaMath = false; // 是否允许使用BigDecimal代替Double类型
+
+    public static String getPKWhereClause(ArrayList<PDMColumn> pkList) {
+        // 生成按主键操作的WHERE子句
+        StringBuilder PKWhereClause = new StringBuilder(50);
+        if (pkList != null && pkList.size() > 0) {
+            for (PDMColumn pk : pkList) {
+                PKWhereClause.append(" AND ").append(pk.getCode()).append(" = ?");
+            }
+            PKWhereClause.delete(0, 4);
+        }
+        if (PKWhereClause.length() == 0) {
+            PKWhereClause.append("1 = 1");
+        }
+        return PKWhereClause.toString().trim();
+    }
 
     public void setDBMSType(int DBMSType) {
         this.DBMSType = DBMSType;
@@ -60,7 +75,6 @@ public class ConvertPDM {
         return pdmColumnArrayList;
     }
 
-
     private String changeType(
             String oldType,
             String tabName,
@@ -88,9 +102,9 @@ public class ConvertPDM {
             }
             regex = "(dec|decimal|numeric|num|number)\\s*(\\(\\s*[0-9]+\\s*(,\\s*[0-9]+|)\\s*\\)|)";
             checkDataType(regex, oldType, tabName, colName);
-            //符合dec,dec(*),dec(*,0),decimal,decimal(*),decimal(*,0)
-            //numeric,numeric(*),numeric(*,0),num,num(*),num(*,0),number(*),number(*,0)的都为整数
-            //注意number类型不为整数
+            // 符合dec,dec(*),dec(*,0),decimal,decimal(*),decimal(*,0)
+            // numeric,numeric(*),numeric(*,0),num,num(*),num(*,0),number(*),number(*,0)的都为整数
+            // 注意number类型不为整数
             String regexI = null;
             if (oldType.indexOf("number") >= 0) {
                 regexI = "number\\s*\\(\\s*[0-9]+\\s*(,\\s*[0]\\s*|)\\)";
@@ -98,7 +112,7 @@ public class ConvertPDM {
                 regexI = "(dec|decimal|numeric|num)\\s*(\\(\\s*[0-9]+\\s*(,\\s*[0]|)\\s*\\)|)";
             }
             if (oldType.matches(regexI)) {
-                //如果定义的整数范围大于2147483647可能会出现溢出
+                // 如果定义的整数范围大于2147483647可能会出现溢出
                 if (AllowJavaType) {
                     if (AllowJavaMath) {
                         String regexB = "(dec|decimal|numeric|num|number)\\s*(\\(\\s*[1-9][0-9]\\s*(,\\s*[0-9]+|)\\s*\\)|)";
@@ -149,7 +163,7 @@ public class ConvertPDM {
             checkDataType(regex, oldType, tabName, colName);
             return "String";
         }
-        //不推荐使用timestamp。timestamp在Microsoft SQL Server JDBC中没有对应的java.sql.Types类型
+        // 不推荐使用timestamp。timestamp在Microsoft SQL Server JDBC中没有对应的java.sql.Types类型
         if (oldType.indexOf("timestamp") >= 0 || oldType.indexOf("date") >= 0) {
             if (oldType.indexOf("datetime") >= 0 && DBMSType != DBConst.DB_SQLServer) {
                 dealDbError(oldType, tabName, colName);
@@ -171,7 +185,7 @@ public class ConvertPDM {
             }
             regex = "text";
             checkDataType(regex, oldType, tabName, colName);
-            return "String"; //SQL Server用String
+            return "String"; // SQL Server用String
         }
         if (oldType.equalsIgnoreCase("long")) {
             if (DBMSType != DBConst.DB_Oracle) {
@@ -201,7 +215,6 @@ public class ConvertPDM {
         return null;
     }
 
-
     private void checkDataType(
             String regex,
             String dataType,
@@ -216,7 +229,6 @@ public class ConvertPDM {
         }
     }
 
-
     private void dealDbError(
             String oldType,
             String tabName,
@@ -226,22 +238,6 @@ public class ConvertPDM {
         } else {
             throw new Exception("表" + tabName + "的字段" + colName + "的数据类型不支持或错误:" + oldType);
         }
-    }
-
-
-    public static String getPKWhereClause(ArrayList<PDMColumn> pkList) {
-        // 生成按主键操作的WHERE子句
-        StringBuilder PKWhereClause = new StringBuilder(50);
-        if (pkList != null && pkList.size() > 0) {
-            for (PDMColumn pk : pkList) {
-                PKWhereClause.append(" AND ").append(pk.getCode()).append(" = ?");
-            }
-            PKWhereClause.delete(0, 4);
-        }
-        if (PKWhereClause.length() == 0) {
-            PKWhereClause.append("1 = 1");
-        }
-        return PKWhereClause.toString().trim();
     }
 
     public String getInsertColumnClause(ArrayList<PDMColumn> newColumns) {

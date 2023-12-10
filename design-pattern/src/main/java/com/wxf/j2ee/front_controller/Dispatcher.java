@@ -2,8 +2,8 @@ package com.wxf.j2ee.front_controller;
 
 public class Dispatcher {
 
-    private StudentView studentView;
-    private HomeView homeView;
+    private final StudentView studentView;
+    private final HomeView homeView;
 
     public Dispatcher() {
         studentView = new StudentView();

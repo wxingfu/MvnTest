@@ -42,12 +42,10 @@ public class Test9 {
         System.out.println(dept);
 
 
-
         param = "\"InTime >='2021-06-02 00:00:00' order by InTime desc\"";
         InVehicleRecord inVehicleRecord = client.getInVehicleRecord(param);
         List<InVehicle> inVehicleList = inVehicleRecord.getModels();
         System.out.println(inVehicleList);
-
 
 
         // ReqParams vehicleReqParam = new ReqParams(
@@ -65,7 +63,6 @@ public class Test9 {
         PageDmsOpenRecord pageDmsOpenRecord = client.pageDmsOpenRecord(dmsReqParam);
         List<DmsOpenRecord> dmsOpenRecordList = pageDmsOpenRecord.getRecords();
         System.out.println(dmsOpenRecordList);
-
 
 
         param = "\"InTime >='2021-06-01 00:00:00' order by OutTime desc\"";

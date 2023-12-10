@@ -1,9 +1,6 @@
 package com.wxf.test;
 
-import java.util.UUID;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
 
 /*
  *
@@ -43,7 +40,7 @@ public class Test11 {
     }
 
     static class MyThread implements Callable<String> {
-        private int ticket = 10;
+        private final int ticket = 10;
 
         @Override
         public String call() {
