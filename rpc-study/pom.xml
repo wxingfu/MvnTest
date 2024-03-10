@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.wxf.rpc</groupId>
+    <groupId>com.weixf.rpc</groupId>
     <artifactId>rpc-study</artifactId>
 
     <properties>

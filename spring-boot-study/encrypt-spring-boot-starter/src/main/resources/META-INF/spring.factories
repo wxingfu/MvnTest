@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.wxf.encrypt.starter.autoconfigure.EncryptAutoConfiguration
+  com.weixf.encrypt.starter.autoconfigure.EncryptAutoConfiguration

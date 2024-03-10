@@ -1,0 +1,12 @@
+package com.weixf.thread.thread.other;
+
+public class Goods {
+
+    private final int id;
+    private final String name;
+
+    public Goods(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+}

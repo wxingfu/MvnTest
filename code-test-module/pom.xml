@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.wxf.test</groupId>
+    <groupId>com.weixf.test</groupId>
     <artifactId>code-test-module</artifactId>
 
     <properties>

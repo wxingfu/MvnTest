@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.wxf.executor</groupId>
+    <groupId>com.weixf.executor</groupId>
     <artifactId>thread-study</artifactId>
 
     <properties>

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.wxf.collection</groupId>
+    <groupId>com.weixf.collection</groupId>
     <artifactId>collection-study</artifactId>
 
     <properties>

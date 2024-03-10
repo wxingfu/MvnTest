@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.wxf.wordexport</groupId>
+    <groupId>com.weixf.wordexport</groupId>
     <artifactId>word-export</artifactId>
 
     <properties>

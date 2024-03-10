@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.wxf.sms.autoconfigure.SmsAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.weixf.sms.autoconfigure.SmsAutoConfiguration

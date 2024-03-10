@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.wxf.spring</groupId>
+    <groupId>com.weixf.spring</groupId>
     <artifactId>spring-study</artifactId>
     <version>1.0-SNAPSHOT</version>
 

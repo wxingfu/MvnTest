@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.wxf.utils</groupId>
+    <groupId>com.weixf.utils</groupId>
     <artifactId>commons-utils</artifactId>
 
     <properties>
