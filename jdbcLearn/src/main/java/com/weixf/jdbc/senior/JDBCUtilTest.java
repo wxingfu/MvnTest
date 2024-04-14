@@ -4,11 +4,13 @@ import com.weixf.jdbc.senior.dao.BankDao;
 import com.weixf.jdbc.senior.dao.EmployeeDao;
 import com.weixf.jdbc.senior.dao.impl.BankDaoImpl;
 import com.weixf.jdbc.senior.dao.impl.EmployeeDaoImpl;
+import com.weixf.jdbc.senior.pojo.Employee;
 import com.weixf.jdbc.senior.util.JDBCUtil;
 import com.weixf.jdbc.senior.util.JDBCUtilV2;
 import org.junit.Test;
 
 import java.sql.Connection;
+import java.util.List;
 
 public class JDBCUtilTest {
     @Test
@@ -47,13 +49,13 @@ public class JDBCUtilTest {
         // 1.创建DAO实现类对象
         EmployeeDao employeeDao = new EmployeeDaoImpl();
 
-        /*//2.调用查询所有方法
+        //2.调用查询所有方法
         List<Employee> employeeList = employeeDao.selectAll();
 
         //3.处理结果
         for (Employee employee : employeeList) {
             System.out.println("employee = " + employee);
-        }*/
+        }
 
         // 调用根据id查询单个员工方法
         /*Employee employee = employeeDao.selectByEmpId(1);
@@ -67,8 +69,8 @@ public class JDBCUtilTest {
         int update = employeeDao.update(employee);
         System.out.println("update = " + update);*/
 
-        int delete = employeeDao.delete(20008);
-        System.out.println("delete = " + delete);
+        // int delete = employeeDao.delete(20008);
+        // System.out.println("delete = " + delete);
 
     }
 

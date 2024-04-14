@@ -1,10 +1,20 @@
 package com.weixf.jdbc.senior.pojo;
 
+import com.weixf.jdbc.senior.anntation.Column;
+import com.weixf.jdbc.senior.anntation.Table;
+
 // 类名就是数据库表的t_后面的单词全写
+@Table(name = "t_emp")
 public class Employee {
+
+    @Column(name = "emp_id")
     private Integer empId;// emp_id
+
+    @Column(name = "emp_name")
     private String empName;// emp_name
+
     private Double empSalary;// emp_salary
+
     private Integer empAge;// emp_age
 
     public Employee() {
