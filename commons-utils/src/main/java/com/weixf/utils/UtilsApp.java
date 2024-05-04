@@ -1,8 +1,7 @@
 package com.weixf.utils;
 
-import com.weixf.utils.file.FileUtils;
-
 import com.weixf.utils.cache.CacheUtils;
+import com.weixf.utils.file.FileUtils;
 
 public class UtilsApp {
 
