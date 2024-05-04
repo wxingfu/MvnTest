@@ -9,7 +9,7 @@ import java.text.ParseException;
  */
 public class Test10 {
     public static void main(String[] args) throws ParseException {
-        String key = PropertiesConfig.getString("key1");
+        String key = ApplicationConfig.getString("key1");
         System.out.println(key);
 
         // double a = 11.00;
